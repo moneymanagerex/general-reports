@@ -1,3 +1,10 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF8"/>
+    <TITLE>Money Manager Ex User Manual</TITLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
 <h3><TMPL_VAR REPORTNAME></h3>
 <TMPL_VAR TODAY><hr>
 <table cellspacing='1' width='95%'>
@@ -60,3 +67,5 @@
     <hr>
     <TMPL_VAR ERROR>
 </TMPL_LOOP>
+</BODY>
+</HTML>
