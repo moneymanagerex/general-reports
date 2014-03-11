@@ -1,4 +1,6 @@
 *.log
 *.pot
 *.pyc
+*.grm
+*.zip
 local_settings.py
