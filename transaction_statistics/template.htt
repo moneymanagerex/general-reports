@@ -1,0 +1,62 @@
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+<table cellspacing='1' width='95%'>
+    <tr bgcolor='#D5D6DE'>
+        <th>Year</th>
+        <th>Jan</th>
+        <th>Feb</th>
+        <th>Mar</th>
+        <th>Apr</th>
+        <th>May</th>
+        <th>Jun</th>
+        <th>Jul</th>
+        <th>Aug</th>
+        <th>Sep</th>
+        <th>Oct</th>
+        <th>Nov</th>
+        <th>Dec</th>
+        <th>Total</th>
+    </tr>
+    <TMPL_LOOP NAME=CONTENTS>
+    <TMPL_IF __ODD__>
+        <tr>
+    <TMPL_ELSE>
+        <tr bgcolor='#E1EDFB'>
+    </TMPL_IF>
+        <td><TMPL_VAR "YEAR"></td>
+        <td><TMPL_VAR "Jan"></td>
+        <td><TMPL_VAR "Feb"></td>
+        <td><TMPL_VAR "Mar"></td>
+        <td><TMPL_VAR "Apr"></td>
+        <td><TMPL_VAR "May"></td>
+        <td><TMPL_VAR "Jun"></td>
+        <td><TMPL_VAR "Jul"></td>
+        <td><TMPL_VAR "Aug"></td>
+        <td><TMPL_VAR "Sep"></td>
+        <td><TMPL_VAR "Oct"></td>
+        <td><TMPL_VAR "Nov"></td>
+        <td><TMPL_VAR "Dec"></td>
+        <td bgcolor='#D5D6DE'><TMPL_VAR YEAR_TOTAL></td>
+        </tr>
+    </TMPL_LOOP>
+        <tr bgcolor='#D5D6DE'>
+                        <td>Average:</td>
+                        <td><TMPL_VAR AVERAGE_Jan></td>
+                        <td><TMPL_VAR AVERAGE_Feb></td>
+                        <td><TMPL_VAR AVERAGE_Mar></td>
+                        <td><TMPL_VAR AVERAGE_Apr></td>
+                        <td><TMPL_VAR AVERAGE_May></td>
+                        <td><TMPL_VAR AVERAGE_Jun></td>
+                        <td><TMPL_VAR AVERAGE_Jul></td>
+                        <td><TMPL_VAR AVERAGE_Aug></td>
+                        <td><TMPL_VAR AVERAGE_Sep></td>
+                        <td><TMPL_VAR AVERAGE_Oct></td>
+                        <td><TMPL_VAR AVERAGE_Nov></td>
+                        <td><TMPL_VAR AVERAGE_Dec></td>
+                        <td><TMPL_VAR GRAND_TOTAL></td>
+        </tr>
+</table>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
