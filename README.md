@@ -23,7 +23,7 @@ Typically, one general report contain the following files
     // xxx
   end
   ~~~
-3. template.htt (purl plain text template file powere by [html template](https://github.com/moneymanagerex/html-template))
+3. template.htt (pure plain text template file powere by [html template](https://github.com/moneymanagerex/html-template))
 
 Contributing
 ------------
