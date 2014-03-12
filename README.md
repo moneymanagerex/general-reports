@@ -6,9 +6,10 @@ Bunch of general reports for Money Manager Ex.
 Typically, one general report contain the following files
 ------------
 1. sqlcontent.sql (MMEX will execute this sql firstly to return one result set)
-~~~
+  * for instance
+  ~~~
   select * from assets_v1;
-~~~
+  ~~~
 2. luacontent.lua (There are two APIs here)
   * handle_record
   ~~~
