@@ -7,18 +7,18 @@ Typically, one general report contain the following files
 ------------
 1. sqlcontent.sql (MMEX will execute this sql firstly to return one result set)
   * for instance
-  ~~~
+  ~~~sql
   select * from assets_v1;
   ~~~
 2. luacontent.lua (There are two APIs here)
   * handle_record
-  ~~~
+  ~~~lua
   function handle_record(record)
       // put your logic to modify record
   end
   ~~~
   * complete
-  ~~~
+  ~~~lua
   function complete(result)
     // xxx
   end
