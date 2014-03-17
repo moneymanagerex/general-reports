@@ -3,7 +3,7 @@ general-reports
 
 Bunch of general reports for Money Manager Ex.
 
-Typically, one general report contain the following files
+Typically, one general report contains the following files
 ------------
 1. sqlcontent.sql (MMEX will execute this sql firstly to return one result set)
   * for instance
