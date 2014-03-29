@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="local:master.css" rel="stylesheet">
-    <script src="local:chart.js"></script>
+    <link href="master.css" rel="stylesheet">
+    <script src="chart.js"></script>
 </head>
 <body>
     <div class="container">
