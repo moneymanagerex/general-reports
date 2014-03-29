@@ -28,8 +28,6 @@ Typically, one general report contains the following files
 3. template.htt (pure plain text template file powere by [html template](https://github.com/moneymanagerex/html-template))
 
 ## Contributing
-------------
-
 1. Fork [it] (http://github.com/moneymanagerex/general-reports)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
