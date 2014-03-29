@@ -1,7 +1,7 @@
 general-reports
 ===============
 
-Bunch of general reports for Money Manager Ex.
+Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/).
 
 Typically, one general report contains the following files
 ------------
@@ -14,13 +14,15 @@ Typically, one general report contains the following files
   * handle_record
   ~~~lua
   function handle_record(record)
-      // put your logic to modify record
+      // put your logic to modify record and apply this function against every record from SQL
+     record:set("extra_value", record::get("VALUE") * 2);
   end
   ~~~
   * complete
   ~~~lua
   function complete(result)
-    // xxx
+     // put some accumulated value and apply this funciton after SQL complete
+     result:set("TOTAL", 1000);
   end
   ~~~
 3. template.htt (pure plain text template file powere by [html template](https://github.com/moneymanagerex/html-template))
