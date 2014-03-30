@@ -25,7 +25,7 @@ Typically, one general report contains the following files
      result:set("TOTAL", 1000);
   end
   ~~~
-3. template.htt (pure plain text template file powere by [html template](https://github.com/moneymanagerex/html-template))
+3. template.htt (plain text template file powered by [html template](https://github.com/moneymanagerex/html-template))
 
 ## Contributing
 1. Fork [it] (http://github.com/moneymanagerex/general-reports)
