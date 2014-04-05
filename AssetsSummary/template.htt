@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
     <title><TMPL_VAR REPORTNAME></title>
     <link href="master.css" rel="stylesheet">
     <script src="Chart.js"></script>
@@ -14,7 +14,7 @@
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
                 <table class "table-condensed">
-                <tr><td><canvas id="reportChart" width="300" height="300"></canvas></td></tr>
+                <tr><td class="text-center"><canvas id="reportChart" width="300" height="300"></canvas></td></tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr><td><table class="table">
                 <thead>
@@ -47,9 +47,8 @@
 </body>
 <script type="text/javascript">
     <!-- Format numbers -->
-    function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
     var elements= document.getElementsByClassName("money");
-    for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>";}
+    for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + elements[i].innerHTML + "<TMPL_VAR SFX_SYMBOL>";}
     <!-- Chart -->
     var data = [
         <TMPL_VAR "ASSET_DATA">
