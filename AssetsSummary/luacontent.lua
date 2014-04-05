@@ -40,7 +40,7 @@ function get_years(record)
             days = cDay - aDay;
         else
             days = get_days(aMonth, aYear) - aDay;
-            if tonumber(aMonth) + 1 > tonumber(cMonth) - 1 then
+            if tonumber(aMonth) + 1 <= tonumber(cMonth) - 1 then
                 for i = (aMonth + 1), (cMonth - 1) do
                     days = days + get_days(i, aYear);
                 end
@@ -54,6 +54,9 @@ function get_years(record)
         end
     else
         nbrYears = cYear - aYear;
+        if tonumber(aMonth) > tonumber(cMonth) or (aMonth == cMonth and tonumber(aDay) > tonumber(cDay)) then
+            nbrYears = nbrYears - 1;
+        end
         local days = get_days(aMonth, aYear) - aDay;
         for i = (aMonth + 1), 12 do
             days = days + get_days(i, aYear);
@@ -114,7 +117,7 @@ function handle_record(record)
 end
 
 function complete(result)
-    result:set("Current_Total", total);
+    result:set("Current_Total", string.format("%.2f", total));
     local colors = {"#FBD4B4", "#E5B8B7", "#B6DDE8", "#B8CCE4", "#F0EDCE", "#DEE3E7", "#99FF99"};
     local rows = '';
     local data = '';

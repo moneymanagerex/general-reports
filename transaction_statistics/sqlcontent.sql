@@ -11,6 +11,10 @@ select strftime('%Y', TRANSDATE) as YEAR
     , total('10' = strftime('%m', TRANSDATE)) as Oct
     , total('11' = strftime('%m', TRANSDATE)) as Nov
     , total('12' = strftime('%m', TRANSDATE)) as Dec
+    , (select distinct min(strftime('%Y', TRANSDATE))
+        from CHECKINGACCOUNT_V1) as Min_Year
+    , (select distinct max(strftime('%Y', TRANSDATE))
+        from CHECKINGACCOUNT_V1) as Max_Year
 from CHECKINGACCOUNT_V1 
 group by year
 order by year desc;
