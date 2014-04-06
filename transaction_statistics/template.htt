@@ -1,45 +1,58 @@
-<h3><TMPL_VAR REPORTNAME></h3>
-<TMPL_VAR TODAY><hr>
-<table cellspacing='1' width='95%'>
-    <tr bgcolor='#D5D6DE'>
-        <th>Year</th>
-        <th>Jan</th>
-        <th>Feb</th>
-        <th>Mar</th>
-        <th>Apr</th>
-        <th>May</th>
-        <th>Jun</th>
-        <th>Jul</th>
-        <th>Aug</th>
-        <th>Sep</th>
-        <th>Oct</th>
-        <th>Nov</th>
-        <th>Dec</th>
-        <th>Total</th>
-    </tr>
-    <TMPL_LOOP NAME=CONTENTS>
-    <TMPL_IF __ODD__>
-        <tr>
-    <TMPL_ELSE>
-        <tr bgcolor='#E1EDFB'>
-    </TMPL_IF>
-        <td><TMPL_VAR "YEAR"></td>
-        <td><TMPL_VAR "Jan"></td>
-        <td><TMPL_VAR "Feb"></td>
-        <td><TMPL_VAR "Mar"></td>
-        <td><TMPL_VAR "Apr"></td>
-        <td><TMPL_VAR "May"></td>
-        <td><TMPL_VAR "Jun"></td>
-        <td><TMPL_VAR "Jul"></td>
-        <td><TMPL_VAR "Aug"></td>
-        <td><TMPL_VAR "Sep"></td>
-        <td><TMPL_VAR "Oct"></td>
-        <td><TMPL_VAR "Nov"></td>
-        <td><TMPL_VAR "Dec"></td>
-        <td bgcolor='#D5D6DE'><TMPL_VAR YEAR_TOTAL></td>
-        </tr>
-    </TMPL_LOOP>
-        <tr bgcolor='#D5D6DE'>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h3>Transaction Statistics</h3>
+        <p><TMPL_VAR TODAY></p>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table">
+                <thead>
+                  <tr>
+                    <th>Year</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <TMPL_LOOP NAME=CONTENTS>
+                    <tr>
+                        <th><TMPL_VAR YEAR></th>
+                        <td><TMPL_VAR Jan></td>
+                        <td><TMPL_VAR Feb></td>
+                        <td><TMPL_VAR Mar></td>
+                        <td><TMPL_VAR Apr></td>
+                        <td><TMPL_VAR May></td>
+                        <td><TMPL_VAR Jun></td>
+                        <td><TMPL_VAR Jul></td>
+                        <td><TMPL_VAR Aug></td>
+                        <td><TMPL_VAR Sep></td>
+                        <td><TMPL_VAR Oct></td>
+                        <td><TMPL_VAR Nov></td>
+                        <td><TMPL_VAR Dec></td>
+                        <th class="total"><TMPL_VAR YEAR_TOTAL></th>
+                    </tr>
+                    </TMPL_LOOP>
+                </tbody>
+                <tfoot>
+                    <tr class="total">
                         <td>Average:</td>
                         <td><TMPL_VAR AVERAGE_Jan></td>
                         <td><TMPL_VAR AVERAGE_Feb></td>
@@ -53,10 +66,20 @@
                         <td><TMPL_VAR AVERAGE_Oct></td>
                         <td><TMPL_VAR AVERAGE_Nov></td>
                         <td><TMPL_VAR AVERAGE_Dec></td>
-                        <td><TMPL_VAR GRAND_TOTAL></td>
-        </tr>
-</table>
-<TMPL_LOOP ERRORS>
-    <hr>
-    <TMPL_VAR ERROR>
-</TMPL_LOOP>
+                        <td><span class="badge"><TMPL_VAR GRAND_TOTAL></span></td>
+                    </tr>
+                </tfoot>
+                </table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>   
+</body>
+</html>
