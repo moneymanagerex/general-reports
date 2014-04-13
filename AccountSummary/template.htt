@@ -7,52 +7,52 @@
     <script src="Chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h3>Account Summary Report</h3>
-        <p><TMPL_VAR TODAY></p>
-        <div class="row">
-            <div class="col-xs-2"></div>
-            <div class="col-xs-8">
-                <table class "table-condensed">
-                <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
-                <tr><td>&nbsp;</td></tr>
-                <tr><td><table class="table">
-                <thead>
-                  <tr>
-                    <th>Account Name</th>
-                    <th  class="text-right">Balance</th>
-                    <th  class="text-right">Base Currency</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <TMPL_LOOP NAME=CONTENTS>
-                    <tr>
-                        <th><TMPL_VAR ACCOUNTNAME></th>
-                        <td class="text-right"><TMPL_VAR Balance></td>
-                        <td  bgcolor='<TMPL_VAR "COLOR">' class="money text-right"><TMPL_VAR Base></td>
-                    </tr>
-                    </TMPL_LOOP>
-                </tbody>
-                <tfoot>
-                    <tr class="total">
-                        <td>Total</td>
-                        <td></td>
-                        <td class="money text-right"><TMPL_VAR Total></td>
-                    </tr>
-                </tfoot>
-                </table></td></tr></table>
-            </div>
-            <table class="table">
-                <tbody>
-                <TMPL_LOOP ERRORS>
-                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
-                    <tr><td><TMPL_VAR ERROR></td></tr>
-                </TMPL_LOOP>
-                </tbody>
-            </table>
-        </div>
-    </div>   
-</body>
+<h3>Account Summary Report</h3>
+<p><TMPL_VAR TODAY></p>
+
+<div class="container">
+<div class="row">
+	<div class="col-xs-12"><canvas id="reportChart" width="300" height="300"></canvas></div>
+</div>
+<div class="row">
+	<div class="col-xs-10">
+
+		<table class="table">
+		<thead>
+		  <tr>
+		    <th>Account Name</th>
+		    <th  class="text-right">Balance</th>
+		    <th  class="text-right">Base Currency</th>
+		  </tr>
+		</thead>
+		<tbody>
+		    <TMPL_LOOP NAME=CONTENTS>
+		    <tr>
+			<th><TMPL_VAR ACCOUNTNAME></th>
+			<td class="text-right"><TMPL_VAR Balance></td>
+			<td  bgcolor='<TMPL_VAR "COLOR">' class="money text-right"><TMPL_VAR Base></td>
+		    </tr>
+		    </TMPL_LOOP>
+		</tbody>
+		<tfoot>
+		    <tr class="total">
+			<td>Total</td>
+			<td></td>
+			<td class="money text-right"><TMPL_VAR Total></td>
+		    </tr>
+		</tfoot>
+		</table>
+
+	</div>
+</div>
+</div>
+
+<ul>
+<TMPL_LOOP ERRORS>
+    <li><span class="label label-danger">Error</span><TMPL_VAR ERROR></li>
+</TMPL_LOOP>
+</ul>
+
 <script type="text/javascript">
     <!-- Format numbers -->
   function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
