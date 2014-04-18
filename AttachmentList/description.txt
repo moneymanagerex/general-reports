@@ -1,0 +1,4 @@
+Show all attachments inserted in Money Manager EX.
+
+Note:
+links to open directly attachment on filename works only if you use a custom directory as attachments archive.
