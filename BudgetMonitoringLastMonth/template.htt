@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><TMPL_VAR name="REPORTNAME" /></title>
+    <link href="master.css" rel="stylesheet"></link>
+    <script src="jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="globalize.min.js" type="text/javascript"></script>
+    <script src="dx.chartjs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var circularGaugeOptions = {
+            scale: {
+                majorTick: {
+                    tickInterval: 500,
+                    color: '#000000',
+                }, 
+                minorTick: {
+                    visible: true,
+                    tickInterval: 100,
+                    color: '#000000',
+                }, 
+                label: {
+                    customizeText: function(label) {
+                        return label.valueText + ' &euro;';
+                    },
+                    indentFromTick: 15,
+                },
+            },
+            rangeContainer: {
+                palette: 'pastel',
+                offset: -10,
+            },
+            title: {
+                font: { size: 18 },
+                position: 'top-center',
+            },
+            valueIndicator: {
+                offset: 10,
+                color: '#CC0000',
+                text: {
+                    format: 'fixedPoint',
+                    precision: 2,
+                    indent: 10,
+                },
+            },
+            subvalueIndicator :{
+                type: 'triangle',
+                offset: -5,
+                color: '#0033CC',
+            },
+        };
+        var linearGaugeOptions = {
+            geometry: {
+                orientation: 'vertical',
+            },
+            scale: {
+                majorTick: {
+                    color: 'green',
+                    showCalculatedTicks: false,
+                },
+                label: {
+                    indentFromTick: -5,
+                    font: {
+                        color: 'green',
+                    },
+                    customizeText: function(label) {
+                        return label.valueText + ' &euro;';
+                    },
+                } ,
+            },
+            rangeContainer: {
+                offset: 5,
+            }, 
+            valueIndicator: {
+                type: 'rangebar',
+                offset: 5,
+                text: {
+                    indent: 3,
+                    format: 'fixedPoint',
+                    precision: 2,
+                    customizeText: function(label) {
+                        return label.valueText + ' &euro;';
+                    },
+                },
+            },
+            title: {
+                font: { size: 12 },
+                position: 'top-center',
+            },
+        };
+        $(function () {
+            <TMPL_VAR name="EXPENSE_INCOME_DATA" />
+            <TMPL_VAR name="EXPENSE_BUDGET_DATA" />
+            <TMPL_VAR name="INCOME_BUDGET_DATA" />
+            <TMPL_VAR name="DASHBOARD_DATA" />
+        });
+    </script>
+</head>
+<body>
+    <div class="page-header">
+        <h2 class="text-center">Budget Monitoring for the last month</h2>
+        <p class="text-center">Compare Expenses, Income and Budget at <TMPL_VAR name="REPORT_DATE" /></p>
+    </div>
+    <div id="chartContainerOverall" class="container" style="clear:both;"></div>
+    <div id="chartContainerWithdrawal" class="container" style="height:350px;clear:both;">
+        <h3>Budget monitoring of Withdrawal Categories</h3>
+    </div>
+    <div id="chartContainerDeposit" class="container" style="height:350px;clear:both;">
+        <h3>Budget monitoring of Deposit Categories</h3>
+    </div>
+</body>
+</html>
