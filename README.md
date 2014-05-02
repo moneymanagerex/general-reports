@@ -35,6 +35,5 @@ Typically, one general report contains the following files
 5. Create new Pull Request
 
 ## Donations
-1. Just visit [it](http://VisitsToMoney.com/index.php?refId=441653) 
-2. Do a donate at my Ripple address: `rUY7DvWqNnSYCYiVr986W71tuaKtDCMNz3` 
-3. [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=moneymanagerex%40gmail%2ecom&lc=US&item_name=MoneyManagerEx&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
+1. Do a donate at my Ripple address: `rUY7DvWqNnSYCYiVr986W71tuaKtDCMNz3` 
+2. [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=moneymanagerex%40gmail%2ecom&lc=US&item_name=MoneyManagerEx&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
