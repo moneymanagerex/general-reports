@@ -34,5 +34,7 @@ Typically, one general report contains the following files
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-## Donations
-If you enjoyed these reports and feel like buying me coffee, you can donate at my Ripple address: `rUY7DvWqNnSYCYiVr986W71tuaKtDCMNz3` or [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=moneymanagerex%40gmail%2ecom&lc=US&item_name=MoneyManagerEx&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest). Thank you very much!
+## Donations. If you enjoyed these reports and feel like buying me coffee, you can
+1. visit [it](http://VisitsToMoney.com/index.php?refId=441653) 
+2. donate at my Ripple address: `rUY7DvWqNnSYCYiVr986W71tuaKtDCMNz3` 
+3. [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=moneymanagerex%40gmail%2ecom&lc=US&item_name=MoneyManagerEx&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
