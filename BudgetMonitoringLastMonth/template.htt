@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title><TMPL_VAR name="REPORTNAME" /></title>
+    <title><TMPL_VAR NAME="REPORTNAME" /></title>
+    <meta charset="UTF-8" />
     <link href="master.css" rel="stylesheet"></link>
     <script src="jquery-2.0.3.min.js" type="text/javascript"></script>
     <script src="globalize.min.js" type="text/javascript"></script>
@@ -20,7 +21,8 @@
                 }, 
                 label: {
                     customizeText: function(label) {
-                        return label.valueText + ' &euro;';
+                        return '<TMPL_VAR NAME="BASE_CURRENCY_PREFIX_SYMBOL" />' + label.valueText 
+                            + '<TMPL_VAR NAME="BASE_CURRENCY_SUFFIX_SYMBOL" />';
                     },
                     indentFromTick: 15,
                 },
@@ -63,7 +65,8 @@
                         color: 'green',
                     },
                     customizeText: function(label) {
-                        return label.valueText + ' &euro;';
+                        return '<TMPL_VAR NAME="BASE_CURRENCY_PREFIX_SYMBOL" />' + label.valueText 
+                        + '<TMPL_VAR NAME="BASE_CURRENCY_SUFFIX_SYMBOL" />';
                     },
                 } ,
             },
@@ -78,7 +81,8 @@
                     format: 'fixedPoint',
                     precision: 2,
                     customizeText: function(label) {
-                        return label.valueText + ' &euro;';
+                        return '<TMPL_VAR NAME="BASE_CURRENCY_PREFIX_SYMBOL" />' + label.valueText 
+                        + '<TMPL_VAR NAME="BASE_CURRENCY_SUFFIX_SYMBOL" />';
                     },
                 },
             },
@@ -88,17 +92,17 @@
             },
         };
         $(function () {
-            <TMPL_VAR name="EXPENSE_INCOME_DATA" />
-            <TMPL_VAR name="EXPENSE_BUDGET_DATA" />
-            <TMPL_VAR name="INCOME_BUDGET_DATA" />
-            <TMPL_VAR name="DASHBOARD_DATA" />
+            <TMPL_VAR NAME="EXPENSE_INCOME_DATA" />
+            <TMPL_VAR NAME="EXPENSE_BUDGET_DATA" />
+            <TMPL_VAR NAME="INCOME_BUDGET_DATA" />
+            <TMPL_VAR NAME="DASHBOARD_DATA" />
         });
     </script>
 </head>
 <body>
     <div class="page-header">
         <h2 class="text-center">Budget Monitoring for the last month</h2>
-        <p class="text-center">Compare Expenses, Income and Budget at <TMPL_VAR name="REPORT_DATE" /></p>
+        <p class="text-center">Compare Expenses, Income and Budget at <TMPL_VAR NAME="REPORT_DATE" /></p>
     </div>
     <div id="chartContainerOverall" class="container" style="clear:both;"></div>
     <div id="chartContainerWithdrawal" class="container" style="height:350px;clear:both;">
