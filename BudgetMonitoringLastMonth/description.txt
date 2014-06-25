@@ -1,6 +1,6 @@
 <h1>Budget Monitoring Report</h1>
 
-<p>Version: 1.0-20140429</p>
+<p>Version: 1.1-20140625</p>
 
 <p>
 The report monitors the actual expenses and income of the last month compared to the budget
@@ -67,4 +67,10 @@ into your <code>MoneyManagerEx/res</code> directory:
     <li><code>jquery-2.0.3.min.js</code></li>
     <li><code>globalize.min.js</code></li>
 </ul>
+</p>
+
+<h3>Note:</h3>
+<p>
+If you have downloaded the javascript libraries into the specified directory, close and re-open
+MoneyManagerEx, if it is currently started.
 </p>

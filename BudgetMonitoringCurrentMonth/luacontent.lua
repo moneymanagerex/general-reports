@@ -61,6 +61,22 @@ local actualExpenseSum = 0;
 local actualIncomeSum = 0;
 
 ---
+-- symbols of base currency
+-- 
+local baseCurrencyPrefixSymbol = nil;
+local baseCurrencySuffixSymbol = nil;
+
+---
+-- Set the currency symbols by the base currency field of the record
+-- 
+function setBaseCurrencySymbol(record) 
+    if (baseCurrencyPrefixSymbol == nil and baseCurrencySuffixSymbol == nil) then
+        baseCurrencyPrefixSymbol = record:get("BaseCurrencyPrefixSymbol");
+        baseCurrencySuffixSymbol = record:get("BaseCurrencySuffixSymbol");
+    end
+end
+
+---
 -- Create the javascript chart code for the given category record, which contains the Code of the
 -- transaction (Withdrawal or Deposit), the c ategory id, the category name, the budget amount
 -- and the actual amount. The rate determines the quotient of actual amount and budget amount.
@@ -84,6 +100,10 @@ function createChartCodeForCategoryBudget(record)
     local colorDefinition = withdrawalColors;
     if record:get("TransCode") == "Deposit" then
         colorDefinition = depositColors;
+    end
+    
+    if tonumber(record:get("BudgetAmount")) < 0.1 then
+        record:set("BudgetAmount",  record:get("ActualAmount") );
     end
     
     local color = determineRateColor(record:get("Rate"), colorDefinition);
@@ -216,6 +236,8 @@ end
 function handle_record(record) 
     local jsOutputPerRecord = createChartCodeForCategoryBudget(record);
     
+    setBaseCurrencySymbol(record);
+    
     updateAmountSumsBy(record);
     
     dashboardChartsJsOutput = dashboardChartsJsOutput .. jsOutputPerRecord;
@@ -245,4 +267,7 @@ function complete(result)
     
     local date = os.date("*t", os.time{year=os.date('%Y'), month=os.date('%m'), day=os.date('%d')});
     result:set("REPORT_DATE", string.format("%d-%02d-%02d",date.year,date.month,date.day));
+    
+    result:set("BASE_CURRENCY_PREFIX_SYMBOL", baseCurrencyPrefixSymbol);
+    result:set("BASE_CURRENCY_SUFFIX_SYMBOL", baseCurrencySuffixSymbol);
 end
