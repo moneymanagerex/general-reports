@@ -6,7 +6,7 @@ select TRANSAMOUNT, REPEATS, NUMOCCURRENCES, NEXTOCCURRENCEDATE,
             (case when TRANSCODE = 'Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) as TRANSAMOUNT
         from CHECKINGACCOUNT_V1) as t
     where t.CATEGID = a.CATEGID
-        and t.STATUS <> 'V' AND t.TRANSDATE>=date('2014-01-01')) as Balance
+        and t.STATUS <> 'V' AND t.TRANSDATE>=date('now','start of year')) as Balance
 from
     (select CATEGID, STATUS, REPEATS, NUMOCCURRENCES, NEXTOCCURRENCEDATE,
         (case when TRANSCODE = 'Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) as TRANSAMOUNT
