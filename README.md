@@ -2,6 +2,7 @@ general-reports
 ===============
 
 Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/).
+
 [![Build Status](https://secure.travis-ci.org/moneymanagerex/general-reports.png)](http://travis-ci.org/moneymanagerex/general-reports)
 
 Typically, one general report contains the following files
