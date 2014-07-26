@@ -1,0 +1,22 @@
+Category Forecast Report Using Repeating Transactions
+
+This report will calculate the transactions for the current year in a given category and then use the remaining repeating transactions to forecast the total for the category at year's end.
+
+LIMITATIONS/KNOWN ISSUES:
+Does not include split transactions.
+Only works for an entire category, not individual subcategories.
+
+USAGE:
+Update category name in line 15 of the SQL.
+
+SIMPLE EXAMPLE: 
+
+The checking account has a repeating transaction of $10 monthly with category "Donation". There were also incidental transactions with the "Donation" category, $3 in Feb and $4 in March. It is currently July. The report will return the following:
+
+Current Total: $77
+Projected Total: $127
+
+
+CREDITS:
+Based on AccountForecast rev 6260febb62b36e7af4173093e9fef3ab33b261b1 by siena123
+https://github.com/moneymanagerex/general-reports/tree/master/AccountForecast
