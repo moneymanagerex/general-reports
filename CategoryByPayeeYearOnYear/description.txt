@@ -1,0 +1,23 @@
+Category By Payee Year on Year Report
+
+This report will look at a given category and display transactions sorted by payee in rows and year in columns. Could be useful for tracking donations, bills, etc.
+
+LIMITATIONS/KNOWN ISSUES:
+This is the initial checkin of the report, basically unchanged from when SQL was the only option. There are lots of hard coded dates and methods, which should be changed using Lua.
+
+USAGE:
+It is complicated. It will get better. 
+
+
+SIMPLE EXAMPLE: 
+
+A report might look as follows:
+
+Category Donations:
+	2014	2013	Total
+Payee1	$10	$5	$15
+Payee2	$8	$6	$14
+	$18	$11	$29
+
+CREDITS:
+Thanks to Nikolay for some help. Originally posted here: http://forum.moneymanagerex.org/viewtopic.php?f=12&t=2669

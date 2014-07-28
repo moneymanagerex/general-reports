@@ -1,0 +1,50 @@
+<!DOCTYPE html><h3><TMPL_VAR REPORTNAME></h3>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href = "master.css" rel = "stylesheet">
+</head>
+<body>
+<TMPL_VAR TODAY><hr>
+<table cellspacing='1' width='95%'>
+    <tr bgcolor='#D5D6DE'>
+        <th>Payee</th>
+        <th>2014</th>
+        <th>2013</th>
+        <th>2012</th>
+        <th>2011</th>
+        <th>2010</th>
+        <th>2009</th>
+        <th>2008</th>
+        <th>Total ('08-'14)</th>
+    </tr>
+    <TMPL_LOOP NAME=CONTENTS>
+    <TMPL_IF __ODD__>
+        <tr>
+    <TMPL_ELSE>
+        <tr bgcolor='#E1EDFB'>
+    </TMPL_IF>
+        <td><TMPL_VAR "Payee"></td>
+        <td class = "money, text-right"><TMPL_VAR "2014"></td>
+        <td class = "money, text-right"><TMPL_VAR "2013"></td>
+        <td class = "money, text-right"><TMPL_VAR "2012"></td>
+        <td class = "money, text-right"><TMPL_VAR "2011"></td>
+        <td class = "money, text-right"><TMPL_VAR "2010"></td>
+        <td class = "money, text-right"><TMPL_VAR "2009"></td>
+        <td class = "money, text-right"><TMPL_VAR "2008"></td>
+        <td class = "money, text-right"><TMPL_VAR "Total ('08-'14)"></td>
+        </tr>
+    </TMPL_LOOP>
+</table>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+<script type="text/javascript">
+  function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
+	var elements= document.querySelectorAll(".money");
+  for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = currency(elements[i].innerHTML) ;}
+</script>
+</html>
