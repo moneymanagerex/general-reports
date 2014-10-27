@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title><TMPL_VAR REPORTNAME></title>
     <link href="master.css" rel="stylesheet">
-    <script src="Chart.js"></script>
+    <script src="ChartNew.js"></script>
 </head>
 <body>
     <div class="container">
