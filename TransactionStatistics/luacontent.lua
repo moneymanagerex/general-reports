@@ -34,7 +34,7 @@ function handle_record(record)
             count[i] = count[i] +1;
             record:set(months[i], math.floor(amount));
         else
-            record:set(months[i], "n/a");
+            record:set(months[i], 0);
         end
     end
     record:set("YEAR_TOTAL", year_total);

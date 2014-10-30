@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><TMPL_VAR REPORTNAME></title>
+    <script src = "ChartNew.js"></script>
     <link href="master.css" rel="stylesheet">
 </head>
 <body>
@@ -12,6 +13,31 @@
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
+            <canvas id="mycanvas" height="400" width="600"></canvas>
+            <script>
+                var LineData = {
+                    labels: ["Jan", "Feb", "Mar" , "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [
+                    <TMPL_LOOP CONTENTS>
+                    {
+                        data: [<TMPL_VAR Jan>, <TMPL_VAR Feb>, <TMPL_VAR Mar>, <TMPL_VAR Apr>, <TMPL_VAR May>, <TMPL_VAR Jun>
+                             , <TMPL_VAR Jul>, <TMPL_VAR Aug>, <TMPL_VAR Sep>, <TMPL_VAR Oct>, <TMPL_VAR Nov>, <TMPL_VAR Dec>],
+                        title: <TMPL_VAR YEAR>,
+                    },
+                    </TMPL_LOOP>
+                    {
+                        data: [<TMPL_VAR AVERAGE_Jan>, <TMPL_VAR AVERAGE_Feb>, <TMPL_VAR AVERAGE_Mar>, <TMPL_VAR AVERAGE_Apr>, <TMPL_VAR AVERAGE_May>, <TMPL_VAR AVERAGE_Jun>
+                             , <TMPL_VAR AVERAGE_Jul>, <TMPL_VAR AVERAGE_Aug>, <TMPL_VAR AVERAGE_Sep>, <TMPL_VAR AVERAGE_Oct>, <TMPL_VAR AVERAGE_Nov>, <TMPL_VAR AVERAGE_Dec>],
+                        title: "Average",
+                    }
+                    ]
+                }
+                var opts= { annotateDisplay : true };
+                window.onload = function() {
+                    var myBar = new Chart(document.getElementById("mycanvas").getContext("2d")).Line(LineData,opts);
+                }
+            </script>
+
                 <table class="table">
                 <thead>
                   <tr>
