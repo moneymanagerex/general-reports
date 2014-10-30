@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+This report shows transactions for the specified category.<br>
+Edit line 32 of SQL script to get proper data.<br>
+<br>
+Get category ID and subcategory ID using this SQL script:<br>
+
+<i>select c.categid, c.categname, s.subcategid, s.subcategname from category_v1 c<br>
+left join subcategory_v1 s on s.categid=c.categid<br>
+order by c.categname, s.subcategname</i><br>
+
+<p>Created by Nikolay in 27-10-2014</p>
