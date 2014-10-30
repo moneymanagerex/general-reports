@@ -76,7 +76,19 @@
     var data = {
         labels : ["January","February","March","April","May","June","July",
                       "August","September","October","November","December"],
-        datasets : [<TMPL_VAR "TREND_DATA">]
+        datasets: [
+            <TMPL_LOOP CONTENTS>
+            {
+                title: <TMPL_VAR YEAR>,
+                fillColor: "rgba(255,255,255,0)",
+                strokeColor: "<TMPL_VAR COLOR>",
+                pointColor: "<TMPL_VAR COLOR>",
+                pointStrokeColor: "rgba(255,255,255,0)",
+                data: [<TMPL_VAR Jan>, <TMPL_VAR Feb>, <TMPL_VAR Mar>, <TMPL_VAR Apr>, <TMPL_VAR May>, <TMPL_VAR Jun>
+                     , <TMPL_VAR Jul>, <TMPL_VAR Aug>, <TMPL_VAR Sep>, <TMPL_VAR Oct>, <TMPL_VAR Nov>, <TMPL_VAR Dec>],
+            } <TMPL_IF __LAST__><TMPL_ELSE>,</TMPL_IF>
+            </TMPL_LOOP>
+        ]
     }
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data);
