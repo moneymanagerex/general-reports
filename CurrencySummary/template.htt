@@ -54,7 +54,16 @@
         { elements[i].innerHTML = currency(elements[i].innerHTML); }
     <!-- Chart -->
     var data = [
-        <TMPL_VAR "CURRENCY_DATA">
+        <TMPL_LOOP CONTENTS>
+        {
+            value: <TMPL_VAR Quantity>,
+            color: "<TMPL_VAR COLOR>",
+            label: "<TMPL_VAR COLOR>",
+            labelColor: "black",
+            labelFontSize: "12",
+            labelAlign: "center"
+        } <TMPL_IF __LAST__><TMPL_ELSE>,</TMPL_IF>
+        </TMPL_LOOP>
     ]
     var options = {
         animationEasing: 'easeOutQuint'
