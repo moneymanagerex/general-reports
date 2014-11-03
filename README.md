@@ -1,11 +1,12 @@
 general-reports
 ===============
 
-Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/).
+Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/) and you can [download](https://github.com/moneymanagerex/general-reports/releases/latest) and import them to Money Manager Ex.
+
 
 [![Build Status](https://secure.travis-ci.org/moneymanagerex/general-reports.png)](http://travis-ci.org/moneymanagerex/general-reports)
 
-Typically, one general report contains the following files
+Typically, one general report contrains
 ------------
 1. sqlcontent.sql (MMEX will execute this sql firstly to return one result set)
   * for instance
