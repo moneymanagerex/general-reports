@@ -11,6 +11,7 @@ You can also compose one from Money Manager Ex as well.
 Typically, one general report contrains
 ------------
 1. sqlcontent.sql (MMEX will execute this sql firstly to return one result set)
+  * sql
   ~~~sql
   select * from assets_v1;
   ~~~
