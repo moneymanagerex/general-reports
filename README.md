@@ -1,7 +1,8 @@
 general-reports
 ===============
 
-Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/) and you can [download](https://github.com/moneymanagerex/general-reports/releases/latest) and import them to Money Manager Ex.
+Bunch of general reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/) and you can [download](https://github.com/moneymanagerex/general-reports/releases/latest) and import them easily.
+You can also compose one from Money Manager Ex as well.
 
 
 [![Build Status](https://secure.travis-ci.org/moneymanagerex/general-reports.png)](http://travis-ci.org/moneymanagerex/general-reports)
