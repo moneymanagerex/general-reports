@@ -40,6 +40,6 @@ Typically, one general report contains:
 5. Create a new pull request
 
 ## Donations
-1. Start it
+1. Star it
 2. Donate to my Ripple address: `rUY7DvWqNnSYCYiVr986W71tuaKtDCMNz3` 
 3. [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=moneymanagerex%40gmail%2ecom&lc=US&item_name=MoneyManagerEx&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
