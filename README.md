@@ -3,7 +3,9 @@ general-reports
 
 General reports for [Money Manager Ex](https://sourceforge.net/projects/moneymanagerex/) which can be [downloaded](https://github.com/moneymanagerex/general-reports/releases/latest) and imported easily.
 Reports can be created using Money Manager Ex as well.
-![compose general report](https://raw.githubusercontent.com/moneymanagerex/moneymanagerex/master/doc/help/GRM.gif)
+
+
+![compose general report](https://raw.githubusercontent.com/moneymanagerex/moneymanagerex/master/doc/help/GRM.gif "compose general report")
 
 
 [![Build Status](https://secure.travis-ci.org/moneymanagerex/general-reports.png)](http://travis-ci.org/moneymanagerex/general-reports)
