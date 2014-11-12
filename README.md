@@ -32,7 +32,7 @@ Typically, one general report contains:
      result:set("TOTAL", 1000);
   end
   ~~~
-3. template.htt (a plain text template file powered by [html template](https://github.com/moneymanagerex/html-template))
+3. template.htt (a plain text template file powered by [html template](https://github.com/moneymanagerex/html-template) which shares the same syntax with Perl's [HTML::Template](http://search.cpan.org/~wonko/HTML-Template-2.95/lib/HTML/Template.pm))
 
 ## Contributing
 1. Fork the [repository] (http://github.com/moneymanagerex/general-reports)
