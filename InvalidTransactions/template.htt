@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href = "master.css" rel = "stylesheet" />
+</head>
+<body>
+<TMPL_VAR TODAY>
+<h3 class="i18n">_Title</h3>
+<hr>
+
+<table class='table'>
+  <thead>
+    <tr>
+        <th class="i18n">ID</td>
+        <th class="i18n">Date</th>
+        <th class="i18n">Account</th>
+        <th class="i18n">Payee</th>
+        <th class="i18n">Category</th>
+        <th class="i18n">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR TRX_LINK></td>
+        <td><TMPL_VAR TRANSDATE></td>
+        <td class='ERROR i18n'><TMPL_VAR TRX_LINK_GO></td>
+        <td class='ERROR i18n'><TMPL_VAR Payee></td>
+        <td class='ERROR i18n'><TMPL_VAR Category></td>
+        <td><TMPL_VAR NOTES></td>
+    </tr>
+    </TMPL_LOOP>
+</tbody>
+</table>
+<TMPL_LOOP ERRORS>
+    <hr>    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+
+<script type="text/javascript">
+    <!-- Red color for ERRORS-->
+    function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
+    var elements= document.getElementsByClassName("ERROR");
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].innerHTML.indexOf("ERROR") > -1) {
+            elements[i].style.color="#ff0000";
+        } 
+    }
+</script>
+<!-- Translations -->
+<script>     
+    var translations =
+    {
+    "english":[{
+        "_Title":"Invalid Transactions"
+    }],
+    "russian": [{
+        "_Title":"Транзакции с ошибками"
+        , "Date":"Дата"
+        , "Payee":"Получатель"
+        , "Category":"Категория"
+        , "Account":"Счёт"
+        , "Notes":"Примечания"
+        , "ERROR":"Ошибка"
+    }],
+    };
+
+    var elements= document.getElementsByClassName('i18n');
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var my_lang = translations.<TMPL_VAR LANGUAGE>;
+        if (my_lang == null) my_lang = translations.english;
+        var item = my_lang[0][element.innerHTML];
+        element.innerHTML = (item == null) ? element.innerHTML : item;
+    }
+</script>
+</html>
