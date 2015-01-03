@@ -18,8 +18,8 @@ img{
 <h3 class="i18n">Title</h3>
 <TMPL_VAR TODAY><hr>
 <div class = "row">
-<div class = "col-xs-2"></div>
-<div class = "col-xs-8">
+<div class = "col-xs-1"></div>
+<div class = "col-xs-10">
 <table class = "table sortable">
 <thead>
     <tr>
@@ -38,7 +38,7 @@ img{
         <tr>
         <td <TMPL_VAR COLOR> ></td>
         <td class = "text-right"><TMPL_VAR TRX_LINK></td>
-        <td nowrap><TMPL_VAR ACCOUNTNAME></td>
+        <td nowrap><TMPL_VAR TRX_GOTO></td>
         <td nowrap><TMPL_VAR PAYEENAME></td>
         <td class="date" sorttable_customkey='<TMPL_VAR Date>' nowrap><TMPL_VAR Date></td>
         <td class="money" sorttable_customkey='<TMPL_VAR Amount>'  prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" ><TMPL_VAR Amount></td>
@@ -129,16 +129,16 @@ img{
         "Title":"My Report"
     }],
     "russian": [{
-        "Title":"Куклы", "Nr":"№", "Amount":"Сумма"
+        "Title":"Список по категории", "Nr":"№", "Amount":"Сумма"
         , "Date": "Дата", "Account": "Счёт"
-         , "Payee":"Получатель", "Notes":"Примечания"
-         , "Files":"Файлы", "Total":"Всего:"
+        , "Payee":"Получатель", "Notes":"Примечания"
+        , "Files":"Файлы", "Total":"Всего:"
     }],
     "italian":[{
         "Title":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
         , "Date": "Data", "Account": "Conto"
-         , "Payee":"Beneficiario", "Notes":"Note"
-         , "Files":"File", "Total":"Totale:"
+        , "Payee":"Beneficiario", "Notes":"Note"
+        , "Files":"File", "Total":"Totale:"
     }]
     };
 
