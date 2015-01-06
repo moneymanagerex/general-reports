@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http - equiv = "Content-Type" content = "text/html">
+	<title><TMPL_VAR REPORTNAME></title>
+	<script src = "ChartNew.js"></script>
+	<script src = "sorttable.js"></script>
+	<link href = "master.css" rel = "stylesheet">
+</head>
+<body>
+	<div class = "container">
+	<h3><TMPL_VAR REPORTNAME></h3>
+	<TMPL_VAR TODAY><hr>
+	<div class = "row">
+	<div class = "col-xs-2"></div>
+	<div class = "col-xs-8">
+	<table class = "table-condensed">
+	<tr><td  class="text-center"><canvas id="reportChart" width="700" height="400"></canvas></td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<table class = "table">
+	<thead>
+		<tr>
+			<th>ACCOUNTNAME</th>
+			<th>Balance12ago</th>
+			<th>Balance11ago</th>
+			<th>Balance10ago</th>
+			<th>Balance9ago</th>
+			<th>Balance8ago</th>
+			<th>Balance7ago</th>
+			<th>Balance6ago</th>
+			<th>Balance5ago</th>
+			<th>Balance4ago</th>
+			<th>Balance3ago</th>
+			<th>Balance2ago</th>
+			<th>Balance1ago</th>
+			<th>BalanceNow</th>
+		</tr>
+	</thead>
+	<tbody>
+		    <TMPL_LOOP NAME=CONTENTS>
+			<tr>
+				<td><TMPL_VAR "ACCOUNTNAME"></td>
+				<td class = "money"><TMPL_VAR "Balance12ago"></td>
+				<td class = "money"><TMPL_VAR "Balance11ago"></td>
+				<td class = "money"><TMPL_VAR "Balance10ago"></td>
+				<td class = "money"><TMPL_VAR "Balance9ago"></td>
+				<td class = "money"><TMPL_VAR "Balance8ago"></td>
+				<td class = "money"><TMPL_VAR "Balance7ago"></td>
+				<td class = "money"><TMPL_VAR "Balance6ago"></td>
+				<td class = "money"><TMPL_VAR "Balance5ago"></td>
+				<td class = "money"><TMPL_VAR "Balance4ago"></td>
+				<td class = "money"><TMPL_VAR "Balance3ago"></td>
+				<td class = "money"><TMPL_VAR "Balance2ago"></td>
+				<td class = "money"><TMPL_VAR "Balance1ago"></td>
+				<td class = "money"><TMPL_VAR "BalanceNow"></td>
+			</tr>
+		    </TMPL_LOOP>
+	</tbody>
+
+	</table>
+	</div>
+	<TMPL_LOOP ERRORS>
+		<TMPL_VAR ERROR>
+	</TMPL_LOOP>
+	</div>
+	</div>
+</body>
+<script>
+	<!-- Format double to base currency -->
+	function currency(n) {
+		n = parseFloat(n);
+		n =  isNaN(n) ? 0 : n.toFixed(2);
+		var out = n.toString().replace(".", "|");
+		out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+		out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+		return out;
+	}
+	var elements= document.getElementsByClassName("money");
+	for (var i = 0; i < elements.length; i++) {
+		var element = elements[i];
+		element.style.textAlign='right';
+		if (element.innerHTML.indexOf("-") > -1) {
+			element.style.color="#ff0000";
+		} 
+		element.innerHTML = '<TMPL_VAR PFX_SYMBOL>' + currency(element.innerHTML) +'<TMPL_VAR SFX_SYMBOL>';
+	}
+
+	<!-- Chart -->
+
+
+	var dataTimeMajor = [
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance12ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance11ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance10ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance9ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance8ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance7ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance6ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance5ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance4ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance3ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance2ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR Balance1ago>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR BalanceNow>, </TMPL_LOOP>]
+	]
+	var dataAccountMajor = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+
+	for (var t=0; t < dataTimeMajor.length; t++)
+	{
+		for(var account=0; account<dataTimeMajor[t].length; account++)
+		{
+			dataAccountMajor[account].push(dataTimeMajor[t][account]);
+		}
+	}
+
+	var data = {
+		labels : ["12 Month ago","11 Month ago","10 Month ago","9 Month ago","8 Month ago","7 Month ago","6 Month ago","5 Month ago","4 Month ago","3 Month ago","2 Month ago","1 Month ago","Now"],
+		datasets : []
+	}
+	var dataAccountColours = [ <TMPL_LOOP CONTENTS> "<TMPL_VAR COLOR>", </TMPL_LOOP>]
+	var dataAccountNames = [ <TMPL_LOOP CONTENTS> "<TMPL_VAR ACCOUNTNAME>", </TMPL_LOOP>]
+	for (var account=0; account < dataAccountMajor.length; account++)
+	{
+		data.datasets.push(  {
+			fillColor : dataAccountColours[account],
+			data : dataAccountMajor[account],
+			title : dataAccountNames[account]
+		} );
+	}
+	var options = {
+		animationEasing: 'easeOutQuint',
+		legend:true,
+		annotateDisplay : true
+	}
+	var ctx = document.getElementById("reportChart").getContext("2d");
+	var reportChart = new Chart(ctx).StackedBar(data, options);
+</script>
+</html>
