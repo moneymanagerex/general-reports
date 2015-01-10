@@ -1,4 +1,19 @@
-select a.ACCOUNTNAME,	(select a.INITIALBAL + total(t.TRANSAMOUNT)
+select a.ACCOUNTNAME,
+
+	strftime('%m-%Y', date('now', 'start of month', '-11 month')) as date11,
+	strftime('%m-%Y', date('now', 'start of month', '-10 month')) as date10,
+	strftime('%m-%Y', date('now', 'start of month', '-9 month')) as date9,
+	strftime('%m-%Y', date('now', 'start of month', '-8 month')) as date8,
+	strftime('%m-%Y', date('now', 'start of month', '-7 month')) as date7,
+	strftime('%m-%Y', date('now', 'start of month', '-6 month')) as date6,
+	strftime('%m-%Y', date('now', 'start of month', '-5 month')) as date5,
+	strftime('%m-%Y', date('now', 'start of month', '-4 month')) as date4,
+	strftime('%m-%Y', date('now', 'start of month', '-3 month')) as date3,
+	strftime('%m-%Y', date('now', 'start of month', '-2 month')) as date2,
+	strftime('%m-%Y', date('now', 'start of month', '-1 month')) as date1,
+	strftime('%m-%Y', date('now')) as date0,
+
+	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
 		(select ACCOUNTID, STATUS,
 			(case when TRANSCODE = 'Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) as TRANSAMOUNT
@@ -178,7 +193,8 @@ select a.ACCOUNTNAME,	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
 	) as BalanceNow
 
+
 from ACCOUNTLIST_V1 as a
-where a.STATUS = 'Open' and a.FAVORITEACCT = 'TRUE'
+where a.STATUS = 'Open' and a.FAVORITEACCT = 'TRUE' and BalanceNow>0
 group by a.ACCOUNTNAME
-order by BalanceNow desc limit 8;
+order by BalanceNow desc;
