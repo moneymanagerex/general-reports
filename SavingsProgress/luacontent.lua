@@ -1,5 +1,5 @@
 local count = 0;
-local colors = {"#FF6666", "#FFB266", "#FFFF66", "#66FFB2", "#66FFFF", "#66B2FF", "#6666FF", "#B266FF", "#FF66FF", "#FF66B2",  "#66FF66", "#B2FF66"};
+local colors = {"#C00000", "#FF0000", "#FFC000", "#FFFF00", "#FFFF99", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060",  "#7030A0", "#EF03C2", "#EEECE1", "#FCD5B4", "#E46D0A"};
 
 function handle_record(record)
     local color = colors[1 + (count % #colors)];
