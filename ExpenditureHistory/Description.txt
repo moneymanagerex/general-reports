@@ -1,0 +1,1 @@
+Shows expenditure by category for past few months with a stacked bar chart.
