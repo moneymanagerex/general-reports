@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http - equiv = "Content-Type" content = "text/html">
+	<title><TMPL_VAR REPORTNAME></title>
+	<script src = "ChartNew.js"></script>
+	<script src = "sorttable.js"></script>
+	<link href = "master.css" rel = "stylesheet">
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+<div class = "row">
+<div class = "col-xs-2"></div>
+<div class = "col-xs-8">
+<table class = "table-condensed">
+<tr><td  class="text-center"><canvas id="reportChart" width="700" height="400"></canvas></td></tr>
+<tr><td>&nbsp;</td></tr><table class = "table">
+<thead>
+	<tr>
+		<th> </th>
+		<th>Category</th>
+		<th class="month">7 Month Ago</th>
+		<th class="month">6 Month Ago</th>
+		<th class="month">5 Month Ago</th>
+		<th class="month">4 Month Ago</th>
+		<th class="month">3 Month Ago</th>
+		<th class="month">2 Month Ago</th>
+		<th class="month">1 Month Ago</th>
+		<th class="month">This Month</th>
+		<th class="text-right">Total</th>
+	</tr>
+</thead>
+<tbody>
+	<TMPL_LOOP NAME=CONTENTS>
+		<tr>
+			<td bgcolor='<TMPL_VAR COLOR>'>  </td>
+			<td><TMPL_VAR "CATEGNAME"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo7"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo6"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo5"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo4"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo3"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo2"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo1"></td>
+			<td class = "money"><TMPL_VAR "MonthAgo0"></td>
+			<td class = "money"><TMPL_VAR "Total"></td>
+		</tr>
+	</TMPL_LOOP>
+</tbody>
+
+</table>
+</div>
+<TMPL_LOOP ERRORS>
+	<TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+</div>
+</body>
+<script>
+
+
+
+
+	<!-- Chart -->
+
+
+	var dataTimeMajor = [
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo7>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo6>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo5>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo4>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo3>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo2>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo1>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR MonthAgo0>, </TMPL_LOOP>],
+	]
+	var dataAccountMajor = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+	var dataAccountTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,]
+
+	for (var t=0; t < dataTimeMajor.length; t++)
+	{
+		for(var account=0; account<dataTimeMajor[t].length; account++)
+		{
+			dataAccountMajor[account].push(dataTimeMajor[t][account]);
+			dataAccountTotal[account] = dataAccountTotal[account]+1;
+		}
+	}
+
+	var monthTags = [
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date7>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date6>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date5>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date4>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date3>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date2>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date1>", </TMPL_LOOP> ],
+		[ <TMPL_LOOP CONTENTS> "<TMPL_VAR date0>", </TMPL_LOOP> ]
+	]
+
+	var data = {
+		labels : [],
+		datasets : []
+	}
+	var dataAccountColours = [ <TMPL_LOOP CONTENTS> "<TMPL_VAR COLOR>", </TMPL_LOOP>]
+	var dataAccountNames = [ <TMPL_LOOP CONTENTS> "<TMPL_VAR CATEGNAME>", </TMPL_LOOP>]
+	for (var account=0; account < dataTimeMajor.length; account++)
+	{
+			data.labels.push( monthTags[account][0] );
+			data.datasets.push(  {
+				fillColor : dataAccountColours[account],
+				data : dataAccountMajor[account],
+				title : dataAccountNames[account]
+			} );
+	}
+
+	var options = {
+		animationEasing: 'easeOutQuint',
+		legend:false,
+		annotateDisplay : true
+	}
+	var ctx = document.getElementById("reportChart").getContext("2d");
+	var reportChart = new Chart(ctx).StackedBar(data, options);
+
+
+	<!-- Table headings -->
+
+	var elements= document.getElementsByClassName("month");
+	for (var i = 0; i < elements.length; i++) {
+		var element = elements[i];
+		element.style.textAlign='right';
+		element.innerHTML = monthTags[i][0];
+	}
+
+
+
+
+	<!-- Format double to base currency -->
+	function currency(n) {
+		n = parseFloat(n);
+		n =  isNaN(n) ? 0 : n.toFixed(2);
+		var out = n.toString().replace(".", "|");
+		out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+		out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+		return out;
+	}
+	var elements= document.getElementsByClassName("money");
+	for (var i = 0; i < elements.length; i++) {
+		var element = elements[i];
+		element.style.textAlign='right';
+		if (element.innerHTML.indexOf("-") > -1) {
+			element.style.color="#ff0000";
+		} 
+		element.innerHTML = '<TMPL_VAR PFX_SYMBOL>' + currency(element.innerHTML) +'<TMPL_VAR SFX_SYMBOL>';
+	}
+
+</script>
+</html>
