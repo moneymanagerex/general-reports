@@ -35,10 +35,10 @@ img{
 </thead>
 <tbody>
     <TMPL_LOOP NAME=CONTENTS>
-        <tr>
+    <tr>
         <td <TMPL_VAR COLOR> ></td>
-        <td class = "text-right"><TMPL_VAR TRX_LINK></td>
-        <td nowrap><TMPL_VAR TRX_GOTO></td>
+        <td class="text-right"><a href="trx:<TMPL_VAR Nr>"><TMPL_VAR Nr></a></td>
+        <td nowrap><a href="trxid:<TMPL_VAR Nr>"><TMPL_VAR ACCOUNTNAME></a></td>
         <td nowrap><TMPL_VAR PAYEENAME></td>
         <td class="date" sorttable_customkey='<TMPL_VAR Date>' nowrap><TMPL_VAR Date></td>
         <td class="money" sorttable_customkey='<TMPL_VAR Amount>'  prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" ><TMPL_VAR Amount></td>
@@ -47,18 +47,18 @@ img{
     </tr>
     </TMPL_LOOP>
 </tbody>
-                <tfoot>
-                    <tr class="total">
-                        <td></td>
-                        <td class="i18n">Total</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="money" prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" nowrap><TMPL_VAR GRAND_TOTAL></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
+	<tfoot>
+		<tr class="total">
+			<td></td>
+			<td></td>
+			<td class="i18n">Total:</td>
+			<td></td>
+			<td></td>
+			<td class="money" prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" nowrap><TMPL_VAR GRAND_TOTAL></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tfoot>
 </table>
 </div>
 <TMPL_LOOP ERRORS>
@@ -126,19 +126,19 @@ img{
     var translations =
     {
     "english":[{
-        "Title":"My Report"
+        "Title":"Category list"
     }],
     "russian": [{
         "Title":"Список по категории", "Nr":"№", "Amount":"Сумма"
         , "Date": "Дата", "Account": "Счёт"
         , "Payee":"Получатель", "Notes":"Примечания"
-        , "Files":"Файлы", "Total":"Всего:"
+        , "Files":"Файлы", "Total:":"Всего:"
     }],
     "italian":[{
         "Title":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
         , "Date": "Data", "Account": "Conto"
         , "Payee":"Beneficiario", "Notes":"Note"
-        , "Files":"File", "Total":"Totale:"
+        , "Files":"File", "Total:":"Totale:"
     }]
     };
 
