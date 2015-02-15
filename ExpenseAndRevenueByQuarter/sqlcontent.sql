@@ -3,7 +3,16 @@ select
     periode,
     sum(Deposit) as Deposit,
     sum(Withdrawal) as Withdrawal,
-    round(sum(Deposit) + sum(Withdrawal),2) as Total
+    round(sum(Deposit) + sum(Withdrawal),2) as Total,
+    (
+        (SELECT sum(initialbal) FROM accountlist_V1)
+        +
+	(
+	    SELECT sum(totransamount) FROM checkingaccount_V1
+	    where
+                TRANSDATE <= date('now', 'start of month','-4 year','localtime')
+	)
+    ) as initialbal
 from (  
     select 
         strftime('%Y', TRANSDATE) || '-' || 
