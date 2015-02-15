@@ -1,11 +1,12 @@
 select 
-  year,
+    'year' as periode_name,
+    periode,
   sum(Deposit) as Deposit,
   sum(Withdrawal) as Withdrawal,
   round(sum(Deposit) + sum(Withdrawal),2) as Total
 from (  
   select 
-    strftime('%Y', TRANSDATE) as year,
+    strftime('%Y', TRANSDATE) as periode,
     case
       when transcode = 'Deposit' then totransamount
       else 0
@@ -18,5 +19,5 @@ from (
   from
     checkingaccount_V1
 )
-group by year
-order by year asc
+group by periode
+order by periode asc
