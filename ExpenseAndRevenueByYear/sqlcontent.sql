@@ -13,8 +13,8 @@ from (
       else 0
     end as Deposit,
     case
-      when transcode = 'Deposit' then 0
-      else totransamount
+          when transcode = 'Withdrawal' then totransamount
+          else 0
     end as Withdrawal
     --,*
   from
