@@ -3,7 +3,8 @@ select
     periode,
   sum(Deposit) as Deposit,
   sum(Withdrawal) as Withdrawal,
-  round(sum(Deposit) + sum(Withdrawal),2) as Total
+  round(sum(Deposit) + sum(Withdrawal),2) as Total,
+    (SELECT sum(initialbal) FROM accountlist_V1) as initialbal
 from (  
   select 
     strftime('%Y', TRANSDATE) as periode,
@@ -12,8 +13,8 @@ from (
       else 0
     end as Deposit,
     case
-      when transcode = 'Deposit' then 0
-      else totransamount
+          when transcode = 'Withdrawal' then totransamount
+          else 0
     end as Withdrawal
     --,*
   from
