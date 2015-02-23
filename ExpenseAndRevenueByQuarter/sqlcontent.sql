@@ -19,11 +19,11 @@ from (
             ((cast(strftime('%m', TRANSDATE) as integer) + 2) / 3)
             as periode,
         case
-            when transcode = 'Deposit' then totransamount
+            when transcode = 'Deposit' then transamount
             else 0
         end as Deposit,
         case
-          when transcode = 'Withdrawal' then totransamount
+          when transcode = 'Withdrawal' then -transamount
           else 0
         end as Withdrawal
         --,*

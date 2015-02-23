@@ -9,11 +9,11 @@ from (
   select 
     strftime('%Y', TRANSDATE) as periode,
     case
-      when transcode = 'Deposit' then totransamount
+      when transcode = 'Deposit' then transamount
       else 0
     end as Deposit,
     case
-          when transcode = 'Withdrawal' then totransamount
+          when transcode = 'Withdrawal' then -transamount
           else 0
     end as Withdrawal
     --,*
