@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet">
+    <script src = "sorttable.js"></script>
+    <!--style>div {border: 1px solid;}</style-->
+</head>
+<body>
+<div class="container">
+<h3 class="i18n">Title</h3>
+<p><TMPL_VAR TODAY></p>
+
+<div class="col-xs-1"></div>
+<div class="col-xs-10">
+
+		<table class="sortable table">
+		<thead>
+		  <tr>
+		    <th class="i18n">ID</th>
+		    <th class="i18n">Date</th>
+		    <th class="i18n">Account</th>
+		    <th class="i18n">Payee</th>
+		    <th  class="i18n" style="text-align:right;" >Amount</th>
+		  </tr>
+		</thead>
+		<tbody>
+		    <TMPL_LOOP NAME=CONTENTS>
+		    <tr>
+			<td><a href="trx:<TMPL_VAR TRANSID>"><TMPL_VAR TRANSID></a></th>
+			<td class="date" sorttable_customkey='<TMPL_VAR TRANSDATE>' nowrap><TMPL_VAR TRANSDATE></th>
+			<td><TMPL_VAR ACCOUNTNAME></th>
+			<td><TMPL_VAR PAYEENAME></th>
+			<td class="money" prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" nowrap><TMPL_VAR TRANSAMOUNT></td>
+		    </tr>
+		    </TMPL_LOOP>
+		</tbody>
+		</table>
+
+	</div>
+</div>
+</div>
+
+<ul>
+<TMPL_LOOP ERRORS>
+    <li><span class="label label-danger i18n">Error</span><TMPL_VAR ERROR></li>
+</TMPL_LOOP>
+</ul>
+
+<script>
+    <!-- Format numbers -->
+    function currency(n) {
+        n = parseFloat(n);
+        n =  isNaN(n) ? 0 : n.toFixed(2);
+        var out = n.toString().replace(".", "|");
+        out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+        out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+        return out;
+    }
+    var elements= document.getElementsByClassName("money");
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.textAlign='right';
+        if (element.innerHTML.indexOf("-") > -1) {
+            element.style.color="#ff0000";
+        } 
+        element.innerHTML = element.getAttribute('prefix') + currency(element.innerHTML) + element.getAttribute('suffix');
+    }
+</script>
+<script>
+    <!-- Format dates -->
+    var elements= document.getElementsByClassName("date");
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var d = new Date(element.innerHTML);
+	var date = d.getDate();
+        date = date > 9 ? date : "0"+date;
+        var month = d.getMonth() + 1;
+        month = month > 9 ? month : "0"+month;
+        var curr_year = d.getFullYear();
+        var short_year = curr_year.toString().substr(2, 4);
+        var date_mask = '<TMPL_VAR  DATEFORMAT>';
+
+        element.innerHTML = date_mask.replace('%y', short_year).replace('%Y', curr_year).replace('%m', month).replace('%d', date);
+    }
+</script>
+<script>     <!-- Translations -->
+    var translations =
+    {
+    "english":[{
+        "Title":"Transactions with Blank Note field"
+    }],
+    "russian": [{
+        "Title":"Транзакции с пустыми заметками", "Amount":"Сумма"
+        , "Date": "Дата", "Account": "Счёт"
+         , "Payee":"Получатель", "ID":"№"
+         , "Amount":"Сумма", "Error":"Ошибка"
+    }],
+    };
+
+    var elements= document.getElementsByClassName('i18n');
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var my_lang = translations.<TMPL_VAR LANGUAGE>;
+        if (my_lang == null) my_lang = translations.english;
+        var item = my_lang[0][element.innerHTML];
+        element.innerHTML = (item == null) ? element.innerHTML : item;
+    }
+</script>
+
+</html>
