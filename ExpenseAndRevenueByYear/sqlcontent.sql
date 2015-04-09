@@ -19,6 +19,7 @@ from (
     --,*
   from
     checkingaccount_V1
+  where status <>'V'
 )
 group by periode
 order by periode asc
