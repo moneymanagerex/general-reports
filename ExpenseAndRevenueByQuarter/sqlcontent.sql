@@ -31,6 +31,7 @@ from (
         checkingaccount_V1
     where
         TRANSDATE > date('now', 'start of month','-4 year','localtime')
+        and status <>'V'
 )
 group by periode
 order by periode asc
