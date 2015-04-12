@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http - equiv = "Content-Type" content = "text/html" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src = "Chart.js"></script>
+    <script src = "sorttable.js"></script>
+    <link href = "master.css" rel = "stylesheet" />
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+
+<div class = "row">
+<div class = "col-xs-1">
+	<div id="legendDiv"></div>
+</div>
+<div class = "col-xs-11">
+	<div id="myChartParent" width="100%">
+		<canvas id="myChart" width="400" height="400"></canvas>
+	</div>
+</div>
+
+<div class = "row">
+	<div class = "col-xs-2">
+	</div>
+<div class = "col-xs-8">
+<table class='table'>
+<thead>
+    <tr>
+        <th>periode_month</th>
+        <th><TMPL_VAR name_n0></th>
+        <th><TMPL_VAR name_n1></th>
+        <th><TMPL_VAR name_n2></th>
+<!--
+        <th><TMPL_VAR name_n3></th>
+        <th><TMPL_VAR name_n4></th>
+-->
+	<th>Cumul <TMPL_VAR name_n0></th>
+        <th>Cumul <TMPL_VAR name_n1></th>
+        <th>Cumul <TMPL_VAR name_n2></th>
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR "periode_month"></td>
+        <td class = "money"><TMPL_VAR "Total"></td>
+        <td class = "money"><TMPL_VAR "Total_n1"></td>
+        <td class = "money"><TMPL_VAR "Total_n2"></td>
+        <td class = "money"><TMPL_VAR "cumul_n0"></td>
+        <td class = "money"><TMPL_VAR "cumul_n1"></td>
+        <td class = "money"><TMPL_VAR "cumul_n2"></td>
+<!--
+        <td class = "money"><TMPL_VAR "Total_n3"></td>
+        <td class = "money"><TMPL_VAR "Total_n4"></td>
+-->
+        </tr>
+    </TMPL_LOOP>
+</tbody>
+
+</table>
+</div>
+<TMPL_LOOP ERRORS>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+</div>
+</body>
+<script>
+  <!--Format numbers-->
+  function currency(n) {
+    n = parseFloat(n);
+    n =  isNaN(n) ? 0 : n.toFixed(2);
+    var out = n.toString().replace(".", "|");
+    out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+    out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+    return out;
+  }
+    
+  <!--Format "money"-->    
+  var elements = document.getElementsByClassName("money");
+  for (var i = 0; i < elements.length; i++){
+    if ( elements[i].innerHTML.indexOf("-") > -1) {
+       elements[i].style.color="#ff0000";
+    } 
+      //alert(elements[i].innerHTML + " " +  currency(elements[i].innerHTML) );
+     //elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>"; 
+  }
+
+  window.onload = function(){
+    // sort table
+    // sorttable.innerSortFunction.apply(document.getElementById('periode'), []);
+    // sorttable.innerSortFunction.apply(document.getElementById('periode'), []);
+
+    // Init graph data :
+var data = {
+    labels: [<TMPL_LOOP NAME=CONTENTS>"<TMPL_VAR periode_month>",</TMPL_LOOP>],
+    datasets: [
+        {
+            label: "0 axis",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS>0,</TMPL_LOOP>]
+        },
+	{
+            label: "<TMPL_VAR name_n2>",
+            fillColor: "rgba(151,160,204,0)",
+            strokeColor: "rgba(151,160,204,1)",
+            pointColor: "rgba(151,160,204,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,160,204,1)",            
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n2>,</TMPL_LOOP>]
+        },
+	{
+            label: "<TMPL_VAR name_n1>",
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n1>,</TMPL_LOOP>]
+        },
+/*
+	{
+            label: "<TMPL_VAR name_n3>",
+	    fillColor: "rgba(151,204,195,0)",
+            strokeColor: "rgba(151,204,195,1)",
+            pointColor: "rgba(151,204,195,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,204,195,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n3>,</TMPL_LOOP>]
+        },
+	{
+            label: "<TMPL_VAR name_n4>",
+            fillColor: "rgba(151,186,204,0)",
+            strokeColor: "rgba(151,186,204,1)",
+            pointColor: "rgba(151,186,204,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,186,204,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n4>,</TMPL_LOOP>]
+        },
+*/
+        {
+            label: "<TMPL_VAR name_n0>",
+            fillColor: "rgba(151,187,205,0.1)",
+            strokeColor: "rgba(70,180,119,1)",
+            pointColor: "rgba(70,180,119,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n0>,</TMPL_LOOP>]
+        },
+    ]
+};
+
+
+    //dipslay graph
+    var options = {
+      scaleLineWidth: 1,
+      responsive: true,
+      //String - A legend template
+      legendTemplate : '<ul>'
+                  +'<% for (var i=0; i<datasets.length; i++) { %>'
+                    +'<li>'
+                    +'<span style=\"background-color:<%=datasets[i].strokeColor%>\">'
+                    +'<% if (datasets[i].label) { %><%= datasets[i].label %><% } %>'
+		    +'</span>'
+                  +'</li>'
+                +'<% } %>'
+              +'</ul>'
+    };
+
+    var ctx = document.getElementById("myChart").getContext("2d");  
+    //alert(document.getElementById("myChartParent").offsetWidth);
+    ctx.canvas.width  = document.getElementById("myChartParent").offsetWidth;
+    var myNewChart = new Chart(ctx).Line(data,options);
+    myNewChart.resize();
+
+  //then you just need to generate the legend
+  var legend = myNewChart.generateLegend();
+  document.getElementById("legendDiv").innerHTML = legend;
+
+  }
+</script>
+</html>
