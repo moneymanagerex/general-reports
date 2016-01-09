@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
 <body>
 <div class="container">
 <TMPL_VAR TODAY>
-<h3 class="i18n">_Title</h3>
+<h3 class="i18n">_Title_</h3>
 <div class="row">
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
@@ -80,6 +80,38 @@
 </tbody>
 <tfoot>
     <tr class="total">
+        <td class="i18n">Deposit:</td>
+        <td class='money'><TMPL_VAR DEPOSIT_twe></td>
+        <td class='money'><TMPL_VAR DEPOSIT_ele></td>
+        <td class='money'><TMPL_VAR DEPOSIT_ten></td>
+        <td class='money'><TMPL_VAR DEPOSIT_nin></td>
+        <td class='money'><TMPL_VAR DEPOSIT_egh></td>
+        <td class='money'><TMPL_VAR DEPOSIT_sev></td>
+        <td class='money'><TMPL_VAR DEPOSIT_six></td>
+        <td class='money'><TMPL_VAR DEPOSIT_fiv></td>
+        <td class='money'><TMPL_VAR DEPOSIT_fou></td>
+        <td class='money'><TMPL_VAR DEPOSIT_thr></td>
+        <td class='money'><TMPL_VAR DEPOSIT_two></td>
+        <td class='money'><TMPL_VAR DEPOSIT_one></td>
+        <td class='money'><TMPL_VAR TOTAL_DEPOSIT></td> 
+    </tr>
+    <tr class="total">
+        <td class="i18n">Expenses:</td>
+        <td class='money'><TMPL_VAR WITH_twe></td>
+        <td class='money'><TMPL_VAR WITH_ele></td>
+        <td class='money'><TMPL_VAR WITH_ten></td>
+        <td class='money'><TMPL_VAR WITH_nin></td>
+        <td class='money'><TMPL_VAR WITH_egh></td>
+        <td class='money'><TMPL_VAR WITH_sev></td>
+        <td class='money'><TMPL_VAR WITH_six></td>
+        <td class='money'><TMPL_VAR WITH_fiv></td>
+        <td class='money'><TMPL_VAR WITH_fou></td>
+        <td class='money'><TMPL_VAR WITH_thr></td>
+        <td class='money'><TMPL_VAR WITH_two></td>
+        <td class='money'><TMPL_VAR WITH_one></td>
+        <td class='money'><TMPL_VAR TOTAL_WITHDRAW></td> 
+    </tr>
+    <tr class="total">
         <td class="i18n">Total:</td>
         <td class='money'><TMPL_VAR TOTAL_twe></td>
         <td class='money'><TMPL_VAR TOTAL_ele></td>
@@ -108,10 +140,10 @@
     var translations =
     {
     "english":[{
-        "_Title":"Categories stats for last 12 months"
+        "_Title_":"Categories stats for last 12 months"
     }],
     "russian": [{
-        "_Title":"Категории за последние 12 месяцев"
+        "_Title_":"Категории за последние 12 месяцев"
         , "Category": "Категория", "Overall":"Сумма"
         , "Jan": "Янв", "Feb": "Фев", "Mar":"Мар"
         , "Apr": "Апр", "May": "Май", "Jun":"Июн"
@@ -120,7 +152,7 @@
          , "Total:":"Всего:"
     }],
   "german": [{
-        "_Title":"Übersicht letzte 12 Monate"
+        "_Title_":"Übersicht letzte 12 Monate"
         , "Category": "Каtegorie", "Overall":"Total"
         , "Jan": "Jan", "Feb": "Feb", "Mar":"Мär"
         , "Apr": "Аpr", "May": "Маi", "Jun":"Jun"
@@ -129,9 +161,21 @@
          , "Total:":"Total:"
     }],
     "italian":[{
-        "_Title":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
+        "_Title_":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
          , "Overall":"Overall"
          , "Total":"Totale:"
+    }],
+    "french":[{
+        "_Title_":"Récapitulatif pour les derniers 12 mois", "Nr":"#",
+        "Jan": "Jan", "Feb": "Fev", "Mar":"Мar"
+        , "Apr": "Аvr", "May": "Маi", "Jun":"Jui"
+        , "Jul": "Jul", "Aug": "Аoû", "Sep":"Sep"
+        , "Oct": "Оct", "Nov": "Nov", "Dec":"Déc",
+        "Amount":"Quantité",
+         "Overall":"Global",
+        "Category":"Catégories",
+        "Deposit:":"Recettes:",
+        "Expenses:":"Dépenses:"
     }]
     };
 
