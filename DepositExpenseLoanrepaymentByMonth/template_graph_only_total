@@ -109,57 +109,16 @@ var data = {
         },
         {
             label: "Total",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(134,45,237,1)",
-            pointColor: "rgba(134,45,237,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR total>,</TMPL_LOOP>]
-        },
-        {
-            label: "Cumul",
             fillColor: "rgba(151,187,205,0.1)",
             strokeColor: "rgba(70,130,180,1)",
             pointColor: "rgba(70,130,180,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR Cumul>,</TMPL_LOOP>]
-        },
-		{
-            label: "Deposit",
-            fillColor: "rgba(151,187,205,0.1)",
-            strokeColor: "rgba(70,180,119,1)",
-            pointColor: "rgba(70,180,119,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR Deposit>,</TMPL_LOOP>]
-        },
-		{
-            label: "Transfer",
-            fillColor: "rgba(151,187,205,0.1)",
-            strokeColor: "rgba(244,191,66,1)",
-            pointColor: "rgba(244,191,66,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR Transfer>,</TMPL_LOOP>]
-        },
-		{
-            label: "Withdrawal",
-            fillColor: "rgba(151,187,205,0.1)",
-            strokeColor: "rgba(244,66,66,1)",
-            pointColor: "rgba(255,66,66,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR Withdrawal>,</TMPL_LOOP>]
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR total>,</TMPL_LOOP>]
         }
     ]
 };
-
 
     //dipslay graph
     var options = {
