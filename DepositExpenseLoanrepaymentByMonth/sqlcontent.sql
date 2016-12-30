@@ -28,14 +28,8 @@ from (
 		case
 			when transcode = 'Transfer' and toaccountid=('19') then -transamount
 			when transcode = 'Transfer' and toaccountid=('20') then -transamount
-			when transcode = 'Transfer' and toaccountid=('21') then -transamount
-			when transcode = 'Transfer' and toaccountid=('23') then -transamount
-			when transcode = 'Transfer' and toaccountid=('30') then -transamount
 			when transcode = 'Transfer' and accountid=('19') then transamount
-			when transcode = 'Transfer' and accountid=('20') then transamount
-			when transcode = 'Transfer' and accountid=('21') then transamount
-			when transcode = 'Transfer' and accountid=('23') then transamount
-			when transcode = 'Transfer' and accountid=('30') then transamount			
+			when transcode = 'Transfer' and accountid=('20') then transamount	
 			else 0
 		end as Transfer
         --,*

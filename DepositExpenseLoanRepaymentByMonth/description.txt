@@ -1,0 +1,10 @@
+Expenses, deposits and loan repayments by month for the last 4 years.
+Based on the report ExpenseAndRevenueByMonth.
+
+TODO
+* You can change the number of years by editing the sql on lines 14 and 45
+* Edit sql rows 29 and following to include the accountID of the loan accounts.
+Look up the account ID's of your loan account(s) with this sql command. 
+SELECT * FROM ACCOUNTLIST_V1 WHERE ACCOUNTTYPE  = 'Loan'  ORDER BY `_rowid_` ASC
+In the files provided, accountID's 19 and 20 correspond to loan accounts.
+
