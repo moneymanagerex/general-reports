@@ -1,5 +1,6 @@
 Expenses, deposits and loan repayments by month for the last 4 years.
 Based on the report ExpenseAndRevenueByMonth.
+You need to hard-code the account ID's of your loan accounts in the sql file.
 
 TODO
 * You can change the number of years by editing the sql on lines 14 and 45
