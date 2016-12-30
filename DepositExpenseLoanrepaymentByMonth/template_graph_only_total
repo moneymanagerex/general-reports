@@ -36,7 +36,6 @@
 		<th>Transfer</th>
         <th>Total</th>
 		<th>Cumul</th>
-		<th>CumulInitialBal</th>
     </tr>
 </thead>
 <tbody>
@@ -48,7 +47,6 @@
 		<td class = "money, text-right"><TMPL_VAR "Transfer"></td>
         <td class = "money, total, text-right"><TMPL_VAR "Total"></td>
 		<td class = "money, total, text-right"><TMPL_VAR "Cumul"></td>
-		<td class = "money, total, text-right"><TMPL_VAR "CumulInitialBal"></td>
         </tr>
     </TMPL_LOOP>
 </tbody>
