@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http - equiv = "Content-Type" content = "text/html" />
+	<link href="master.css" rel="stylesheet">
+</head>
+
+<body>
+<div class = "container">
+	<div class = "row">
+		<div class = "col-xs-10">
+			<table class = "table sortable">
+			<thead>
+			<tr>
+				<th>id</th>
+				<th>date</th>
+				<th>withdrawal</th>
+				<th>category</th>
+				<th>notes</th>
+				<th>payee</th>
+				<th>account</th>
+			</tr>
+			</thead>
+
+			<tbody>
+			<TMPL_LOOP NAME=CONTENTS>
+				<tr>
+					<td><TMPL_VAR id></td>
+					<td><TMPL_VAR date></td>
+					<td><TMPL_VAR amount></td>
+					<td><TMPL_VAR cat></td>
+					<td><TMPL_VAR notes></td>
+					<td><TMPL_VAR payee></td>
+					<td><TMPL_VAR account></td>
+
+				</tr>
+			</TMPL_LOOP>
+			</tbody>
+			</table>
+		</div>
+	<TMPL_LOOP ERRORS>
+		<hr>
+		<TMPL_VAR ERROR>
+	</TMPL_LOOP>
+	</div>
+</div>
+</body>
+</html>
