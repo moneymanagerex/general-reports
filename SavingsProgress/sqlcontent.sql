@@ -25,7 +25,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-12 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance12ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance12ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -39,7 +39,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-11 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance11ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance11ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -53,7 +53,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-10 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance10ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance10ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -67,7 +67,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-9 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance9ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance9ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -81,7 +81,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-8 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance8ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance8ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -95,7 +95,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-7 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance7ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance7ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -109,7 +109,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-6 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance6ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance6ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -123,7 +123,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-5 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance5ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance5ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -137,7 +137,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-4 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance4ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance4ago,
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
 		(select ACCOUNTID, STATUS,
@@ -150,7 +150,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-3 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance3ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance3ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -164,7 +164,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-2 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance2ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance2ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -178,7 +178,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer' and TRANSDATE < date('now', 'start of month', '-1 month')
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as Balance1ago,
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as Balance1ago,
 
 	(select a.INITIALBAL + total(t.TRANSAMOUNT)
 		from
@@ -191,7 +191,7 @@ select a.ACCOUNTNAME,
 			where TRANSCODE = 'Transfer'
 		) as t
 		where  t.ACCOUNTID = a.ACCOUNTID and t.STATUS <> 'V'
-	) as BalanceNow
+	) * (select BASECONVRATE from CURRENCYFORMATS_V1 where CURRENCYID = a.CURRENCYID) as BalanceNow
 
 
 from ACCOUNTLIST_V1 as a
