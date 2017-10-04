@@ -1,0 +1,3 @@
+New ReportShow the account interest rate, balance, credit limit, and available credit for Credit Card accounts, ordered by interest rate (highest to lowest).
+
+Largely based off of the original "CreditReport" report.
