@@ -4,3 +4,8 @@
 *.grm
 *.zip
 local_settings.py
+
+# eclipse project
+.project
+.pydevproject
+

@@ -17,14 +17,14 @@ if __name__ == '__main__':
     conn.row_factory = sqlite3.Row 
     curs = conn.cursor()
     sql = ''
-    for line in open('tables_v1.sql', 'rb'):
+    for line in open('./database/tables.sql', 'rb'):
         sql = sql + line
     curs.executescript(sql)
     for report in os.listdir('.'):
         if not report.startswith('.') and os.path.isdir(report):
             try:
                 check(curs, report)
-            except:
+            except Exception as e:
                 exit(1)
     conn.close()
     exit(0)
