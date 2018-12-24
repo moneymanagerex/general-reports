@@ -20,12 +20,19 @@ if __name__ == '__main__':
     for line in open('tables_v1.sql', 'rb'):
         sql = sql + line
     curs.executescript(sql)
+    
+    anyNotPassed = False
+    
     for report in os.listdir('.'):
         if not report.startswith('.') and os.path.isdir(report):
             try:
                 check(curs, report)
             except:
-                exit(1)
+                print 'ERR: %s' % report
     conn.close()
+    
+    if anyNotPassed:
+        exit(1)
+    
     exit(0)
     
