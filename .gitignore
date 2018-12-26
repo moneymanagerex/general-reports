@@ -4,3 +4,4 @@
 *.grm
 *.zip
 local_settings.py
+.vscode
