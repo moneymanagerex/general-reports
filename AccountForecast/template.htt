@@ -31,27 +31,27 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>1 month <TMPL_VAR Month1_Label></td>
                         <td class="text-right"><TMPL_VAR Month1_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>2 months <TMPL_VAR Month2_Label></td>
                         <td class="text-right"><TMPL_VAR Month2_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>3 months <TMPL_VAR Month3_Label></td>
                         <td class="text-right"><TMPL_VAR Month3_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>4 months <TMPL_VAR Month4_Label></td>
                         <td class="text-right"><TMPL_VAR Month4_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>5 months <TMPL_VAR Month5_Label></td>
                         <td class="text-right"><TMPL_VAR Month5_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>6 months <TMPL_VAR Month6_Label></td>
                         <td class="text-right"><TMPL_VAR Month6_Total></td>
                    </tr>
