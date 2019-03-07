@@ -33,51 +33,51 @@
                     </TMPL_LOOP>
                 </tbody>
                 <tfoot>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL1></td>
                         <td class="money text-right"><TMPL_VAR FVALUE1></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL2></td>
                         <td class="money text-right"><TMPL_VAR FVALUE2></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL3></td>
                         <td class="money text-right"><TMPL_VAR FVALUE3></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL4></td>
                         <td class="money text-right"><TMPL_VAR FVALUE4></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL5></td>
                         <td class="money text-right"><TMPL_VAR FVALUE5></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL6></td>
                         <td class="money text-right"><TMPL_VAR FVALUE6></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL7></td>
                         <td class="money text-right"><TMPL_VAR FVALUE7></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL8></td>
                         <td class="money text-right"><TMPL_VAR FVALUE8></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL9></td>
                         <td class="money text-right"><TMPL_VAR FVALUE9></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL10></td>
                         <td class="money text-right"><TMPL_VAR FVALUE10></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL11></td>
                         <td class="money text-right"><TMPL_VAR FVALUE11></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL12></td>
                         <td class="money text-right"><TMPL_VAR FVALUE12></td>
                     </tr>
