@@ -16,6 +16,7 @@ if __name__ == '__main__':
     conn = sqlite3.connect(':memory:')
     conn.row_factory = sqlite3.Row 
     curs = conn.cursor()
+	print 'database created'
     sql = ''
     for line in open('tables_v1.sql', 'rb'):
         sql = sql + line
