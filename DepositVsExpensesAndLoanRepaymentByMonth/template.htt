@@ -48,10 +48,11 @@
 					</tbody>
 				</table>
 			</div>
-		<TMPL_LOOP ERRORS>
+			<TMPL_LOOP ERRORS>
 			<hr>
 			<TMPL_VAR ERROR>
-		</TMPL_LOOP>
+			</TMPL_LOOP>
+		</div>
 	</div>
 </div>
 <script>

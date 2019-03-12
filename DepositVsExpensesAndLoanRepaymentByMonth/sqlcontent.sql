@@ -1,33 +1,34 @@
-select
-    'month' as periode_name,
-    periode,
-    sum(Deposit) as Deposit,
-    sum(Withdrawal) as Withdrawal,
-	  sum(Transfer) as Transfer,
-    round(sum(Deposit) + sum(Withdrawal) + sum(Transfer),2) as Total,
-    (SELECT sum(initialbal) FROM accountlist_V1) as initialbal
-from (
-    select
-        strftime('%Y-%m', TRANSDATE) as periode,
-        case
-          when transcode = 'Deposit' then transamount
-          else 0
-        end as Deposit,
-        case
-          when transcode = 'Withdrawal' then -transamount
-          else 0
-        end as Withdrawal,
-    		case
-    			when transcode = 'Transfer' and toaccountid in (SELECT accountid FROM accountlist_V1 where accounttype ='Loan') then -transamount
-    			when transcode = 'Transfer' and accountid in (SELECT accountid FROM accountlist_V1 where accounttype ='Loan') then transamount
-    			else 0
-		end as Transfer
-        --,*
-    from
-        checkingaccount_V1
-    where
-    /*    TRANSDATE > date('now', 'start of month','-5 year','localtime') and */
-        status <>'V'
-)
-group by periode
-order by periode asc
+SELECT 'month' AS periode_name,
+       cadata.periode AS periode,
+       sum(cadata.Deposit) AS Deposit,
+       sum(cadata.Withdrawal) AS Withdrawal,
+       sum(cadata.Transfer) AS Transfer,
+       round(sum(cadata.Deposit) + sum(cadata.Withdrawal) + sum(cadata.Transfer), 2) AS Total,
+       (
+           SELECT sum(al3.INITIALBAL) 
+             FROM accountlist_V1 AS al3
+       )
+       AS initialbal
+  FROM (
+           SELECT strftime('%Y-%m', ca.TRANSDATE) AS periode,
+                  CASE WHEN ca.transcode = 'Deposit' THEN ca.transamount ELSE 0 END AS Deposit,
+                  CASE WHEN ca.transcode = 'Withdrawal' THEN -ca.transamount ELSE 0 END AS Withdrawal,
+                  CASE WHEN ca.transcode = 'Transfer' AND 
+                            ca.toaccountid IN (
+                          SELECT al1.accountid
+                            FROM accountlist_V1 AS al1
+                           WHERE al1.accounttype = 'Loan'
+                      )
+                  THEN -ca.transamount WHEN ca.transcode = 'Transfer' AND 
+                                            ca.accountid IN (
+                          SELECT al2.accountid
+                            FROM accountlist_V1 AS al2
+                           WHERE al2.accounttype = 'Loan'
+                      )
+                  THEN ca.transamount ELSE 0 END AS Transfer
+             FROM checkingaccount_V1 AS ca
+            WHERE ca.status NOT IN ('V', 'D')-- and TRANSDATE > date('now', 'start of month','-5 year','localtime') 
+       )
+       AS cadata
+ GROUP BY periode
+ ORDER BY periode ASC;
