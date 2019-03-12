@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -16,7 +16,7 @@
                 <thead>
                   <tr>
                     <th>Account Name</th>
-                    <th  class="text-center">Base Currency</th>
+                    <th class="text-center">Base Currency</th>
                     <th class="text-center">Balance</th>
                     <th class="text-center">Credit Limit</th>
                     <th class="text-center">Available Credit</th>
@@ -53,9 +53,9 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 </body>
-<script type="text/javascript">
+<script>
   function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
   var elements= document.getElementsByClassName("money");
   for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>";}

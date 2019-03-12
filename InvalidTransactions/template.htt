@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
     <title><TMPL_VAR REPORTNAME></title>
-    <link href = "master.css" rel = "stylesheet" />
+    <link href="master.css" rel="stylesheet" />
 </head>
 <body>
+<h3 class="i18n"><TMPL_VAR REPORTNAME></h3>
 <TMPL_VAR TODAY>
-<h3 class="i18n">_Title</h3>
 <hr>
-
 <table class='table'>
   <thead>
     <tr>

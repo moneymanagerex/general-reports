@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <title><TMPL_VAR REPORTNAME></title>
@@ -29,7 +29,7 @@
                     <TMPL_LOOP NAME=CONTENTS>
                     <tr>
                         <td><TMPL_VAR STOCKNAME></td>
-                        <td bgcolor='<TMPL_VAR "COLOR">'><TMPL_VAR SYMBOL></td>
+                        <td style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR SYMBOL></td>
                         <td class="stock text-right"><TMPL_VAR NUMSHARES></td>
                         <td class="money text-right"><TMPL_VAR VALUE></td>
                     </tr>
@@ -55,8 +55,7 @@
             </table>
         </div>
     </div>   
-</body>
-<script type="text/javascript">
+<script>
     <!-- Format numbers -->
     function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
     function shares(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(4);}
@@ -84,4 +83,5 @@
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Pie(data, options);
 </script>
+</body>
 </html>

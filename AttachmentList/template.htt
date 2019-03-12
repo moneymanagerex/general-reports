@@ -2,9 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <meta http - equiv = "Content-Type" content = "text/html" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href = "master.css" rel = "stylesheet" />
+    <link href="master.css" rel="stylesheet" />
 </head>
 <body>
 <div class = "container">
@@ -30,7 +29,7 @@
         <td class = "text-right"><TMPL_VAR "Nr"></td>
         <td><TMPL_VAR "Reference"></td>
         <td><TMPL_VAR "Description"></td>
-   <td><a href="<TMPL_VAR "BasePathLUA">"><TMPL_VAR "File"></a></td>
+        <td><a href="<TMPL_VAR "BasePathLUA">"><TMPL_VAR "File"></a></td>
         </tr>
     </TMPL_LOOP>
 </tbody>

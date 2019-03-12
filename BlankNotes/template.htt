@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src = "sorttable.js"></script>
-    <!--style>div {border: 1px solid;}</style-->
+	<!-- sorttable_customkey is not HTML5, should be data-sorttable_customkey but this needs changes to sorttable.js -->
 </head>
 <body>
 <div class="container">
 <h3 class="i18n">Title</h3>
 <p><TMPL_VAR TODAY></p>
-
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
-
 		<table class="sortable table">
 		<thead>
 		  <tr>
@@ -22,22 +20,21 @@
 		    <th class="i18n">Date</th>
 		    <th class="i18n">Account</th>
 		    <th class="i18n">Payee</th>
-		    <th  class="i18n" style="text-align:right;" >Amount</th>
+		    <th class="i18n" style="text-align:right;">Amount</th>
 		  </tr>
 		</thead>
 		<tbody>
 		    <TMPL_LOOP NAME=CONTENTS>
 		    <tr>
 			<td><a href="trx:<TMPL_VAR TRANSID>"><TMPL_VAR TRANSID></a></th>
-			<td class="date" sorttable_customkey='<TMPL_VAR TRANSDATE>' nowrap><TMPL_VAR TRANSDATE></th>
+			<td class="date" sorttable_customkey='<TMPL_VAR TRANSDATE>' style="white-space: nowrap"><TMPL_VAR TRANSDATE></th>
 			<td><TMPL_VAR ACCOUNTNAME></th>
 			<td><TMPL_VAR PAYEENAME></th>
-			<td class="money" prefix="<TMPL_VAR PFX_SYMBOL>" suffix="<TMPL_VAR SFX_SYMBOL>" nowrap><TMPL_VAR TRANSAMOUNT></td>
+			<td class="money" data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" style="white-space: nowrap"><TMPL_VAR TRANSAMOUNT></td>
 		    </tr>
 		    </TMPL_LOOP>
 		</tbody>
 		</table>
-
 	</div>
 </div>
 </div>
@@ -64,8 +61,8 @@
         element.style.textAlign='right';
         if (element.innerHTML.indexOf("-") > -1) {
             element.style.color="#ff0000";
-        } 
-        element.innerHTML = element.getAttribute('prefix') + currency(element.innerHTML) + element.getAttribute('suffix');
+        }
+        element.innerHTML = element.getAttribute('data-prefix') + currency(element.innerHTML) + element.getAttribute('data-suffix');
     }
 </script>
 <script>
@@ -108,5 +105,5 @@
         element.innerHTML = (item == null) ? element.innerHTML : item;
     }
 </script>
-
+</body>
 </html>

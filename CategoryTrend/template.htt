@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!-- TODO: Update category and subcategory in line 12 -->
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src="ChartNew.js"></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
-                <table class "table-condensed">
+                <table class="table-condensed">
                 <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr><td><table class="table">
@@ -93,9 +93,9 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 </body>
-<script type="text/javascript">
+<script>
     <!-- Format numbers -->
     function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
     var elements= document.getElementsByClassName("money");

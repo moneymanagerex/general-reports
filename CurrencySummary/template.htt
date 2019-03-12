@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
     <link href = "master.css" rel = "stylesheet" />
     <script src = "ChartNew.js"></script>
@@ -27,7 +27,8 @@
                 <tbody>
                     <TMPL_LOOP NAME=CONTENTS>
                     <tr>
-                        <td bgcolor='<TMPL_VAR "COLOR">'><TMPL_VAR "CURRENCYNAME"></td>
+                        <td style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR "CURRENCYNAME"></td>
+<!--                        <td style="background-color:<TMPL_VAR COLOR>"><TMPL_VAR "CURRENCYNAME"></td>  -->
                         <td class = "text-right"><TMPL_VAR "Quantity"></td>
                         <td class = "money text-right"><TMPL_VAR "BASECONVRATE"></td>
                     </tr>
@@ -44,7 +45,7 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 </body>
 <script>
     <!--Format numbers-->
