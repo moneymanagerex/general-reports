@@ -55,6 +55,12 @@
     "english":[{
         "_Title_":"Invalid Transactions"
     }],
+    "english_uk":[{
+        "_Title_":"Invalid Transactions"
+    }],
+    "english_us":[{
+        "_Title_":"Invalid Transactions"
+    }],
     "russian": [{
         "_Title_":"Транзакции с ошибками"
         , "Date":"Дата"

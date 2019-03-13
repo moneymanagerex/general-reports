@@ -126,6 +126,12 @@
     "english":[{
         "_Title_":"One Category List"
     }],
+    "english_uk":[{
+        "_Title_":"One Category List"
+    }],
+    "english_us":[{
+        "_Title_":"Single Category List"
+    }],
     "russian": [{
         "_Title_":"Куклы", "Nr":"№", "Amount":"Сумма"
         , "Date": "Дата", "Account": "Счёт"
