@@ -63,7 +63,7 @@ from(
     left join ACCOUNTLIST_V1 AC on AC.ACCOUNTID = c.ACCOUNTID
     left join currencyformats_v1 cf on cf.currencyid=AC.currencyid
     where transcode != 'Transfer'
-    and c.status !='V'
+    and c.status NOT IN ('V','D')
     and ac.status !='Closed'
     and (date('now', 'start of month','-11 month','localtime') <= transdate
         and transdate < date('now', 'start of month','+1 month','localtime'))
@@ -71,6 +71,5 @@ from(
     ) t 
     left join category_v1 ca on ca.categid=t.categ
     left join subcategory_v1 sc on sc.categid=t.categ and sc.subcategid=t.subcateg
-
 group by category
 order by category
