@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-<h3 class="i18n">Title</h3>
+<h3 class="i18n">_Title_</h3>
 <p><TMPL_VAR TODAY></p>
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
@@ -86,20 +86,34 @@
     var translations =
     {
     "english":[{
-        "Title":"Transactions with Blank Note field"
+        "_Title_":"Transactions with Blank Note field"
     }],
     "russian": [{
-        "Title":"Транзакции с пустыми заметками", "Amount":"Сумма"
+        "_Title_":"Транзакции с пустыми заметками", "Amount":"Сумма"
         , "Date": "Дата", "Account": "Счёт"
          , "Payee":"Получатель", "ID":"№"
          , "Amount":"Сумма", "Error":"Ошибка"
     }],
     };
-
+	var my_lang = [];
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
+        // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
     var elements= document.getElementsByClassName('i18n');
     for (var i = 0; i < elements.length; i++) {
         var element = elements[i];
-        var my_lang = translations.<TMPL_VAR LANGUAGE>;
         if (my_lang == null) my_lang = translations.english;
         var item = my_lang[0][element.innerHTML];
         element.innerHTML = (item == null) ? element.innerHTML : item;

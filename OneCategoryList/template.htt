@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-<h3 class="i18n"><TMPL_VAR REPORTNAME></h3>
+<h3 class="i18n">_Title_</h3>
 <TMPL_VAR TODAY><hr>
 <div class="row">
 <div class="col-xs-2"></div>
@@ -124,25 +124,41 @@
     var translations =
     {
     "english":[{
-        "Title":"My Report"
+        "_Title_":"One Category List"
     }],
     "russian": [{
-        "Title":"Куклы", "Nr":"№", "Amount":"Сумма"
+        "_Title_":"Куклы", "Nr":"№", "Amount":"Сумма"
         , "Date": "Дата", "Account": "Счёт"
          , "Payee":"Получатель", "Notes":"Примечания"
          , "Files":"Файлы", "Total":"Всего:"
     }],
     "italian":[{
-        "Title":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
+        "_Title_":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
         , "Date": "Data", "Account": "Conto"
          , "Payee":"Beneficiario", "Notes":"Note"
          , "Files":"File", "Total":"Totale:"
     }]
     };
+	var my_lang = [];
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
+        // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
+
     var elements= document.getElementsByClassName('i18n');
     for (var i=0; i < elements.length; i++) {
         var element=elements[i];
-        var my_lang=translations.<TMPL_VAR LANGUAGE>;
         if (my_lang == null) my_lang=translations.english;
         var item=my_lang[0][element.innerHTML];
         element.innerHTML=(item == null) ? element.innerHTML : item;
