@@ -131,14 +131,18 @@
     <hr>    <TMPL_VAR ERROR>
 </TMPL_LOOP>
 </div>
+
 <script> <!-- Translations -->
     var translations =
     {
     "english":[{
         "_Title_":"Categories stats for last 12 months"
     }],
-    "english-uk":[{
-        "_Title_":"Categories stats for last 12 months"
+    "english_uk":[{
+        "_Title_":"Categories statistics for the last 12 month period"
+    }],
+    "english_us":[{
+        "_Title_":"Categories statistics for the last 12 months"
     }],
     "russian": [{
         "_Title_":"Категории за последние 12 месяцев"
@@ -177,15 +181,27 @@
     }]
     };
     function _(n) {
-	// The below line has issues with hyphenated languages (i.e. english-uk, english-us)
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
         // var my_lang=translations.<TMPL_VAR LANGUAGE>;
-	var my_lang=translations.english;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
         if (my_lang == null) my_lang=translations.english;
         var item=my_lang[0][n];
         var out=(item == null) ? n : item;
         return out;
     }
-    var elements= document.getElementsByClassName('i18n');
+    var elements = document.getElementsByClassName('i18n');
     for (var i=0; i < elements.length; i++) {
         var element=elements[i];
         element.innerHTML=_(element.innerHTML);
