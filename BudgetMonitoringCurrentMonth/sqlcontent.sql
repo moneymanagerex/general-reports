@@ -33,7 +33,7 @@ from (
                 join CurrencyFormats_v1 cf on (a.CurrencyId = cf.CurrencyId)
             where 1=1
                 and t.TransCode <> 'Transfer'
-                and t.Status <> 'V'
+                and t.STATUS NOT IN ('D', 'V')
                 and TransDate 
                     between date('now', '0 month', 'start of month') 
                     and date('now', 'start of month', '1 month', '-1 day')

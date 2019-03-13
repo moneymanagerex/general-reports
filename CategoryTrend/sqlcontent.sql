@@ -4,12 +4,12 @@ select strftime('%Y', TRANSDATE) as YEAR
     , total((case when TRANSCODE = 'Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) * c1.BASECONVRATE) as AMOUNT
 from
     (select ACCOUNTID, TRANSDATE, TRANSCODE, CATEGID, SUBCATEGID, TRANSAMOUNT from CHECKINGACCOUNT_V1
-        where STATUS <> 'V'
+        where STATUS NOT IN ('D', 'V')
     union all
     select t1.ACCOUNTID, t1.TRANSDATE, t1.TRANSCODE, t2.CATEGID, t2.SUBCATEGID, t2.SPLITTRANSAMOUNT from SPLITTRANSACTIONS_V1 as t2
         inner join CHECKINGACCOUNT_V1 as t1
         on t1.TRANSID = t2.TRANSID
-        where t1.STATUS <> 'V') as t3
+        where t1.STATUS NOT IN ('D', 'V')) as t3
 inner join ACCOUNTLIST_V1 as a1 on a1.ACCOUNTID = t3.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c1 on c1.CURRENCYID = a1.CURRENCYID
 inner join CATEGORY_V1 as cat on t3.CATEGID = cat.CATEGID

@@ -18,6 +18,6 @@ inner join CURRENCYFORMATS_V1 as c on c.CURRENCYID = a.CURRENCYID
 inner join  PAYEE_V1 as p on t.PAYEEID = p.PAYEEID
 where p.PAYEENAME = 'Payee1'
     and t.TRANSCODE='Withdrawal'
-    and t.STATUS <> 'V'
+    and t.STATUS NOT IN ('D', 'V')
 group by year
 order by year desc;

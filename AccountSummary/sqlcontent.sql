@@ -9,7 +9,7 @@ select a.ACCOUNTNAME, c.BASECONVRATE, c.PFX_SYMBOL, c.SFX_SYMBOL,
         from CHECKINGACCOUNT_V1
         where TRANSCODE = 'Transfer') as t
     where  t.ACCOUNTID = a.ACCOUNTID
-        and t.STATUS <> 'V') as Balance
+        and t.STATUS NOT IN ('D', 'V')) as Balance
 from ACCOUNTLIST_V1 as a
 inner join CURRENCYFORMATS_V1 as c on c.CURRENCYID = a.CURRENCYID
 where a.ACCOUNTTYPE in ('Checking', 'Term') and a.STATUS = 'Open'

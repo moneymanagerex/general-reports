@@ -10,7 +10,7 @@ select b.TRANSAMOUNT, b.REPEATS, b.NUMOCCURRENCES, b.NEXTOCCURRENCEDATE, c.PFX_S
         from CHECKINGACCOUNT_V1
         where TRANSCODE = 'Transfer') as t
     where  t.ACCOUNTID = a.ACCOUNTID
-        and t.STATUS <> 'V') as Balance
+        and t.STATUS NOT IN ('V','D')) as Balance
 from 
     (select ACCOUNTID, STATUS, REPEATS, NUMOCCURRENCES, NEXTOCCURRENCEDATE,
         (case when TRANSCODE = 'Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) as TRANSAMOUNT
@@ -22,4 +22,4 @@ from
 inner join  ACCOUNTLIST_V1 as a on b.ACCOUNTID = a.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c on c.CURRENCYID = a.CURRENCYID
 where a.ACCOUNTNAME = 'Account1'
-and b.STATUS <> 'V';
+and b.STATUS NOT IN ('V','D');
