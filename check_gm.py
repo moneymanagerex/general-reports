@@ -7,7 +7,7 @@ import sqlite3
 def check(curs, report):
     print 'checking %s' % report
     sql = ''
-    for line in open(os.path.join(report, 'sqlcontent.sql'), 'r'):
+    for line in open(os.path.join(report, 'sqlcontent.sql'), 'rb'):
         sql = sql + line
     curs.execute(sql)
     print 'done %s' % report
@@ -16,13 +16,10 @@ if __name__ == '__main__':
     conn = sqlite3.connect(':memory:')
     conn.row_factory = sqlite3.Row 
     curs = conn.cursor()
-	print 'database created, loading schema...'
     sql = ''
-    for line in open('tables_v1.sql', 'r'):
+    for line in open('tables_v1.sql', 'rb'):
         sql = sql + line
-		if line[len(line)] = ';':
-			curs.executescript(sql)
-			sql = ''
+    curs.executescript(sql)
     
     anyNotPassed = False
     
