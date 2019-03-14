@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h3>Account Trend Report (Account1)</h3>
+        <h3>Account Trend Report (<TMPL_VAR ACCOUNTNAME>)</h3>
         <p><TMPL_VAR TODAY></p>
         <div class="row">
             <div class="col-xs-2"></div>
@@ -82,7 +82,7 @@
                         <td class="text-right"><TMPL_VAR FVALUE12></td>
                     </tr>
                 </tfoot>
-                </table></td></tr></table>
+                 </table></td></tr></table>
             </div>
             <table class="table">
                 <tbody>
@@ -93,12 +93,12 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
+</body>
 <script>
     var data = {<TMPL_VAR "CHART_DATA">}
     var opt = {bezierCurve : false}
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data,opt);
 </script>
-</body>
 </html>

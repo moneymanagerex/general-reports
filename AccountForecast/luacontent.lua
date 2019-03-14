@@ -6,6 +6,7 @@ local period = 6;
 local initialized = 0;
 local repeatcode = 0;
 local numrepeats = 0;
+local accountname = '';
 
 function is_leap_year(year)
     local ly = 0;
@@ -143,6 +144,7 @@ function handle_record(record)
         total = record:get("Balance");
         prefix = record:get("PFX_SYMBOL");
         suffix = record:get("SFX_SYMBOL");
+        accountname = record:get("ACCOUNTNAME");
         for i=1,period do
             forecast[i] = total;
         end
@@ -199,4 +201,5 @@ function complete(result)
         result:set("Month" .. i .. "_Label", string.format("(%d-%02d-%02d)",date.year,date.month,date.day));
     end
     result:set('CHART_DATA', string.sub(data,1,-2) .. "]}]");
+    result:set('ACCOUNTNAME', accountname);
 end

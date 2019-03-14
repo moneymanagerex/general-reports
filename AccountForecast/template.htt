@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="container">
-        <h3>Account Forecast Report (Account1)</h3>
-        <p><TMPL_VAR TODAY></p>
+        <h3>Account Forecast Report (<TMPL_VAR ACCOUNTNAME>)</h3>
+        <p>Report Date: <TMPL_VAR TODAY></p>
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
@@ -68,11 +68,11 @@
             </table>
         </div>
     </div>
+</body>
 <script>
     var data = {labels : ["Current","1 month","2 months","3 months","4 months","5 months","6 months"], <TMPL_VAR "CHART_DATA">}
     var opt = {bezierCurve : false}
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data,opt);
 </script>
-</body>
 </html>

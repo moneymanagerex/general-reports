@@ -3,5 +3,4 @@ Account Forecast Report using Repeating Transactions
 Note: Requires at least one entry for account name in repeating transactions.
 
 TODO: 
-1. Update account name in SQL (line 24). 
-2. Update account name in Template (line 12).
+1. Update account name in SQL (line 24).

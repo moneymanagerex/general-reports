@@ -27,10 +27,17 @@ local product_sum = 0;
 local squared_sum = 0;
 local zero_count = 0;
 local last_value = 0;
+local initialized =0 ;
+local accountname = '';
 
 function handle_record(record)
-    prefix = record:get("PFX_SYMBOL");
-    suffix = record:get("SFX_SYMBOL");
+    if initialized == 0 then
+        prefix = record:get("PFX_SYMBOL");
+        suffix = record:get("SFX_SYMBOL");
+        accountname = record:get("ACCOUNTNAME");
+        initialized = 1;
+    end
+
     if count ~= 0 then
         local prev_y = year;
         local prev_m = month + 1;
@@ -106,4 +113,5 @@ function complete(result)
         result:set('FVALUE' .. i, prefix .. fval .. suffix);
     end
     result:set('CHART_DATA', string.sub(labels,1,-2) .. "]," .. string.sub(data,1,-2) .. "]}]");
+    result:set('ACCOUNTNAME', accountname);
 end
