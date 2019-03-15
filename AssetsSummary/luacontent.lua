@@ -123,7 +123,7 @@ function complete(result)
     local data = '';
     for t = 1,#type do
         local value = string.format("%.2f", subtotal[t]);
-        rows = rows .. '<tr bgcolor=' .. colors[t] .. '><td>' .. type[t] .. '</td><td class="money text-right">' .. value .. '</td></tr>';
+        rows = rows .. '<tr style="background-color:' .. colors[t] .. '"><td>' .. type[t] .. '</td><td class="money text-right">' .. value .. '</td></tr>';
         data = data .. '{value: ' .. value .. ', color:"' .. colors[t] .. '", label : "' .. type[t] ..'", labelColor : "black", labelFontSize : "12", labelAlign : "center"},\n';
     end
     result:set("SubTotals", rows);

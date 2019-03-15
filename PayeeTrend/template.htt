@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!-- TODO: Update payee name in line 12 -->
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src="ChartNew.js"></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
-                <table class "table-condensed">
+                <table class="table-condensed">
                 <tr><td  class="text-center"><canvas id="reportChart" width="750" height="300"></canvas></td></tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr><td><table class="table">
@@ -38,7 +38,7 @@
                 <tbody>
                     <TMPL_LOOP NAME=CONTENTS>
                     <tr>
-                        <th bgcolor='<TMPL_VAR "COLOR">'><TMPL_VAR YEAR></th>
+                        <th style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR YEAR></th>
                         <td class="money text-right"><TMPL_VAR Jan></td>
                         <td class="money text-right"><TMPL_VAR Feb></td>
                         <td class="money text-right"><TMPL_VAR Mar></td>
@@ -66,8 +66,7 @@
             </table>
         </div>
     </div>   
-</body>
-<script type="text/javascript">
+<script>
     <!-- Format numbers -->
     function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
     var elements= document.getElementsByClassName("money");
@@ -93,4 +92,5 @@
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data);
 </script>
+</body>
 </html>

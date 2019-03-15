@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <!-- TODO: Update account name in line 12 -->
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src="ChartNew.js"></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
-                <table class "table-condensed">
+                <table class="table-condensed">
                 <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr><td><table class="table">
@@ -31,27 +31,27 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>1 month <TMPL_VAR Month1_Label></td>
                         <td class="text-right"><TMPL_VAR Month1_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>2 months <TMPL_VAR Month2_Label></td>
                         <td class="text-right"><TMPL_VAR Month2_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>3 months <TMPL_VAR Month3_Label></td>
                         <td class="text-right"><TMPL_VAR Month3_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>4 months <TMPL_VAR Month4_Label></td>
                         <td class="text-right"><TMPL_VAR Month4_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>5 months <TMPL_VAR Month5_Label></td>
                         <td class="text-right"><TMPL_VAR Month5_Total></td>
                    </tr>
-                   <tr bgcolor='rgba(255,0,0,0.5)'>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
                         <td>6 months <TMPL_VAR Month6_Label></td>
                         <td class="text-right"><TMPL_VAR Month6_Total></td>
                    </tr>
@@ -68,11 +68,11 @@
             </table>
         </div>
     </div>
-</body>
-<script type="text/javascript">
+<script>
     var data = {labels : ["Current","1 month","2 months","3 months","4 months","5 months","6 months"], <TMPL_VAR "CHART_DATA">}
     var opt = {bezierCurve : false}
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data,opt);
 </script>
+</body>
 </html>

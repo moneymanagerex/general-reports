@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -14,14 +14,14 @@
             <div class="col-xs-8">
                 <table class="table">
                 <thead>
-                  <tr>
+                    <tr>
                     <th>Account Name</th>
 <!--                    <th  class="text-center">Base Currency</th> -->
                     <th class="text-center">Interest Rate</th>
                     <th class="text-center">Balance</th>
                     <th class="text-center">Credit Limit</th>
                     <th class="text-center">Available Credit</th>
-                  </tr>
+                    </tr>
                 </thead>
                 <tbody>
                     <TMPL_LOOP NAME=CONTENTS>
@@ -38,7 +38,7 @@
                 <tfoot>
                     <tr class="total">
                         <td>TOTAL</td>
-			<td></td>
+                        <td></td>
                         <td class="money text-right"><TMPL_VAR Base_Total></td>
                         <td class="money text-right"><TMPL_VAR Credit_Total></td>
                         <td class="money text-right"><TMPL_VAR Avail_Total></td>
@@ -56,10 +56,10 @@
             </table>
         </div>
     </div>   
-</body>
-<script type="text/javascript">
+<script>
   function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
   var elements= document.getElementsByClassName("money");
   for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>";}
 </script>
+</body>
 </html>

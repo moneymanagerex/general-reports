@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!-- TODO: Update category and subcategory in line 12 -->
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src="ChartNew.js"></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
-                <table class "table-condensed">
+                <table class="table-condensed">
                 <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr><td><table class="table">
@@ -33,51 +33,51 @@
                     </TMPL_LOOP>
                 </tbody>
                 <tfoot>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL1></td>
                         <td class="money text-right"><TMPL_VAR FVALUE1></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL2></td>
                         <td class="money text-right"><TMPL_VAR FVALUE2></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL3></td>
                         <td class="money text-right"><TMPL_VAR FVALUE3></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL4></td>
                         <td class="money text-right"><TMPL_VAR FVALUE4></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL5></td>
                         <td class="money text-right"><TMPL_VAR FVALUE5></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL6></td>
                         <td class="money text-right"><TMPL_VAR FVALUE6></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL7></td>
                         <td class="money text-right"><TMPL_VAR FVALUE7></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL8></td>
                         <td class="money text-right"><TMPL_VAR FVALUE8></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL9></td>
                         <td class="money text-right"><TMPL_VAR FVALUE9></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL10></td>
                         <td class="money text-right"><TMPL_VAR FVALUE10></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL11></td>
                         <td class="money text-right"><TMPL_VAR FVALUE11></td>
                     </tr>
-                    <tr bgcolor='rgba(255,0,0,0.5)'>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL12></td>
                         <td class="money text-right"><TMPL_VAR FVALUE12></td>
                     </tr>
@@ -93,9 +93,9 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 </body>
-<script type="text/javascript">
+<script>
     <!-- Format numbers -->
     function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
     var elements= document.getElementsByClassName("money");

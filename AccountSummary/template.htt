@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
     <script src="ChartNew.js"></script>
 </head>
 <body>
 <h3>Account Summary Report</h3>
 <p><TMPL_VAR TODAY></p>
-
 <div class="container">
 <div class="row">
 	<div class="col-xs-12"><canvas id="reportChart" width="300" height="300"></canvas></div>
 </div>
 <div class="row">
 	<div class="col-xs-10">
-
 		<table class="table">
 		<thead>
 		  <tr>
@@ -30,7 +28,7 @@
 		    <tr>
 			<th><TMPL_VAR ACCOUNTNAME></th>
 			<td class="text-right"><TMPL_VAR Balance></td>
-			<td  bgcolor='<TMPL_VAR "COLOR">' class="money text-right"><TMPL_VAR Base></td>
+			<td style="background-color:<TMPL_VAR "COLOR">" class="money text-right"><TMPL_VAR Base></td>
 		    </tr>
 		    </TMPL_LOOP>
 		</tbody>
@@ -42,18 +40,15 @@
 		    </tr>
 		</tfoot>
 		</table>
-
 	</div>
 </div>
 </div>
-
 <ul>
 <TMPL_LOOP ERRORS>
     <li><span class="label label-danger">Error</span><TMPL_VAR ERROR></li>
 </TMPL_LOOP>
 </ul>
-
-<script type="text/javascript">
+<script>
     <!-- Format numbers -->
   function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
   var elements= document.getElementsByClassName("money");
@@ -63,4 +58,5 @@
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).PolarArea(data);
 </script>
+</body>
 </html>
