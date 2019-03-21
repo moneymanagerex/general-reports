@@ -1,7 +1,9 @@
 local total = 0;
 local prefix = '';
 local suffix = '';
-local forecast = {0,0,0,0,0,0}
+local dpchar = '';
+local grpsepchar = '';
+local forecast = {0,0,0,0,0,0};
 local period = 6;
 local initialized = 0;
 local repeatcode = 0;
@@ -53,7 +55,7 @@ end
 
 function get_next_date(record, previousYear, previousMonth, previousDay)
     local originalnumber = tonumber(record:get("NUMOCCURRENCES"));
-    -- Auto Execute User Acknowlegement required
+    -- Auto Execute User Acknowledgment required
     if repeatcode >= 100 then
         repeatcode = repeatcode - 100;
     end
@@ -144,6 +146,8 @@ function handle_record(record)
         total = record:get("Balance");
         prefix = record:get("PFX_SYMBOL");
         suffix = record:get("SFX_SYMBOL");
+        dpchar = record:get("DECIMAL_POINT");
+        grpsepchar = record:get("GROUP_SEPARATOR");
         accountname = record:get("ACCOUNTNAME");
         for i=1,period do
             forecast[i] = total;
@@ -188,7 +192,7 @@ function complete(result)
     else
         data = data .. value .. ',';
     end
-    result:set("Current_Total", prefix .. value .. suffix);
+    result:set("Current_Total", value);
     for i=1,period do
         value = string.format("%.2f", forecast[i]);
         if tonumber(string.sub(value,-1)) == 0  and tonumber(string.sub(value,-2)) ~= 0 then
@@ -196,10 +200,15 @@ function complete(result)
         else
             data = data .. value .. ',';
         end
-        result:set("Month" .. i .. "_Total", prefix .. value .. suffix);
+        result:set("Month" .. i .. "_Total", value);
         local date = os.date("*t", os.time{year=curYear,month=curMonth+i,day=curDay});
         result:set("Month" .. i .. "_Label", string.format("(%d-%02d-%02d)",date.year,date.month,date.day));
     end
     result:set('CHART_DATA', string.sub(data,1,-2) .. "]}]");
+    -- override the base currency as the account may be in different currency
+    result:set('PFX_SYMBOL', prefix);
+    result:set('SFX_SYMBOL', suffix);
+    result:set('DECIMAL_POINT', dpchar);
+    result:set('GROUP_SEPARATOR', grpsepchar);
     result:set('ACCOUNTNAME', accountname);
 end
