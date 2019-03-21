@@ -1,0 +1,6 @@
+<h1>Income vs. Expenses Report by Year</h1>
+<p>This report adds up all the deposit and withdrawal transactions and provides totals per Year.</p>
+<p>The report is shown in the base currency and any transactions not in the base currency are converted using the currency of the account and the base conversion rate for the currencyt to base currency.</p>
+<i>It ignores any transactions that are marked <b>Void (V)</b> or <b>Duplicate (D)</b> and also ignores <b>Transfer</b> type transactions.</i>
+<hr>
+<p>For MMEX v1.3.3. DB v7</p>
