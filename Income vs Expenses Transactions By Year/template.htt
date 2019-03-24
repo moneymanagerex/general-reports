@@ -10,7 +10,7 @@
    </head>
    <body>
       <div class="container">
-      <h3>Income vs. Expenses by Year</h3>
+      <h3><TMPL_VAR REPORTNAME> (<TMPL_VAR YEAR_TYPE>)</h3>
       <p>
          Report Date: 
          <TMPL_VAR TODAY>
@@ -22,6 +22,7 @@
                <tr>
                   <td class="text-center">
                      <canvas id="reportChart" width="800" height="400"></canvas>
+			<p style="font-size:10px">All values in base currency <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL>.</p>
                   </td>
                </tr>
 		</table>
@@ -52,6 +53,14 @@
                      </tr>
                   </TMPL_LOOP>
                </tbody>
+            </table>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
             </table>
          </div>
       </div>
