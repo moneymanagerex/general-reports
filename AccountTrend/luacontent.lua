@@ -37,7 +37,6 @@ function handle_record(record)
         accountname = record:get("ACCOUNTNAME");
         initialized = 1;
     end
-
     if count ~= 0 then
         local prev_y = year;
         local prev_m = month + 1;
@@ -62,12 +61,13 @@ function handle_record(record)
         year = record:get("YEAR");
         month = record:get("MONTH");
     end
+    
     local date = months[tonumber(month)] .. ' ' .. year;
     labels = labels .. '"' .. date .. '",';
     record:set("DATE", date);
     last_value = record:get("Balance");
     local balance = string.format("%.2f", last_value);
-    record:set("Balance", prefix .. balance .. suffix);
+    record:set("Balance", balance);
     if tonumber(string.sub(balance,-1)) == 0  and tonumber(string.sub(balance,-2)) ~= 0 then
         data = data .. '\'' .. balance .. '\',';
     else
@@ -110,7 +110,7 @@ function complete(result)
         else
             data = data .. fval .. ',';
         end
-        result:set('FVALUE' .. i, prefix .. fval .. suffix);
+        result:set('FVALUE' .. i, fval);
     end
     result:set('CHART_DATA', string.sub(labels,1,-2) .. "]," .. string.sub(data,1,-2) .. "]}]");
     result:set('ACCOUNTNAME', accountname);
