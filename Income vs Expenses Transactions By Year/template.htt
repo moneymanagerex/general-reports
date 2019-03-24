@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+   <head>
+      <meta charset="UTF-8" />
+      <title>
+         <TMPL_VAR REPORTNAME>
+      </title>
+      <link href="master.css" rel="stylesheet" />
+      <script src="ChartNew.js"></script>
+   </head>
+   <body>
+      <div class="container">
+      <h3><TMPL_VAR REPORTNAME> (<TMPL_VAR YEAR_TYPE>)</h3>
+      <p>
+         Report Date: 
+         <TMPL_VAR TODAY>
+      </p>
+      <div class="row">
+         <div class="col-xs-2"></div>
+         <div class="col-xs-8">
+               <table class = "table-condensed">
+               <tr>
+                  <td class="text-center">
+                     <canvas id="reportChart" width="800" height="400"></canvas>
+			<p style="font-size:10px">All values in base currency <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL>.</p>
+                  </td>
+               </tr>
+		</table>
+            <table class="table">
+               <thead>
+                  <tr class="text-center">
+                     <th class="text-center">Year</th>
+                     <th class="text-center">Income</th>
+                     <th class="text-center">Expense</th>
+                     <th class="text-center">Difference</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <TMPL_LOOP NAME=CONTENTS>
+                     <tr>
+                        <td>
+                           <TMPL_VAR YEAR>
+                        </td>
+                        <td class="money text-right">
+                           <TMPL_VAR INCOME>
+                        </td>
+                        <td class="money text-right">
+                           <TMPL_VAR EXPENSE>
+                        </td>
+                        <td class="money text-right">
+                           <TMPL_VAR DIFFERENCE>
+                        </td>
+                     </tr>
+                  </TMPL_LOOP>
+               </tbody>
+            </table>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+         </div>
+      </div>
+<script>
+  <!-- Format numbers -->
+  function formatNumberWithSeparators(n, grpchar) {return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);}
+  function changeDecimalPoint(s, dpchar) {var dppos = s.lastIndexOf("."); return (dppos > 0 ? s.slice(0,dppos) + dpchar + s.substr(dppos+1) : s)}
+  function currency(n, grpsep, dpt) {n=parseFloat(n); return isNaN(n) ? 0 : formatNumberWithSeparators(changeDecimalPoint(n.toFixed(2), dpt),grpsep);}
+  var elements=document.getElementsByClassName("money");
+  for (var i=0; i < elements.length; i++) {elements[i].innerHTML =((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>") + " " + currency(elements[i].innerHTML, (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"),(elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")) + " " + (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();}
+  <!-- Chart -->
+	var data = {
+		labels : [<TMPL_VAR GLABELS>],
+		datasets : [<TMPL_VAR CHART_DATA>]
+	}
+    var opt = { animationEasing: 'easeOutQuint',
+	animationLeftToRight : true,
+      canvasBorders : true,
+      canvasBordersWidth : 3,
+      canvasBordersColor : "grey",
+      graphTitle : "Income vs. Expenses by Year",
+      legend : true,
+      inGraphDataShow : true,
+      annotateDisplay : true,
+      graphTitleFontSize: 16
+      }
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Bar(data,opt);
+</script>
+</body>
+</html>
