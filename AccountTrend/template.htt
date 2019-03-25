@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- TODO: Update account name in line 12 -->
 <html lang="en-US">
 <head>
     <meta charset="UTF-8" />
@@ -35,39 +34,39 @@
                 <tfoot>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL1></td>
-                        <td class="text-right"><TMPL_VAR FVALUE1></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE1></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL2></td>
-                        <td class="text-right"><TMPL_VAR FVALUE2></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE2></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL3></td>
-                        <td class="text-right"><TMPL_VAR FVALUE3></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE3></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL4></td>
-                        <td class="text-right"><TMPL_VAR FVALUE4></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE4></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL5></td>
-                        <td class="text-right"><TMPL_VAR FVALUE5></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE5></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL6></td>
-                        <td class="text-right"><TMPL_VAR FVALUE6></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE6></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL7></td>
-                        <td class="text-right"><TMPL_VAR FVALUE7></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE7></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL8></td>
-                        <td class="text-right"><TMPL_VAR FVALUE8></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE8></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL9></td>
-                        <td class="text-right"><TMPL_VAR FVALUE9></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE9></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL10></td>
@@ -75,11 +74,11 @@
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL11></td>
-                        <td class="text-right"><TMPL_VAR FVALUE11></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE11></td>
                     </tr>
                     <tr style="background-color:rgba(255,0,0,0.5)">
                         <td><TMPL_VAR FLABEL12></td>
-                        <td class="text-right"><TMPL_VAR FVALUE12></td>
+                        <td class="account text-right"><TMPL_VAR FVALUE12></td>
                     </tr>
                 </tfoot>
                  </table></td></tr></table>
@@ -94,11 +93,21 @@
             </table>
         </div>
     </div>
-</body>
 <script>
+  <!-- Chart -->
     var data = {<TMPL_VAR "CHART_DATA">}
     var opt = {bezierCurve : false}
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Line(data,opt);
-</script>
+<!-- Format numbers -->
+  function formatNumberWithSeparators(n, grpchar) {return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);}
+  function changeDecimalPoint(s, dpchar) {var dppos = s.lastIndexOf("."); return (dppos > 0 ? s.slice(0,dppos) + dpchar + s.substr(dppos+1) : s)}
+  function currency(n, grpsep, dpt) {n=parseFloat(n); return isNaN(n) ? 0 : formatNumberWithSeparators(changeDecimalPoint(n.toFixed(2), dpt),grpsep);}
+<!-- Format numbers (money) -->
+  var elements=document.getElementsByClassName("money");
+  if (elements) {for (var i=0; i < elements.length; i++) {elements[i].innerHTML =((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>") + " " + currency(elements[i].innerHTML, (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"),(elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")) + " " + (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();}}
+<!-- Format numbers (accounts)-->
+  elements=document.getElementsByClassName("account");
+  if (elements) {document.write("account"); for (i=0; i < elements.length; i++) {currency(elements[i].innerHTML, (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"),(elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")).trim();}}</script>
+</body>
 </html>

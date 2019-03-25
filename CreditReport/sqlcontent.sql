@@ -14,6 +14,6 @@ from
 inner join ACCOUNTLIST_V1 as a on a.ACCOUNTID=t.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c on a.CURRENCYID=c.CURRENCYID
 where ACCOUNTNAME in ('Account1', 'Account2')
-    and t.STATUS<>'V'
+    and t.STATUS NOT IN ('V','D')
 group by a.ACCOUNTID
 order by ACCOUNTNAME;

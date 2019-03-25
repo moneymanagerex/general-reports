@@ -205,7 +205,7 @@ function complete(result)
         result:set("Month" .. i .. "_Label", string.format("(%d-%02d-%02d)",date.year,date.month,date.day));
     end
     result:set('CHART_DATA', string.sub(data,1,-2) .. "]}]");
-    -- override the base currency as the account may be in different currency
+    -- Override the base currency as the account may be in different currency
     result:set('PFX_SYMBOL', prefix);
     result:set('SFX_SYMBOL', suffix);
     result:set('DECIMAL_POINT', dpchar);
