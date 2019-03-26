@@ -1,1 +1,4 @@
 Checking and Term Account Summary Report
+
+Setup:
+1. Edit SQL line 36 for the account types required
