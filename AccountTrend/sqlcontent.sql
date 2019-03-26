@@ -28,7 +28,7 @@ from
     where TRANSCODE = 'Transfer') as t1
 inner join ACCOUNTLIST_V1 as a on a.ACCOUNTID = t1.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c on c.CURRENCYID = a.CURRENCYID
-where ACCOUNTNAME = 'Lloyds'
+where ACCOUNTNAME = 'Account1'
     and t1.STATUS NOT IN ('D', 'V')
 group by YEAR, MONTH
 order by YEAR asc, MONTH asc;
