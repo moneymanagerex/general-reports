@@ -9,7 +9,7 @@
 <body>
     <div class = "container">
         <h3>Currency Summary Report</h3>
-        <p><TMPL_VAR TODAY></p>
+        <p>Report Date: <TMPL_VAR TODAY></p>
         <div class = "row">
             <div class = "col-xs-2"></div>
             <div class = "col-xs-8">
@@ -20,19 +20,23 @@
                 <thead>
                     <tr>
                         <th>Currency Name</th>
-                        <th>Number of Accounts</th>
-                        <th>Conversion Rate</th>
+                        <th>Symbol</th>
+                        <th>No. of Accounts</th>
+                        <th>Currency Conversion Rate</th>
+			<th>Latest History Rate</th>
                     </tr>
                 </thead>
                 <tbody>
                     <TMPL_LOOP NAME=CONTENTS>
                     <tr>
                         <td style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR "CURRENCYNAME"></td>
-<!--                        <td style="background-color:<TMPL_VAR COLOR>"><TMPL_VAR "CURRENCYNAME"></td>  -->
+                        <td class = "text-center"><TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></td>
                         <td class = "text-right"><TMPL_VAR "Quantity"></td>
-                        <td class = "money text-right"><TMPL_VAR "BASECONVRATE"></td>
+                        <td class = "currrate text-right"><TMPL_VAR "BASECONVRATE"></td>
+			<td class = "currrate text-right"><TMPL_VAR "HISTBASECONVRATE"></td>
                     </tr>
                     </TMPL_LOOP>
+                    <p>Base currency is set to: <b><TMPL_VAR "CURRENCYNAME">&nbsp;<TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></b></p>
                 </tbody>
                 </table></td></tr></table>
             </div>
@@ -45,14 +49,15 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>   
 </body>
 <script>
     <!--Format numbers-->
-    function currency(n) { n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(4); }
-    var elements = document.getElementsByClassName("money");
-    for (var i = 0; i < elements.length; i++)
-        { elements[i].innerHTML = currency(elements[i].innerHTML); }
+    <!--Format Currency Rate-->
+    function currrate(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(4);};
+    var elements = document.getElementsByClassName("currrate");
+    for (var i = 0; i < elements.length; i++) { elements[i].innerHTML = currrate(elements[i].innerHTML);};
+    <!--Format money-->
     <!-- Chart -->
     var data = [
         <TMPL_LOOP CONTENTS>
