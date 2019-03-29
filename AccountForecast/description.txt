@@ -1,6 +1,8 @@
 Account Forecast Report using Repeating Transactions
 
+Figures are displayed in the currency of the account selected.
+
 Note: Requires at least one entry for account name in repeating transactions.
 
-TODO: 
+Setup: 
 1. Update account name in SQL (line 24).

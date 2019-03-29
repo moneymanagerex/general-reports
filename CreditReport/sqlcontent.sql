@@ -1,19 +1,35 @@
--- TODO: Update account names in line 16 and Lua.
-select a.ACCOUNTNAME
-    , a.INITIALBAL + total(t.TRANSAMOUNT) as Balance
-    , (a.INITIALBAL + total(t.TRANSAMOUNT))*c.BASECONVRATE as BaseBal
-    , c.PFX_SYMBOL, c.SFX_SYMBOL
-from
-    (select ACCOUNTID, TRANSDATE, STATUS,
-        (case when TRANSCODE='Deposit' then TRANSAMOUNT else -TRANSAMOUNT end) as TRANSAMOUNT
-    from CHECKINGACCOUNT_V1
-    union all
-    select TOACCOUNTID, TRANSDATE, STATUS, TOTRANSAMOUNT
-    from CHECKINGACCOUNT_V1
     where TRANSCODE='Transfer') as t
 inner join ACCOUNTLIST_V1 as a on a.ACCOUNTID=t.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c on a.CURRENCYID=c.CURRENCYID
 where ACCOUNTNAME in ('Account1', 'Account2')
-    and t.STATUS NOT IN ('V','D')
-group by a.ACCOUNTID
-order by ACCOUNTNAME;
+-- TODO: Update account names in line 28 and Lua
+SELECT a.accountname AS ACCOUNTNAME,
+       a.initialbal + Total(t.transamount) AS BALANCE,
+       (a.initialbal + Total(t.transamount)) * Ifnull(ch.currvalue, c.baseconvrate) AS BASEBAL,
+       c.pfx_symbol AS PFX_SYMBOL,
+       c.sfx_symbol AS SFX_SYMBOL,
+       c.group_separator AS GROUP_SEPARATOR,
+       c.decimal_point AS DECIMAL_POINT
+FROM
+  (SELECT ca1.accountid AS ACCOUNTID,
+		ca1.transdate AS TRANSDATE,
+		ca1.status AS STATUS,
+		(CASE WHEN ca1.transcode = 'Deposit' THEN ca1.transamount ELSE -ca1.transamount END) AS TRANSAMOUNT
+   FROM checkingaccount_v1 AS ca1
+   UNION ALL
+   SELECT ca2.toaccountid AS ACCOUNTID,
+		ca2.transdate AS TRANSDATE,
+		ca2.status AS STATUS,
+		ca2.totransamount AS TRANSAMOUNT
+   FROM checkingaccount_v1 AS ca2
+   WHERE transcode = 'Transfer') AS t
+INNER JOIN accountlist_v1 AS a ON a.accountid = t.accountid
+INNER JOIN currencyformats_v1 AS c ON a.currencyid = c.currencyid
+LEFT JOIN currencyhistory_v1 AS ch ON ch.currencyid = c.currencyid
+	AND ch.currdate = (SELECT MAX(crhst.currdate)
+					   FROM currencyhistory_v1 AS crhst
+					   WHERE crhst.currencyid = c.currencyid)
+WHERE accountname IN ('Account1', 'Account2')
+  AND t.status NOT IN ('V', 'D')
+GROUP BY a.accountid
+ORDER BY accountname;

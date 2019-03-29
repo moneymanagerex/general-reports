@@ -3,6 +3,8 @@ local labels = 'labels : [';
 local data = '';
 local prefix = '';
 local suffix = '';
+local dpchar = '';
+local grpsepchar = '';
 local json = [[
     datasets : [{
         fillColor : "rgba(255,255,255,0)",
@@ -34,6 +36,8 @@ function handle_record(record)
     if initialized == 0 then
         prefix = record:get("PFX_SYMBOL");
         suffix = record:get("SFX_SYMBOL");
+        dpchar = record:get("DECIMAL_POINT");
+        grpsepchar = record:get("GROUP_SEPARATOR");
         accountname = record:get("ACCOUNTNAME");
         initialized = 1;
     end
@@ -114,4 +118,9 @@ function complete(result)
     end
     result:set('CHART_DATA', string.sub(labels,1,-2) .. "]," .. string.sub(data,1,-2) .. "]}]");
     result:set('ACCOUNTNAME', accountname);
+    -- Override the base currency variables as the account may be in different currency
+    result:set('PFX_SYMBOL', prefix);
+    result:set('SFX_SYMBOL', suffix);
+    result:set('DECIMAL_POINT', dpchar);
+    result:set('GROUP_SEPARATOR', grpsepchar);
 end
