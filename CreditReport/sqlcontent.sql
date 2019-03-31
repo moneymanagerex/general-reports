@@ -1,11 +1,9 @@
-    where TRANSCODE='Transfer') as t
-inner join ACCOUNTLIST_V1 as a on a.ACCOUNTID=t.ACCOUNTID
-inner join CURRENCYFORMATS_V1 as c on a.CURRENCYID=c.CURRENCYID
-where ACCOUNTNAME in ('Account1', 'Account2')
--- TODO: Update account names in line 28 and Lua
+-- TODO: Update account names in line 31
 SELECT a.accountname AS ACCOUNTNAME,
        a.initialbal + Total(t.transamount) AS BALANCE,
+	a.creditlimit AS CREDITLIMIT,
        (a.initialbal + Total(t.transamount)) * Ifnull(ch.currvalue, c.baseconvrate) AS BASEBAL,
+	a.creditlimit + a.initialbal + Total(t.transamount) AS AVAILABLE,
        c.pfx_symbol AS PFX_SYMBOL,
        c.sfx_symbol AS SFX_SYMBOL,
        c.group_separator AS GROUP_SEPARATOR,
@@ -29,7 +27,7 @@ LEFT JOIN currencyhistory_v1 AS ch ON ch.currencyid = c.currencyid
 	AND ch.currdate = (SELECT MAX(crhst.currdate)
 					   FROM currencyhistory_v1 AS crhst
 					   WHERE crhst.currencyid = c.currencyid)
-WHERE accountname IN ('Account1', 'Account2')
-  AND t.status NOT IN ('V', 'D')
+WHERE t.status NOT IN ('V', 'D')
+  AND accountname IN ('Account1', 'Account2')
 GROUP BY a.accountid
 ORDER BY accountname;
