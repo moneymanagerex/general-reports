@@ -104,7 +104,7 @@
 	var data={
 		labels: [<TMPL_LOOP NAME=CONTENTS>"<TMPL_VAR periode_month>",</TMPL_LOOP>],
 		datasets: [
-			{
+/*			{
 				label: "0 axis",
 				fillColor: "rgba(220,220,220,0.2)",
 				strokeColor: "rgba(220,220,220,1)",
@@ -114,7 +114,6 @@
 				pointHighlightStroke: "rgba(220,220,220,1)",
 				data: [<TMPL_LOOP NAME=CONTENTS>0,</TMPL_LOOP>]
 			},
-/*
 		{
 				label: "<TMPL_VAR name_n4>",
 				fillColor: "rgba(151,186,204,0)",

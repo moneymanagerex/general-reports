@@ -1,2 +1,4 @@
 Yearly Expense/Revenue
-show graph of cumul yearly expense and revenus by month for the last 3 years
+Show a graph of cumulative yearly expense and revenus by month for the last 3 years
+
+Displays all figures in the base currency, converting amounts from the account currency to base currency using the latest currency history value. If there are no currency history values, then uses the currency base rate conversion.

@@ -33,7 +33,7 @@ SELECT mdata.periode_month AS periode_month,
                                                                              FROM CURRENCYHISTORY_V1 AS CRHST
                                                                             WHERE CRHST.CURRENCYID = CF.CURRENCYID
                                                                        )
-                       WHERE ca.TRANSDATE > date('now', 'start of year', '-4 year', 'localtime') AND 
+                       WHERE ca.TRANSDATE >= date('now', 'start of year', '-4 year', 'localtime') AND 
                              ca.STATUS NOT IN ('V', 'D') AND 
                              ca.TRANSCODE <> 'Transfer'
                   )
@@ -42,4 +42,3 @@ SELECT mdata.periode_month AS periode_month,
        AS mdata
  GROUP BY mdata.periode_month
  ORDER BY mdata.periode_month ASC;
-;
