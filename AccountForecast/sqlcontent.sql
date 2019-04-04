@@ -1,4 +1,4 @@
--- TODO: Update account name in line 24. 
+-- TODO: Update account name in line 25. 
 select b.TRANSAMOUNT, b.REPEATS, b.NUMOCCURRENCES, b.NEXTOCCURRENCEDATE, c.PFX_SYMBOL, c.SFX_SYMBOL, c.DECIMAL_POINT, c.GROUP_SEPARATOR,
     (select a.INITIALBAL + total(t.TRANSAMOUNT)
     from
@@ -21,5 +21,5 @@ from
     where TRANSCODE = 'Transfer') as b
 inner join ACCOUNTLIST_V1 as a on b.ACCOUNTID = a.ACCOUNTID
 inner join CURRENCYFORMATS_V1 as c on c.CURRENCYID = a.CURRENCYID
-where a.ACCOUNTNAME = 'Account1'
-and b.STATUS NOT IN ('V','D');
+where b.STATUS NOT IN ('V','D')
+and a.ACCOUNTNAME = 'Account1';
