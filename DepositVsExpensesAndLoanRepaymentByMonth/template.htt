@@ -136,11 +136,6 @@ var data={
     ctx.canvas.width =document.getElementById("myChartParent").offsetWidth;
     var myNewChart=new Chart(ctx).Line(data,options);
     myNewChart.resize();
-
-  //then you just need to generate the legend
-  var legend=myNewChart.generateLegend();
-  document.getElementById("legendDiv").innerHTML=legend;
-
   }
 </script>
 </body>
