@@ -2,9 +2,7 @@
 <html lang="en-US">
    <head>
       <meta charset="UTF-8" />
-      <title>
-         <TMPL_VAR REPORTNAME>
-      </title>
+      <title><TMPL_VAR REPORTNAME></title>
       <link href="master.css" rel="stylesheet" />
       <script src = "sorttable.js"></script>
       <!-- sorttable_customkey is not HTML5, should be data-sorttable_customkey but this needs changes to sorttable.js -->
@@ -145,10 +143,10 @@
              "_Title_":"Transactions with Blank Note field"
          }],
          "russian": [{
-             "_Title_":"Транзакции с пустыми заметками", "Amount":"Сумма"
-             , "Date": "Дата", "Account": "Счёт"
-              , "Payee":"Получатель", "ID":"№"
-              , "Amount":"Сумма", "Error":"Ошибка"
+             "_Title_":"РўСЂР°РЅР·Р°РєС†РёРё СЃ РїСѓСЃС‚С‹РјРё Р·Р°РјРµС‚РєР°РјРё", "Amount":"РЎСѓРјРјР°"
+             , "Date": "Р”Р°С‚Р°", "Account": "РЎС‡С‘С‚"
+              , "Payee":"РџРѕР»СѓС‡Р°С‚РµР»СЊ", "ID":"в„–"
+              , "Amount":"РЎСѓРјРјР°", "Error":"РћС€РёР±РєР°"
          }],
          };
          var my_lang = [];

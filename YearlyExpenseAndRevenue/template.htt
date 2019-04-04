@@ -167,15 +167,13 @@
 			}
 		]
 	};
-
 	//display graph
 	var options={
 		legend:true,
-		bezierCurve:false
-		,scaleLineWidth: 1
-		,responsive:true
+		bezierCurve:false,
+		scaleLineWidth:1,
+		responsive:true
 	};
-
 	var ctx=document.getElementById("myChart").getContext("2d");  
 	var myNewChart=new Chart(ctx).Line(data,options);
 	</script>
