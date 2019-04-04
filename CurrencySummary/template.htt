@@ -19,12 +19,12 @@
                 <tr><td><table class="table">
                 <thead>
                     <tr>
-                        <th>Currency Name</th>
-                        <th>Symbol</th>
-                        <th>No. of Accounts</th>
-                        <th>Currency Conversion Rate</th>
-			<th>Latest History Rate</th>
-			<th>Display Format</th>
+                        <th class="text-center">Currency Name</th>
+                        <th class="text-center">Symbol</th>
+                        <th class="text-center">No. of Accounts</th>
+                        <th class="text-center">Currency Conversion Rate</th>
+			<th class="text-center">Latest History Rate</th>
+			<th class="text-center">Display Format</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,18 +100,16 @@
     var data = [
         <TMPL_LOOP CONTENTS>
         {
-            value: <TMPL_VAR Quantity>,
-            color: "<TMPL_VAR COLOR>",
-            label: "<TMPL_VAR COLOR>",
-            labelColor: "black",
-            labelFontSize: "12",
-            labelAlign: "center"
+            value:<TMPL_VAR Quantity>,
+            color:"<TMPL_VAR COLOR>",
+            title:"<TMPL_VAR CURRENCYNAME>",
+            labelColor:"black",
+            labelFontSize:"12",
+            labelAlign:"center"
         } <TMPL_IF __LAST__><TMPL_ELSE>,</TMPL_IF>
         </TMPL_LOOP>
     ]
-    var options = {
-        animationEasing: 'easeOutQuint'
-    }
+    var options = {legend:true,animationEasing:'easeOutQuint'}
     var ctx = document.getElementById("reportChart").getContext("2d");
     var reportChart = new Chart(ctx).Pie(data, options);
 </script>

@@ -6,6 +6,3 @@ function handle_record(record)
     count = count + 1;
     record:set('COLOR', color);
 end
-
-function complete(result)
-end
