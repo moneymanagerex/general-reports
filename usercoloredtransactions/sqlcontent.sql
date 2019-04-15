@@ -8,7 +8,7 @@ SELECT t.FOLLOWUPID,
        (
            SELECT inf.infovalue
              FROM infotable_V1 AS inf
-            WHERE inf.infoname = 'USER_COLOR' || CAST (t.followupid AS TEXT) 
+            WHERE inf.infoname = 'USER_COLOR' || CAST (t.followupid AS TEXT)
        )
        AS FOLLOWCOLOR,
 t.transid as transid
@@ -40,14 +40,13 @@ c2.TRANSID
        INNER JOIN
        CURRENCYFORMATS_V1 AS c ON t.CURRENCYID = c.CURRENCYID
        LEFT JOIN
-       CURRENCYHISTORY_V1 AS CH ON CH.CURRENCYID = c.CURRENCYID AND 
+       CURRENCYHISTORY_V1 AS CH ON CH.CURRENCYID = c.CURRENCYID AND
                                    CH.CURRDATE = (
-                                                     SELECT MAX(CRHST.CURRDATE) 
+                                                     SELECT MAX(CRHST.CURRDATE)
                                                        FROM CURRENCYHISTORY_V1 AS CRHST
                                                       WHERE CRHST.CURRENCYID = c.CURRENCYID
                                                  )
  WHERE t.FOLLOWUPID > 0
  ORDER BY t.FOLLOWUPID ASC,
           t.PAYEENAME ASC,
-          t.TRANSDATE ASC;
-;
+          t.TRANSDATE ASC;ß
