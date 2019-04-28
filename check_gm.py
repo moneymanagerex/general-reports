@@ -8,7 +8,8 @@ import sqlite3
 def check(curs, report):
     print ('checking %s' % report)
     sql = ''
-    for line in open(os.path.join(report, 'sqlcontent.sql'), mode='r', encoding='utf-8'):
+#3.    for line in open(os.path.join(report, 'sqlcontent.sql'), mode='r', encoding='utf-8'):
+    for line in open(os.path.join(report, 'sqlcontent.sql'), mode='r'):
         sql = sql + line
     curs.execute(sql)
     print ('done %s' % report)
@@ -18,7 +19,8 @@ if __name__ == '__main__':
     conn.row_factory = sqlite3.Row 
     curs = conn.cursor()
     sql = ''
-    for line in open('tables_v1.sql', mode='r', encoding='utf-8'):
+#    for line in open('tables_v1.sql', mode='r', encoding='utf-8'):
+    for line in open('tables_v1.sql', mode='r'):
         sql = sql + line
     curs.executescript(sql)
     
@@ -29,11 +31,12 @@ if __name__ == '__main__':
             try:
                 check(curs, report)
             except:
-                print (traceback.print_exc())
+                print(traceback.print_exc())
                 print ('ERR: %s' % report)
     conn.close()
     
     if anyNotPassed:
         exit(1)
     
-    exit(0)
+    # exit(0)
+    
