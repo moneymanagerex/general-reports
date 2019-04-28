@@ -23,7 +23,7 @@ SELECT IFNULL(CH.CURRVALUE, m.BASECONVRATE) AS CURRRATE,
                                                        FROM CURRENCYHISTORY_V1 AS CRHST
                                                       WHERE CRHST.CURRENCYID = m.CURRENCYID
                                                  )
- WHERE t.NOTES;
+ WHERE t.NOTES="";
 /* For v13 DB
 - remove the _V1 from the tablenames
 - remove the m.BASECONVRATE and ISNULL checks on CH.CURRVALUE
