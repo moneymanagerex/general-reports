@@ -16,7 +16,7 @@ SELECT tx_yr_data.yeartype as YEARTYPE,
                    END AS YEAR,
                   tx_data.income AS income,
                   tx_data.expense AS expense
-             FROM (/* change SELECT 'YEAR' to SELECT 'FINYEAR' if you want financial years based on settings for financial year start month & day from MMEX options, keep as SELECT 'YEAR' for normal years Jan-01 to Dec-31 */
+             FROM (/* change SELECT 'YEAR' to SELECT 'FIN_YEAR' if you want financial years based on settings for financial year start month & day from MMEX options, keep as SELECT 'YEAR' for normal years Jan-01 to Dec-31 */
                       SELECT 'YEAR' AS yeartype, -- values are 'YEAR' or 'FIN_YEAR'
                              CA.transdate AS transdate,
                              CAST (strftime('%Y', transdate) AS INTEGER) AS year,
