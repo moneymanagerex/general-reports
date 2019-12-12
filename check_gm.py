@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # vi:tabstop=4:expandtab:shiftwidth=4:softtabstop=4:autoindent:smarttab
 
-import os
+import os, sys
 import sqlite3
+import urllib.request
 
 def check(curs, report):
     print 'checking %s' % report

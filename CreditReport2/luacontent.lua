@@ -1,25 +1,17 @@
-local base_total = 0;
-local credit_total = 0;
-local avail_total = 0;
+local base_bal_total = 0;
+local base_credit_total = 0;
+local base_avail_total = 0;
+local exchg_rate = 1;
 
 function handle_record(record)
-    local prefix = record:get("PFX_SYMBOL");
-    local suffix = record:get("SFX_SYMBOL");
-    local balance = record:get("Balance");
-    local credit = record:get("CreditLimit");
-    local available = record:get("AvailableCredit");
-    local InterestRate = record:get("InterestRate");
-    record:set("Balance", prefix .. string.format("%.2f", balance) .. suffix);
-    record:set("Credit", prefix .. string.format("%.2f", credit) .. suffix);
-    record:set("Available",  prefix .. string.format("%.2f", available) .. suffix);
-    record:set("InterestRate", prefix .. string.format("%.2f", InterestRate) .. suffix);
-    base_total = base_total + record:get("BaseBal");
-    credit_total = credit_total + record:get("CreditLimit");
-    avail_total = avail_total + record:get("AvailableCredit");
+    exchg_rate = record:get("CURRVALUE");
+    base_bal_total = base_bal_total + (record:get("Balance") * exchg_rate);
+    base_credit_total = base_credit_total + (record:get("CreditLimit")  * exchg_rate);
+    base_avail_total = base_avail_total + (record:get("AvailableCredit") * exchg_rate);
 end
 
 function complete(result)
-    result:set("Base_Total", base_total);
-    result:set("Credit_Total", credit_total);
-    result:set("Avail_Total", avail_total);
+    result:set("Base_Bal_Total", base_bal_total);
+    result:set("Base_Credit_Total", base_credit_total);
+    result:set("Base_Avail_Total", base_avail_total);
 end

@@ -140,7 +140,7 @@
 
     function handle_record(record)
         if initialized == 0 then
-            total = record:get("Balance");
+            total = record:get("BALANCE");
             forecast= total;
             initialized = 1;
         end

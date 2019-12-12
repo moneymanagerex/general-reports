@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
     <script src = "ChartNew.js"></script>
-    <link href="master.css" rel="stylesheet">
+    <link href="master.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -32,12 +32,11 @@
                     }
                     ]
                 }
-                var opts= { annotateDisplay : true };
+                var opts= {annotateDisplay:true,legend:true};
                 window.onload = function() {
                     var myBar = new Chart(document.getElementById("mycanvas").getContext("2d")).Line(LineData,opts);
                 }
             </script>
-
                 <table class="table">
                 <thead>
                   <tr>

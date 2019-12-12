@@ -1,4 +1,6 @@
 language: python
+python: "3.6"
+install: true
 script:
-  - python check_gm.py
-  - python pack_gm.py
+  - ./check_gm.py
+  - ./pack_gm.py
