@@ -8,11 +8,13 @@ local colsDeposit = {["one"]=0, ["two"]=0, ["thr"]=0 , ["fou"]=0, ["fiv"]=0, ["s
 function handle_record(record)
     grandTotal = grandTotal + record:get('OVERALL');
     for key, value in pairs(cols) do
+        withdrawAmount=record:get("WITH_" .. key);
+        depositAmount=record:get("DEP_" .. key);
         cols[key] = cols[key] + record:get(key);
-        colsWithdraw[key] = colsWithdraw[key] + record:get("WITH_" .. key);
-        colsDeposit[key] = colsDeposit[key] + record:get("DEP_" .. key);
-        TotalWithdraw = TotalWithdraw + record:get("WITH_" .. key);
-        TotalDeposit = TotalDeposit + record:get("DEP_" .. key);
+        colsWithdraw[key] = colsWithdraw[key] + withdrawAmount;
+        colsDeposit[key] = colsDeposit[key] + depositAmount;
+        TotalWithdraw = TotalWithdraw + withdrawAmount;
+        TotalDeposit = TotalDeposit + depositAmount;
      end
 end
 

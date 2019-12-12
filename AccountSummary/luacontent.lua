@@ -4,10 +4,8 @@ local count = 0;
 local colors = {"#FF6666", "#FFB266", "#FFFF66", "#B2FF66", "#66FF66", "#66FFB2", "#66FFFF", "#66B2FF", "#6666FF", "#B266FF", "#FF66FF", "#FF66B2"};
 
 function handle_record(record)
-    local bal = string.format("%.2f", record:get('Balance'));
-    local base = bal * record:get("BASECONVRATE");
-    record:set("Balance", record:get('PFX_SYMBOL') .. bal .. record:get('SFX_SYMBOL'));
-    record:set("Base", base);
+    local base = record:get('BALANCE') * record:get("CURRVALUE");
+    record:set("BASE", base);
     total = total + base;
     local color = colors[1 + (count % #colors)];
     data = data .. '{value:' .. string.format("%.2f", base) .. ',color:"' .. color .. '"},';

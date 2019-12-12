@@ -1,5 +1,6 @@
 local months = {"Jan", "Feb", "Mar" , "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 local colors = {"#FF6666", "#FFB266", "#FFFF66", "#B2FF66", "#66FF66", "#66FFB2", "#66FFFF", "#66B2FF", "#6666FF", "#B266FF", "#FF66FF", "#FF66B2"};
+payeename = ''
 
 function handle_record(record)
     local color = colors[1 + (tonumber(record:get('YEAR')) % #colors)];
@@ -13,7 +14,9 @@ function handle_record(record)
             end
         end
     end
+    payeename = record:get('PAYEENAME');
 end
 
 function complete(result)
+     result:set('PAYEENAME', payeename);
 end

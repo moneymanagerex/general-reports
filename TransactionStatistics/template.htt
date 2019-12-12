@@ -32,7 +32,7 @@
                     }
                     ]
                 }
-                var opts= { annotateDisplay : true };
+                var opts= {annotateDisplay:true,legend:true};
                 window.onload = function() {
                     var myBar = new Chart(document.getElementById("mycanvas").getContext("2d")).Line(LineData,opts);
                 }

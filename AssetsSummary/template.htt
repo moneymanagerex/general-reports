@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h3>Asset Summary Report</h3>
-        <p><TMPL_VAR TODAY></p>
+        <p>Report Date: <TMPL_VAR TODAY></p>
         <div class="row">
             <div class="col-xs-2"></div>
             <div class="col-xs-8">
@@ -43,7 +43,7 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
 <script>
     <!-- Format numbers -->
     var elements= document.getElementsByClassName("money");

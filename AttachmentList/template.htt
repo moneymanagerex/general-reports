@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en-US'>
 <head>
     <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
@@ -8,7 +8,7 @@
 <body>
 <div class = "container">
 <h3><TMPL_VAR REPORTNAME></h3>
-<TMPL_VAR TODAY><hr>
+Report Date: <TMPL_VAR TODAY><hr>
 <div class = "row">
 <div class = "col-xs-2"></div>
 <div class = "col-xs-8">

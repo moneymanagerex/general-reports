@@ -2,6 +2,8 @@ Report: select all withdrawal transactions (for specified accounts).
 Included columns: date, amount, cat:subcat, notes, payee,  account name.
 Author: Aleksandr Anfilov
 
+Displays amouts in the currency of the account.
+
 How to export results to Excel: 
 1. Create a blank worksheet in Excel, set format for columns:
   B (date) - Date format,

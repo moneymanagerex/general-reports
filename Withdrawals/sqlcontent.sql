@@ -1,37 +1,44 @@
-SELECT	t1.transid					id,
-	t1.transdate					date,
-	t2.splittransamount			amount,
+SELECT	wd_data.id				id,
+	wd_data.date					AS date,
+	wd_data.amount				AS amount,
 	COALESCE(c.categname, '')
-	||  ":" ||   
-	COALESCE(sc.subcategname, '')	cat, 
-	''							notes,
-	p.payeename					payee,
-	a.accountname				account
+	||  ":" || 
+	COALESCE(sc.subcategname, '')	AS cat,
+	wd_data.notes				AS notes,
+	p.payeename					AS payee,
+	acc.accountname				AS account,
+	c.PFX_SYMBOL				AS pfx_symbol,
+	c.SFX_SYMBOL				AS sfx_symbol,
+	c.GROUP_SEPARATOR			AS group_separator,
+	c.DECIMAL_POINT				AS decimal_point
+FROM (SELECT	t1.transid		AS id,
+	t1.transdate				AS date,
+	t2.splittransamount		AS amount,
+	t2.categid				AS catid,
+	t2.subcategid				AS subcatid, 
+	''						AS notes,
+	t1.payeeid				AS payeeid,
+	t1.accountid				AS accountid
 	FROM splittransactions_v1 AS t2
 		INNER JOIN checkingaccount_v1 AS t1	ON t1.TRANSID = t2.TRANSID
-		LEFT JOIN category_v1 c		ON t2.categid=c.categid
-		LEFT JOIN subcategory_v1 sc	ON t2.subcategid= sc.subcategid
-		LEFT JOIN accountlist_v1 a	ON t1.accountid = a.accountid
-		LEFT JOIN payee_v1 p		ON t1.payeeid = p.payeeid
 	WHERE  
-		--t1.accountid in (	SELECT accountid	FROM accountlist_v1	WHERE accountname LIKE "EUR%") AND 
 	t1.transcode = "Withdrawal"
 UNION ALL
-SELECT	ca.transid				id,
-	ca.transdate					date,
-	ca.transamount				amount,
-	 COALESCE(c.categname, '')
-	 ||  ":" || 
-	 COALESCE(sc.subcategname, '')	cat,
-	ca.notes						notes,
-	p.payeename					payee,
-	a.accountname				account
+SELECT	ca.transid	AS id,
+	ca.transdate		AS date,
+	ca.transamount	AS amount,
+	ca.categid		AS catid,
+	ca.subcategid		AS subcatid, 
+	ca.notes			AS notes,
+	ca.payeeid		AS payeeid,
+	ca.accountid		AS accountid
 	FROM  checkingaccount_v1 AS ca
-		JOIN accountlist_v1 a	ON ca.accountid = a.accountid
-		LEFT JOIN payee_v1 p	ON ca.payeeid = p.payeeid
-		LEFT JOIN category_v1 c	ON ca.categid=c.categid
-		LEFT JOIN subcategory_v1 sc	ON ca.subcategid= sc.subcategid
 	WHERE  
-			--ca.accountid in (SELECT accountid FROM accountlist_v1 WHERE accountname LIKE "EUR%")	AND 
 		ca.transcode = "Withdrawal" AND ca.categid <>-1
-ORDER BY date
+) AS wd_data
+LEFT JOIN accountlist_v1 AS acc ON wd_data.accountid = acc.accountid
+LEFT JOIN CURRENCYFORMATS_V1 AS c ON c.CURRENCYID = acc.CURRENCYID
+LEFT JOIN category_v1 AS c ON wd_data.catid=c.categid
+LEFT JOIN subcategory_v1 AS sc ON wd_data.subcatid= sc.subcategid
+LEFT JOIN payee_v1 AS p ON wd_data.payeeid = p.payeeid
+ORDER BY date ASC;

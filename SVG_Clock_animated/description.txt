@@ -1,0 +1,3 @@
+SVG Example: SVG Clock: animated with Javascript
+
+https://kihyuckhong.wordpress.com/2010/01/10/svg-example-svg-clock-animated-with-javascript/

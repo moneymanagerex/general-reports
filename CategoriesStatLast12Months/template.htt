@@ -20,22 +20,25 @@
 </head>
 <body>
 <div class="container">
-<TMPL_VAR TODAY>
 <h3 class="i18n">_Title_</h3>
+<TMPL_VAR TODAY>
 <div class="row">
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
     <canvas id="reportChart" width="700" height="400"></canvas>
-</div>
-<div class="col-xs-5"></div>
-<div class="col-xs-4">
-    <table class="table-condensed" style="border: 2px double gray;">
-        <tr><td><div class="foo" style="background-color:green;"></div></td><td id="lastYear">yyyy</td>
-        <td><div class="foo" style="background-color:blue;"></div></td><td id="thisYear">yyyy</td></tr>
-    </table>
-</div>
+	<div class="col-xs-5"></div>
+	<div class="col-xs-4">
+	    <table class="table-condensed" style="border: 2px double gray;">
+		<tr>
+			<td class="small text-muted">All figures in base currency: <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></td>
+			<td><div class="foo" style="background-color:green;"></div></td><td id="lastYear">yyyy</td>
+			<td><div class="foo" style="background-color:blue;"></div></td><td id="thisYear">yyyy</td>
+		</tr>
+	    </table>
+	</div>
+	</div>
 <table class='table sortable'>
   <thead>
     <tr>
@@ -128,10 +131,9 @@
 </table>
     </div></div>
 <TMPL_LOOP ERRORS>
-    <hr>    <TMPL_VAR ERROR>
+    <hr><TMPL_VAR ERROR>
 </TMPL_LOOP>
 </div>
-
 <script> <!-- Translations -->
     var translations =
     {

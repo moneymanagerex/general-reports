@@ -27,7 +27,7 @@ SELECT 'month' AS periode_name,
                       )
                   THEN ca.transamount ELSE 0 END AS Transfer
              FROM checkingaccount_V1 AS ca
-            WHERE ca.status NOT IN ('V', 'D')-- and TRANSDATE > date('now', 'start of month','-5 year','localtime') 
+            WHERE ca.STATUS NOT IN ('D', 'V')-- and TRANSDATE > date('now', 'start of month','-5 year','localtime') 
        )
        AS cadata
  GROUP BY periode

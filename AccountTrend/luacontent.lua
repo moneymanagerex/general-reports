@@ -3,6 +3,8 @@ local labels = 'labels : [';
 local data = '';
 local prefix = '';
 local suffix = '';
+local dpchar = '';
+local grpsepchar = '';
 local json = [[
     datasets : [{
         fillColor : "rgba(255,255,255,0)",
@@ -27,10 +29,18 @@ local product_sum = 0;
 local squared_sum = 0;
 local zero_count = 0;
 local last_value = 0;
+local initialized =0 ;
+local accountname = '';
 
 function handle_record(record)
-    prefix = record:get("PFX_SYMBOL");
-    suffix = record:get("SFX_SYMBOL");
+    if initialized == 0 then
+        prefix = record:get("PFX_SYMBOL");
+        suffix = record:get("SFX_SYMBOL");
+        dpchar = record:get("DECIMAL_POINT");
+        grpsepchar = record:get("GROUP_SEPARATOR");
+        accountname = record:get("ACCOUNTNAME");
+        initialized = 1;
+    end
     if count ~= 0 then
         local prev_y = year;
         local prev_m = month + 1;
@@ -55,12 +65,13 @@ function handle_record(record)
         year = record:get("YEAR");
         month = record:get("MONTH");
     end
+    
     local date = months[tonumber(month)] .. ' ' .. year;
     labels = labels .. '"' .. date .. '",';
     record:set("DATE", date);
     last_value = record:get("Balance");
     local balance = string.format("%.2f", last_value);
-    record:set("Balance", prefix .. balance .. suffix);
+    record:set("Balance", balance);
     if tonumber(string.sub(balance,-1)) == 0  and tonumber(string.sub(balance,-2)) ~= 0 then
         data = data .. '\'' .. balance .. '\',';
     else
@@ -103,7 +114,13 @@ function complete(result)
         else
             data = data .. fval .. ',';
         end
-        result:set('FVALUE' .. i, prefix .. fval .. suffix);
+        result:set('FVALUE' .. i, fval);
     end
     result:set('CHART_DATA', string.sub(labels,1,-2) .. "]," .. string.sub(data,1,-2) .. "]}]");
+    result:set('ACCOUNTNAME', accountname);
+    -- Override the base currency variables as the account may be in different currency
+    result:set('PFX_SYMBOL', prefix);
+    result:set('SFX_SYMBOL', suffix);
+    result:set('DECIMAL_POINT', dpchar);
+    result:set('GROUP_SEPARATOR', grpsepchar);
 end
