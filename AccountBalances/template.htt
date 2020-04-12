@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src = "ChartNew.js"></script>
+    <script src = "sorttable.js"></script>
+    <link href = "master.css" rel = "stylesheet">
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+<div class = "row">
+<div class = "col-xs-2"></div>
+<div class = "col-xs-8">
+<table class = "table">
+<thead>
+    <tr>
+        <th>Account name</th>
+        <th>Account type</th>
+        <th>Balance</th>
+        <th>Currency</th>
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR "ACCOUNTNAME"></td>
+        <td><TMPL_VAR "ACCOUNTTYPE"></td>
+        <td class="money text-right"  data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" data-grpsep="<TMPL_VAR GROUP_SEPARATOR>" data-decpt="<TMPL_VAR DECIMAL_POINT>"><TMPL_VAR BALANCE></td>
+         <td><TMPL_VAR CURRENCY_SYMBOL></td>
+        </tr>
+    </TMPL_LOOP>
+</tbody>
+</table>
+</div>
+</div>
+Parameters:<BR> Date:  <TMPL_VAR single_date>
+</div>
+<TMPL_LOOP ERRORS>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+
+</html>
