@@ -28,7 +28,6 @@ deploy:
   skip_cleanup: true
   keep_history: true
   repo: moneymanagerex/general-reports
-  github_token: $GitHub_auth_token
   token: $GitHub_auth_token
   local_dir: gh_releases 
   #file: gh_releases/*.{zip,grm}
