@@ -1,7 +1,7 @@
 Account balances for a specific date.
 ===========================================================
 
-.. figure:: https://raw.githubusercontent.com/moneymanagerex/general-reports/master/AccountBalances/sample.png
+.. figure:: https://raw.githubusercontent.com/moneymanagerex/general-reports/master/packages/AccountBalances/sample.png
    :alt: Account balances for a specific date
 
 This report will show account balances for a specific date.
