@@ -33,4 +33,3 @@ deploy:
   overwrite: true
   on:
     tags: true
-    condition: ${#GitHub_auth_token} != 0
