@@ -4,3 +4,33 @@ install: true
 script:
   - ./check_gm.py
   - ./pack_gm.py
+
+notifications: # set notification options
+  email:
+    recipients:
+      - developers@moneymanagerex.org
+    on_success: change # change is when the repo status goes from pass to fail or vice versa
+    on_failure: always
+
+after_success:
+
+# Rename files for GH Releases upload as workaround for travis-ci/dpl#821
+before_deploy: |-
+  if [[ ! -d gh_releases ]]; then
+    mkdir gh_releases
+    for f in *.{zip,grm}; do
+      if [[ -e "$f" ]]; then cp -v "$f" "gh_releases/${f//\~/.}"; fi
+    done
+  fi
+
+deploy:
+- provider: releases
+  api_key: $GitHub_auth_token
+  file_glob: true
+  file: gh_releases/*.{zip,grm}
+  skip_cleanup: true
+  prerelease: true
+  overwrite: true
+  on:
+    tags: true
+    condition: ${#GitHub_auth_token} != 0
