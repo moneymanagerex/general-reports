@@ -6,7 +6,7 @@ import zipfile
 
 def pack_report(subdir, package):
     root_path = os.path.dirname(os.path.realpath(__file__))
-    print ('--|zip|-- packing: ', subdir.ljust(45),  package + '.zip')
+    print ('--|zip|-- packing: ', subdir.ljust(60),  package + '.zip')
     valid_names = ['description.txt', 'luacontent.lua', 'sqlcontent.sql', 'template.htt']
     f = zipfile.ZipFile(package + '.zip', 'w')
     os.chdir(subdir)
