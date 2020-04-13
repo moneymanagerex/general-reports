@@ -17,7 +17,7 @@ A.description AS Description, A.filename AS File,
 (SELECT infovalue FROM infotable_v1 WHERE infoname = 'ATTACHMENTSFOLDER:Win' COLLATE NOCASE) AS BasePath,
 '\'||A.reftype||'\'||A.filename AS FilePath, '' AS BasepathLUA
 FROM attachment_v1 A INNER JOIN accountlist_v1 C ON C.accountid = A.refid
-WHERE A.reftype = "BankAccount"
+WHERE A.reftype like "Bank%Account"
 
 UNION ALL
 
