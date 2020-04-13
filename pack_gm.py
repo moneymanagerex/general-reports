@@ -6,7 +6,7 @@ import zipfile
 
 def pack_report(subdir, package):
     root_path = os.path.dirname(os.path.realpath(__file__))
-    print ('============ packing: ', package + '.zip')
+    print ('===zip=== packing: ', subdir.ljust(40),  package + '.zip')
     valid_names = ['description.txt', 'luacontent.lua', 'sqlcontent.sql', 'template.htt']
     f = zipfile.ZipFile(package + '.zip', 'w')
     os.chdir(subdir)
@@ -21,7 +21,6 @@ if __name__ == '__main__':
     for subdir, dirs, files in os.walk(path):
         if not files: continue
         path, subfolder = os.path.split(subdir)
-        print ('--', subdir, subfolder)
         try:
             pack_report(subdir, subfolder)
         except:
