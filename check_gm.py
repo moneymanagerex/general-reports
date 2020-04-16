@@ -18,7 +18,8 @@ valid_names = ['description.txt', 'luacontent.lua', 'sqlcontent.sql', 'template.
 path = 'packages'
 
 for subdir, dirs, files in os.walk(path):
-    if not files: continue
+    file_count = len(files)    
+    if file_count < 4: continue
     error_msg = ''
     err = False
     package = ''
