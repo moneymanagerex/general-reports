@@ -1,6 +1,7 @@
 language: python
 python: "3.6"
 install: true
+
 script:
   - ./check_gm.py
   - ./pack_gm.py
@@ -16,6 +17,8 @@ after_success:
 
 # Rename files for GH Releases upload as workaround for travis-ci/dpl#821
 before_deploy: |-
+  git config --global credential.helper store
+  echo "https://$GitHub_auth_token:x-oauth-basic@github.com" >$HOME/.git-credentials
   if [[ ! -d gh_releases ]]; then
     mkdir gh_releases
     for f in *.{zip,grm}; do
