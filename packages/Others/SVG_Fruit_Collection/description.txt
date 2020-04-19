@@ -1,0 +1,3 @@
+A graph that shows the number of fruit collected
+
+https://webformyself.com/kak-sozdat-grafik-na-svg/
