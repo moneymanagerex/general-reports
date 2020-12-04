@@ -229,7 +229,7 @@
                 [ <TMPL_LOOP CONTENTS> <TMPL_VAR ele>, </TMPL_LOOP>],
                 [ <TMPL_LOOP CONTENTS> <TMPL_VAR ten>, </TMPL_LOOP>],
                 [ <TMPL_LOOP CONTENTS> <TMPL_VAR nin>, </TMPL_LOOP>],
-                [ <TMPL_LOOP CONTENTS> <TMPL_VAR eig>, </TMPL_LOOP>],
+                [ <TMPL_LOOP CONTENTS> <TMPL_VAR egh>, </TMPL_LOOP>],
 		[ <TMPL_LOOP CONTENTS> <TMPL_VAR sev>, </TMPL_LOOP>],
 		[ <TMPL_LOOP CONTENTS> <TMPL_VAR six>, </TMPL_LOOP>],
 		[ <TMPL_LOOP CONTENTS> <TMPL_VAR fiv>, </TMPL_LOOP>],
