@@ -21,4 +21,6 @@ Set up your loan accounts and payments like this
 Configuration
 ------
 It is possible to limit the period that is displayed in the sqlcontent.sql file on line 29.
-Uncomment this line and change the *'-5 year'* to the display period you wish.
+Uncomment this line and change the *''-5 year'* to the display period you wish.
+
+![](https://raw.githubusercontent.com/moneymanagerex/general-reports/master/packages/Income_Expenses/YearlyExpenseAndRevenue/sample.png)
