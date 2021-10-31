@@ -11,7 +11,7 @@ Category
 
 Currency
 
-ncome_Expenses
+Income_Expenses
 
 Others
 
