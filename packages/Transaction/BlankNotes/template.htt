@@ -29,7 +29,7 @@
                   <TMPL_LOOP NAME=CONTENTS>
                      <tr>
                         <td>
-                           <a href="trx:<TMPL_VAR TRANSID>">
+                           <a href="trx:<TMPL_VAR TRANSID>" target="_blank">
                               <TMPL_VAR TRANSID>
                            </a>
                            </th>
