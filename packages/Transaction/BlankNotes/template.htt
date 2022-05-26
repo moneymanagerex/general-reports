@@ -149,9 +149,8 @@
               , "Amount":"Сумма", "Error":"Ошибка"
          }],
          };
-         var my_lang = [];
          // The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
-             // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+         var my_lang=translations.<TMPL_VAR LANGUAGE>;
          var my_lang = [];
          if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
          switch("<TMPL_VAR LANGUAGE>") {
