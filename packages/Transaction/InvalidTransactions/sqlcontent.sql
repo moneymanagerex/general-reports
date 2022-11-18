@@ -47,4 +47,4 @@ select c.transid, c.transdate, c.notes
       inner join payee_v1 p on p.payeeid=c.payeeid
       inner join accountlist_v1 a on a.accountid=c.accountid
       inner join splittransactions_v1 s on c.transid=s.transid
-    where s.categid > 0  and s.categid not in (select categid from category_v1)
+    where s.categid > 0  and s.categid not in (select categid from category_v1);
