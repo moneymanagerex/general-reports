@@ -1,4 +1,11 @@
-SELECT CASE t.subcateg WHEN -1 THEN ca.categname ELSE ca.categname || ':' || sc.subcategname END as category,
+WITH RECURSIVE categories(categid, categname, parentid) AS
+    (SELECT a.categid, a.categname, a.parentid FROM category_v1 a WHERE parentid = '-1'
+        UNION ALL
+     SELECT c.categid, r.categname || ':' || c.categname, c.parentid
+     FROM categories r, category_v1 c
+	 WHERE r.categid = c.parentid
+	 )
+SELECT ca.categname as category,
        total(CASE strftime('%m', date('now', 'start of month', '-11 month', 'localtime')) WHEN month THEN amount END) AS twe,
        total(CASE strftime('%m', date('now', 'start of month', '-10 month', 'localtime')) WHEN month THEN amount END) AS ele,
        total(CASE strftime('%m', date('now', 'start of month', '-9 month', 'localtime')) WHEN month THEN amount END) AS ten,
@@ -39,7 +46,6 @@ SELECT CASE t.subcateg WHEN -1 THEN ca.categname ELSE ca.categname || ':' || sc.
   FROM (
            SELECT strftime('%m', TRANSDATE) AS month,
                   CASE ifnull(c.categid, -1) WHEN -1 THEN s.categid ELSE c.categid END AS categ,
-                  CASE ifnull(c.categid, -1) WHEN -1 THEN ifnull(s.subcategid, -1) ELSE ifnull(c.subcategid, -1) END AS subcateg,
                   sum((CASE c.categid WHEN -1 THEN splittransamount ELSE transamount END) * (CASE transcode WHEN 'Withdrawal' THEN -IFNULL(CH.CURRVALUE, CF.BASECONVRATE) ELSE cf.BaseConvRate END)) as amount,
                   sum((CASE c.categid WHEN -1 THEN splittransamount ELSE transamount END) * (CASE transcode WHEN 'Withdrawal' THEN -IFNULL(CH.CURRVALUE, CF.BASECONVRATE) ELSE 0.00 END)) as amountWithdraw,
                   sum((CASE c.categid WHEN -1 THEN splittransamount ELSE transamount END) * (CASE transcode WHEN 'Withdrawal' THEN 0.00 ELSE IFNULL(CH.CURRVALUE, CF.BASECONVRATE) END)) as amountDeposit
@@ -59,16 +65,14 @@ SELECT CASE t.subcateg WHEN -1 THEN ca.categname ELSE ca.categname || ':' || sc.
                                                             )
             WHERE transcode != 'Transfer' AND 
                   c.status NOT IN ('V', 'D') AND 
+				  (c.DELETEDTIME = '' OR c.DELETEDTIME IS NULL) AND
                   ac.status = 'Open' AND 
                   (date('now', 'start of month', '-11 month', 'localtime') <= transdate AND 
                    transdate < date('now', 'start of month', '+1 month', 'localtime')) 
             GROUP BY month,
-                     categ,
-                     subcateg
+                     categ
        ) AS t
        LEFT JOIN
-       category_v1 ca ON ca.categid = t.categ
-       LEFT JOIN
-       subcategory_v1 sc ON sc.categid = t.categ AND sc.subcategid = t.subcateg
+       categories ca ON ca.categid = t.categ
  GROUP BY category
  ORDER BY category asc;

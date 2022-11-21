@@ -1,9 +1,14 @@
+WITH RECURSIVE categories(categid, categname, parentid) AS
+    (SELECT a.categid, a.categname, a.parentid FROM category_v1 a WHERE parentid = '-1'
+        UNION ALL
+     SELECT c.categid, r.categname || ':' || c.categname, c.parentid
+     FROM categories r, category_v1 c
+	 WHERE r.categid = c.parentid
+	 )
 SELECT	wd_data.id				id,
 	wd_data.date					AS date,
 	wd_data.amount				AS amount,
-	COALESCE(c.categname, '')
-	||  ":" || 
-	COALESCE(sc.subcategname, '')	AS cat,
+	COALESCE(c.categname, '')	AS cat,
 	wd_data.notes				AS notes,
 	p.payeename					AS payee,
 	acc.accountname				AS account,
@@ -15,7 +20,6 @@ FROM (SELECT	t1.transid		AS id,
 	t1.transdate				AS date,
 	t2.splittransamount		AS amount,
 	t2.categid				AS catid,
-	t2.subcategid				AS subcatid, 
 	''						AS notes,
 	t1.payeeid				AS payeeid,
 	t1.accountid				AS accountid
@@ -27,8 +31,7 @@ UNION ALL
 SELECT	ca.transid	AS id,
 	ca.transdate		AS date,
 	ca.transamount	AS amount,
-	ca.categid		AS catid,
-	ca.subcategid		AS subcatid, 
+	ca.categid		AS catid, 
 	ca.notes			AS notes,
 	ca.payeeid		AS payeeid,
 	ca.accountid		AS accountid
@@ -38,7 +41,6 @@ SELECT	ca.transid	AS id,
 ) AS wd_data
 LEFT JOIN accountlist_v1 AS acc ON wd_data.accountid = acc.accountid
 LEFT JOIN CURRENCYFORMATS_V1 AS c ON c.CURRENCYID = acc.CURRENCYID
-LEFT JOIN category_v1 AS c ON wd_data.catid=c.categid
-LEFT JOIN subcategory_v1 AS sc ON wd_data.subcatid= sc.subcategid
+LEFT JOIN categories AS c ON wd_data.catid=c.categid
 LEFT JOIN payee_v1 AS p ON wd_data.payeeid = p.payeeid
 ORDER BY date ASC;
