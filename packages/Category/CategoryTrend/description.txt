@@ -1,5 +1,5 @@
 Category Trend with Forecast Report using Average
 
 TODO: 
-1. Update category and subcategory in SQL (line 17). 
+1. Update category and subcategory in SQL (line 41). 
 2. Update category and subcategory in Template (line 12).
