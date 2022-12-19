@@ -24,13 +24,13 @@
 			<tbody>
 			<TMPL_LOOP NAME=CONTENTS>
 				<tr>
-					<td><TMPL_VAR id></td>
+					<td><TMPL_VAR TRX_LINK></td>
 					<td><TMPL_VAR date></td>
 					<td class="money" data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" data-decpt="<TMPL_VAR DECIMAL_POINT>" data-grpsep="<TMPL_VAR GROUP_SEPARATOR>"><TMPL_VAR amount></td>
 					<td><TMPL_VAR cat></td>
 					<td><TMPL_VAR notes></td>
 					<td><TMPL_VAR payee></td>
-					<td><TMPL_VAR account></td>
+					<td><TMPL_VAR TRX_LINK_GO></td>
 				</tr>
 			</TMPL_LOOP>
 			</tbody>
