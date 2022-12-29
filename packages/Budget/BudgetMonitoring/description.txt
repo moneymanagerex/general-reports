@@ -1,11 +1,13 @@
 <h1>Budget Monitoring Report</h1>
 
-Version: 2.0 - 20220328
+Version: 2.1 - 20220328
 
 The report monitors the actual incomes and expenses by main categories of the selected time range compared to the 
 maintained budget.
 
-The amounts of the sub categories are aggregated to the assigned main category of each sub category.
+The amounts of all nested categories of a main category are summed up to the according main category. 
+
+Requires MMEX >= 1.6.2 (nested categories #1477)
 
 <h2>Budget has to be maintained</h2>
 
