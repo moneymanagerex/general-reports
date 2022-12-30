@@ -1,6 +1,6 @@
 <h1>Budget Monitoring Report</h1>
 
-Version: 2.1 - 20220328
+Version: 2.1 - 20221230
 
 The report monitors the actual incomes and expenses by main categories of the selected time range compared to the 
 maintained budget.
