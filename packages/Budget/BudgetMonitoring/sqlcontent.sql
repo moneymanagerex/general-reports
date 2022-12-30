@@ -31,17 +31,17 @@ ignoredAccountNames AS (
     SELECT '<accontNameToIgnore>' accountName 
 ),
 /**
- * Defines the sub-category referenced by tupel (category-name, sub-category-name) which should be used as 
- * category for the given transaction code (Withdrawal or Deposit). 
+ * Defines the nested-category referenced by '<root category-name>:<sub-category-name>[:<sub-sub-category-name>]) 
+ * which should be used as category for the given transaction code (Withdrawal or Deposit). 
  */
 transferSubCategoriesToSubstitute AS (
-    SELECT '<TransferCategoryName>' transferCategoryName, '<TransferSubCategoryName>' transferSubCategoryName
-        , '<TransactionCode>' transactionCode
+    SELECT '<TransferSubCategoryName>' newCategoryName, 
+        '<TransferCategoryName>:<TransferSubCategoryName>' transferCategoryName, '<TransactionCode>' transactionCode
 ),
 transferSubstitution AS (
-    select transferSubCategoryName categoryName, c.categId categoryId, transactionCode
+    select newCategoryName categoryName, c.categId categoryId, transactionCode
     from Categories c
-        join transferSubCategoriesToSubstitute sub on (c.categName = sub.transferCategoryName || ':' || sub.transferSubCategoryName)
+        join transferSubCategoriesToSubstitute sub on (c.categName = sub.transferCategoryName)
 ),
 /**
  * SubCategories, which are used in transfer transactions, shoule be nonetheless assigned to the category
