@@ -275,6 +275,19 @@ reportData AS (
     , 1 Show
     from actualsVsBudgets
     order by TransCode, Category
+),
+/**
+ * Substitute date format patterns, which work in C++ but not in SQLite
+ */
+DateFormatSubstituted AS (
+    SELECT replace(replace(replace(infovalue, 
+        '%y', '%Y'), 
+        '%Mon', '%m'), 
+        '%w', '') format
+        , infovalue, infoname
+    FROM infotable_v1
+    WHERE infoname = 'DATEFORMAT'
+    LIMIT 1
 )
 SELECT *
 FROM reportData
@@ -287,8 +300,9 @@ SELECT '-- selected accounts --' TransCode, "" CategoryId
 FROM selectedAccounts
 UNION ALL
 SELECT '-- selected period --' TransCode, "" CategoryId
-    , begin_date || ' - ' || end_date Category
+    , strftime(ifnull(format, '%y-%m-%d'), begin_date) || ' - ' || strftime(ifnull(format, '%y-%m-%d'), end_date) Category
     , 0 ActualAmount, 0 BudgetAmount, 0 Difference, 0 Rate, 0 RelativeDeviation
     , "" BaseCurrencyPrefixSymbol, "" BaseCurrencySuffixSymbol, 0 SwitchType, '' TYPE
     , 0 Show
 FROM PeriodSelection
+    left join DateFormatSubstituted on (1=1)
