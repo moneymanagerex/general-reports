@@ -73,6 +73,11 @@ local baseCurrencySuffixSymbol = nil;
 local selectedAccounts = "all";
 
 ---
+-- Period of time which is contained in report
+-- 
+local selectedPeriod = '';
+
+---
 -- available types map withdrawal to expenses and deposit to incomes
 -- 
 local availableTypes = {
@@ -101,8 +106,10 @@ function handle_record(record)
 end
 
 function do_handle_record(record)
-    if (record:get("CategoryId") == nil or record:get("CategoryId") == "") then
+    if (record:get("TransCode") == "-- selected accounts --") then
         do_handle_accounts(record);
+    elseif (record:get("TransCode") == "-- selected period --") then
+        do_handle_period(record);
     else 
         do_handle_category(record);
     end
@@ -110,6 +117,10 @@ end
 
 function do_handle_accounts(record)
     selectedAccounts = record:get("Category");
+end
+
+function do_handle_period(record)
+    selectedPeriod = record:get("Category");
 end
 
 function do_handle_category(record)
@@ -298,6 +309,7 @@ function do_complete(result)
     local date = os.date("*t", os.time{year=os.date('%Y'), month=os.date('%m'), day=os.date('%d')});
     result:set("CREATED_AT", os.date("%c"));
     result:set("SELECTED_ACCOUNTS", selectedAccounts);
+    result:set("SELECTED_PERIOD", selectedPeriod);
     
     result:set("MONEY_STYLE", generateCurrencyCss());
     

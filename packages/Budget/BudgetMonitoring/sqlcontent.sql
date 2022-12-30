@@ -285,3 +285,10 @@ SELECT '-- selected accounts --' TransCode, "" CategoryId
     , "" BaseCurrencyPrefixSymbol, "" BaseCurrencySuffixSymbol, 0 SwitchType, '' TYPE
     , 0 Show
 FROM selectedAccounts
+UNION ALL
+SELECT '-- selected period --' TransCode, "" CategoryId
+    , begin_date || ' - ' || end_date Category
+    , 0 ActualAmount, 0 BudgetAmount, 0 Difference, 0 Rate, 0 RelativeDeviation
+    , "" BaseCurrencyPrefixSymbol, "" BaseCurrencySuffixSymbol, 0 SwitchType, '' TYPE
+    , 0 Show
+FROM PeriodSelection
