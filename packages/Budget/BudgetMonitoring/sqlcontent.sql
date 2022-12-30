@@ -47,7 +47,7 @@ transferSubstitution AS (
  * SubCategories, which are used in transfer transactions, shoule be nonetheless assigned to the category
  */
 transferSubCategoriesToReAssign AS (
-    SELECT '<CategoryName>' CategoryName, '<TransferSubCategoryName>' transferSubCategoryName 
+    SELECT '<CategoryName>:<TransferSubCategoryName>' TransferCategoryName 
 ),
 /**
  * PeriodSelection: 
@@ -153,7 +153,7 @@ actuals AS (
     from (checkingaccount_v1 t
         left join SplitTransactions_v1 st on (t.TransId = st.TransId))
         join Categories c on (c.CategId = ifnull(st.CategId, t.CategId))
-        JOIN transferSubCategoriesToReAssign tsc ON (c.CategName = tsc.CategoryName || ':' || tsc.transferSubCategoryName)
+        JOIN transferSubCategoriesToReAssign tsc ON (c.CategName = tsc.TransferCategoryName)
         JOIN transactionTypesOfCategories ttc ON (c.RootCategId = ttc.CategoryId)
         join AccountList_v1 a on (t.AccountId = a.AccountId)
         join CurrencyFormats_v1 cf on (a.CurrencyId = cf.CurrencyId)

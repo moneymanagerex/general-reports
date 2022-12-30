@@ -99,16 +99,16 @@ ignoredAccountNames AS (
     SELECT 'My secret account' accountName
 </pre>
 
-<h3>Re-Assignment of transfer sub-categories</h3>
+<h3>Re-Assignment of nested transfer categories</h3>
 
-You may have a 1st-level nested category, which is mostly assigned to transfer transactions. Those transactions would be
+You may have a nested category, which is mostly assigned to transfer transactions. Those transactions would be
 ignored, as the report doesn't contain transfer transactions. If the main category of this sub category is a
-<i>Withdrawal</i> or <i>Deposit</i> category, you can re-assign this sub category, so that the transactions will
+<i>Withdrawal</i> or <i>Deposit</i> category, you can re-assign this nested category, so that the transactions will
 be used according to the transaction code of the main category:
 
 <pre>
 transferSubCategoriesToReAssign AS (
-    SELECT 'My Main Category' CategoryName, 'My sub category of this Main Category' transferSubCategoryName
+    SELECT 'My Main Category:My sub category of this Main Category' transferCategoryName
 )
 </pre>
 
