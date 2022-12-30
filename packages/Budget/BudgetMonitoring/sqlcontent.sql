@@ -44,7 +44,7 @@ transferSubstitution AS (
         join transferSubCategoriesToSubstitute sub on (c.categName = sub.transferCategoryName)
 ),
 /**
- * SubCategories, which are used in transfer transactions, shoule be nonetheless assigned to the category
+ * SubCategories, which are used in transfer transactions, should be nonetheless assigned to the category
  */
 transferSubCategoriesToReAssign AS (
     SELECT '<CategoryName>:<TransferSubCategoryName>' TransferCategoryName 
