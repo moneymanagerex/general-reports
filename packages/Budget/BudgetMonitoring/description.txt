@@ -1,16 +1,18 @@
 <h1>Budget Monitoring Report</h1>
 
-Version: 2.0 - 20220328
+Version: 2.1 - 20221230
 
 The report monitors the actual incomes and expenses by main categories of the selected time range compared to the 
 maintained budget.
 
-The amounts of the sub categories are aggregated to the assigned main category of each sub category.
+The amounts of all nested categories of a main category are summed up to the according main category. 
+
+Requires MMEX >= 1.6.2 (nested categories #1477)
 
 <h2>Budget has to be maintained</h2>
 
 It doesn't matter, if you maintain the budget on yearly or monthly basis. Every budget amount will be normalized
-to a monthly value, with a month having <code>30.41667</code> in average. This comes into play, if the period is 
+to a monthly value, with a month having <code>30.41667</code> days in average. This comes into play, if the period is 
 less than a month. I.e. if the period of a budget amount is <i>weekly</i> the budget amount will be divided by 
 <code>7</code> (value for one day) and multiplied by <code>30.41667</code> (value for the month).
 
@@ -30,7 +32,7 @@ expenses to actual incomes by clicking <em>vs Income</em> on the right side.
 <h3>Incomes and Expenses summary</h3>
 
 In the first section of the report you see the summary of both <em>Incomes</em> and <em>Expenses</em> over the selected
-time range. In each case the left side contains a radial bar of the percentaged actual value compared to the reference 
+time period. In each case the left side contains a radial bar of the percentaged actual value compared to the reference 
 value (budget) and the ride side contains the according amounts: reference value (budget), actual value and difference.
 
 The difference of the income will be calculated by <code>actual amount - budget amount</code>, whereas for expenses
@@ -43,7 +45,7 @@ of actual expenses vs actual incomes. You see the according radial bar chart min
 <h3>Incomes and Expenses by Category</h3>
 
 The second section of the report contains a tabular representation of the comparison of actuals vs budgets for 
-each category, which is contained in either the selected transactions or defined budgets. The percentage of 
+each main category, which is contained in either the selected transactions or defined budgets. The percentage of 
 the actuals compared to budgets will be displayed as little bar charts, additionally.
 
 To evaluate if a category is a income or expense category, respectively, the transaction codes 
@@ -51,24 +53,24 @@ To evaluate if a category is a income or expense category, respectively, the tra
 more <i>Deposit</i> transactions, the category is an expense category. If there are more <i>Withdrawal</i> transactions,
 it's an income category.
 
+Note: This means, that each main category and its nested categories should be used for either Withdrawals or Deposits.
+
 <h3>Colors and bars</h3>
 
 To visualize the percentage of actuals vs budgets colors will be used from dark green (<em>good</em>) to
 dark red (<em>bad</em>). The more actual income the greener the bar, but the more actual expenses the darker red is used.
 
 From 0% to 100% the background color is grey, so you can see, that the 100% is not reached yet. For values greater
-the 100% the background color stays green (which is used as 100%) and the bar starts again to grow in darker green 
+than 100% the background color stays green (which is used as 100%) and the bar starts again to grow in darker green 
 (for incomes) and yellow/ red (for expenses), respectively.
 
-<h3>Evaluation difference of budget and actual amounts</h3>
+<h3>Selected time period</h3>
 
-The budget amounts will be evaluated, if the first day of the month is contained in the time selection, whereas the
-actual amounts will only be evaluated if the very day of the transaction is contained in the time selection. So,
-if your time selection goes to 25th of a month, every transaction afterwards won't be contained within the report.
-If there is a budget value for an income or expense after the 25th, the budget value will be contained within the
-report nonetheless, as it's only assigned to the month and not to any day. 
+Regardless of what day of month you select as begin date or end date, the report will always select the first day of the 
+selected month as begin date and the last day of the selected month as end date. This is due to fact, that the budget
+is distributed evenly over all days of a month. 
 
-So, it makes sense to choose a time period which contains the last day of a month.
+Currently the report doesn't evaluate the start of the financial year.
 
 <h2>How to customize the contained data</h2>
 
@@ -97,29 +99,29 @@ ignoredAccountNames AS (
     SELECT 'My secret account' accountName
 </pre>
 
-<h3>Re-Assignment of transfer sub-categories</h3>
+<h3>Re-Assignment of nested transfer categories</h3>
 
-You may have a sub category, which mostly transfer transactions are assigned to. Those transactions would be
+You may have a nested category, which is mostly assigned to transfer transactions. Those transactions would be
 ignored, as the report doesn't contain transfer transactions. If the main category of this sub category is a
-<i>Withdrawal</i> or <i>Deposit</i> category, you can re-assign this sub category, so that the transactions will
+<i>Withdrawal</i> or <i>Deposit</i> category, you can re-assign this nested category, so that the transactions will
 be used according to the transaction code of the main category:
 
 <pre>
 transferSubCategoriesToReAssign AS (
-    SELECT 'My Main Category' CategoryName, 'My sub category of this Main Category' transferSubCategoryName
+    SELECT 'My Main Category:My sub category of this Main Category' transferCategoryName
 )
 </pre>
 
-<h3>Substitution of transfer sub-categories</h3>
+<h3>Substitution of nested transfer categories</h3>
 
-Some other transfer sub categories should be used as stand-alone expense or income category. For this you can use the
-sub query <code>transferSubCategoriesToSubstitute</code>:
+Some other transfer nested categories of any nested level should be used as stand-alone expense or income category. 
+For this you can use the sub query <code>transferSubCategoriesToSubstitute</code>:
 
 <pre>
 transferSubCategoriesToSubstitute AS (
-    SELECT 'My Main Category' transferCategoryName, 'My stand-alone Sub Category' transferSubCategoryName
+    SELECT 'My new Category' newCategoryName, 'My Main Category:1st-level-child-category:2nd-level-child-category' transferCategoryName
         , 'Deposit' transactionCode
 )
 </pre>
 
-In this case you would see <i>My stand-alone Sub Category</i> as separate, <em>virtual</em> Expense category within the report.
+In this case you would see <i>My new Category</i> as separate, <em>virtual</em> Expense category within the report.

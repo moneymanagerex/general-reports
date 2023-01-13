@@ -40,6 +40,7 @@
         <header><h2>Budget Dashboard</h2></header>
         <aside>
             <p>Report created <TMPL_VAR NAME="CREATED_AT" /></p>
+            <p>Selected Time Period: <TMPL_VAR NAME="SELECTED_PERIOD" /></p>
         </aside>
         <footer>Accounts: <TMPL_VAR NAME="SELECTED_ACCOUNTS" /></footer>
     </div>

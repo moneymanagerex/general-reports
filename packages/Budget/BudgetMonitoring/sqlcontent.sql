@@ -3,13 +3,25 @@
  *      This value will be used to calculate weekly, bi-weekly or daily budget for a month.
  */
 /**
+ * All nested categories with Id of the parent category and Id/ Name of the root category.
+ */
+WITH categories AS (
+    SELECT a.categid, a.categname, a.parentid, a.categid rootCategId, a.categName rootCategName 
+    FROM category_v1 a 
+    WHERE parentid = '-1' 
+    UNION ALL 
+    SELECT c.categid, r.categname || ':' || c.categname categName, c.parentid, r.rootCategId, r.rootCategName 
+    FROM categories r
+        join category_v1 c on (r.categid = c.parentid)
+),
+/**
  * Defines account types, which should not to be contained within the report. Several account types
  * can be combined with UNION ALL
  * You can list all used account types with 'select distinct accountType from AccountList_v1'
  * from the General Report Manager.
  */
-WITH ignoredAccountTypes AS (
-    SELECT '<accountTypeToIgnore>' accountType 
+ignoredAccountTypes AS (
+    SELECT '<accountTypeToIgnore>' accountType
 ),
 /**
  * Defines accounts by its account name, which should not to be contained within the report.
@@ -19,27 +31,23 @@ ignoredAccountNames AS (
     SELECT '<accontNameToIgnore>' accountName 
 ),
 /**
- * Defines the sub-category referenced by tupel (category-name, sub-category-name) which should be used as 
- * category for the given transaction code (Withdrawal or Deposit). 
+ * Defines the nested-category referenced by '<root category-name>:<sub-category-name>[:<sub-sub-category-name>]) 
+ * which should be used as category for the given transaction code (Withdrawal or Deposit). 
  */
 transferSubCategoriesToSubstitute AS (
-    SELECT '<TransferCategoryName>' transferCategoryName, '<TransferSubCategoryName>' transferSubCategoryName
-        , '<TransactionCode>' transactionCode
+    SELECT '<TransferSubCategoryName>' newCategoryName, 
+        '<TransferCategoryName>:<TransferSubCategoryName>' transferCategoryName, '<TransactionCode>' transactionCode
 ),
 transferSubstitution AS (
-    select transferSubCategoryName categoryName, '0_' || sc.subCategId categoryId, transactionCode
-        , c.categId, sc.subCategId
-    from category_v1 c
-        join subcategory_v1 sc on (c.categId = sc.categId)
-        join transferSubCategoriesToSubstitute sub on (
-            c.categName = sub.transferCategoryName and sc.subCategName = sub.transferSubCategoryName
-        )
+    select newCategoryName categoryName, c.categId categoryId, transactionCode
+    from Categories c
+        join transferSubCategoriesToSubstitute sub on (c.categName = sub.transferCategoryName)
 ),
 /**
- * SubCategories, which are used in transfer transactions, shoule be nonetheless assigned to the category
+ * SubCategories, which are used in transfer transactions, should be nonetheless assigned to the category
  */
 transferSubCategoriesToReAssign AS (
-    SELECT '<CategoryName>' CategoryName, '<TransferSubCategoryName>' transferSubCategoryName 
+    SELECT '<CategoryName>:<TransferSubCategoryName>' TransferCategoryName 
 ),
 /**
  * PeriodSelection: 
@@ -102,12 +110,12 @@ transactionTypesOfCategories AS (
     from (
         select categId, categName, transcode, numberOfTransactions, max(numberOfTransactions) over (partition by categId, categName) numberOfTransactionsForMainTransCode
         from (
-            select transCode, categId, categName, count(transid) numberOfTransactions
-            from category_v1 
-                join checkingaccount_v1 using (categId)
+            select transCode, c.rootCategId categId, c.rootCategName categName, count(transid) numberOfTransactions
+            from categories c 
+                join checkingaccount_v1 ca on (c.categId = ca.categId)
             where 1=1
                 and transcode <> 'Transfer'
-            group by transcode, categId, categName
+            group by transcode, c.rootCategId, c.rootCategName
         )
     )
     where 1=1
@@ -123,13 +131,13 @@ transactionTypesOfCategories AS (
  *  * Transfer transactions, substituted as separate category
  */
 actuals AS (
-    select a.AccountName, ifnull(st.CategId, t.CategId) CategoryId, c.CategName category
+    select a.AccountName, c.RootCategId CategoryId, c.RootCategName category
         , ifnull(abs(st.SplitTransAmount), t.TransAmount) * cf.BaseConvRate BasedTransAmount
         , CASE WHEN t.TransCode = ttc.TransCode THEN 1 ELSE -1 END sign
     from (checkingaccount_v1 t
         left join SplitTransactions_v1 st on (t.TransId = st.TransId))
-        join Category_v1 c on (c.CategId = ifnull(st.CategId, t.CategId))
-        JOIN transactionTypesOfCategories ttc ON (c.CategId = ttc.CategoryId)
+        join Categories c on (c.CategId = ifnull(st.CategId, t.CategId))
+        JOIN transactionTypesOfCategories ttc ON (c.RootCategId = ttc.CategoryId)
         join AccountList_v1 a on (t.AccountId = a.AccountId)
         join CurrencyFormats_v1 cf on (a.CurrencyId = cf.CurrencyId)
     where 1=1
@@ -139,15 +147,14 @@ actuals AS (
         AND a.accountType NOT IN (SELECT accountType FROM IgnoredAccountTypes)
         AND a.accountName NOT IN (SELECT accountName FROM IgnoredAccountNames)
     UNION ALL
-    select a.AccountName, ifnull(st.CategId, t.CategId) CategoryId, c.CategName category
+    select a.AccountName, c.RootCategId CategoryId, c.RootCategName category
         , ifnull(abs(st.SplitTransAmount), t.TransAmount) * cf.BaseConvRate BasedTransAmount
         , 1 sign
     from (checkingaccount_v1 t
         left join SplitTransactions_v1 st on (t.TransId = st.TransId))
-        join Category_v1 c on (c.CategId = ifnull(st.CategId, t.CategId))
-        JOIN SubCategory_v1 sc ON (sc.SubCategId = ifnull(st.SubCategId, t.SubCategId))
-        JOIN transferSubCategoriesToReAssign tsc ON (c.CategName = tsc.CategoryName AND sc.SubCategName = tsc.transferSubCategoryName)
-        JOIN transactionTypesOfCategories ttc ON (c.CategId = ttc.CategoryId)
+        join Categories c on (c.CategId = ifnull(st.CategId, t.CategId))
+        JOIN transferSubCategoriesToReAssign tsc ON (c.CategName = tsc.TransferCategoryName)
+        JOIN transactionTypesOfCategories ttc ON (c.RootCategId = ttc.CategoryId)
         join AccountList_v1 a on (t.AccountId = a.AccountId)
         join CurrencyFormats_v1 cf on (a.CurrencyId = cf.CurrencyId)
     where 1=1
@@ -162,10 +169,10 @@ actuals AS (
         , 1 sign
     from (checkingaccount_v1 t
         left join SplitTransactions_v1 st on (t.TransId = st.TransId))
-        join Category_v1 c on (c.CategId = ifnull(st.CategId, t.CategId))
+        join Categories c on (c.CategId = ifnull(st.CategId, t.CategId))
         join AccountList_v1 a on (t.AccountId = a.AccountId)
         join CurrencyFormats_v1 cf on (a.CurrencyId = cf.CurrencyId)
-        JOIN transferSubstitution ts ON (ts.CategId = ifnull(st.CategId, t.CategId) AND ts.SubCategId = ifnull(st.SubCategId, t.SubCategId))
+        JOIN transferSubstitution ts ON (ts.CategoryId = c.categId)
     WHERE 1=1
         AND t.TransCode = 'Transfer'
         AND t.Status <> 'V'
@@ -185,50 +192,42 @@ actualsByCategory AS (
 /**
  * Budget totals by category normalized to months
  */
-budgetsByCategory AS (
-    select c.CategId CategoryId, c.CategName Category
-        , round(total(abs(
-            case 
-                when Period = 'Weekly' then Amount * 30.41667 / 7
-                when Period = 'Bi-Weekly' then Amount * 30.41667 / 7 / 2
-                when Period = 'Fortnightly' then Amount * 30.41667 / 7 / 2
-                when Period = 'Monthly' then Amount 
-                when Period = 'Bi-Monthly' then Amount / 2
-                when Period = 'Every 2 Months' then Amount / 2
-                when Period = 'Quarterly' then Amount / 3
-                when Period = 'Half-Yearly' then Amount / 6
-                when Period = 'Yearly' then Amount / 12
-                when Period = 'Daily' then Amount * 30.41667
-                WHEN Period = 'None' THEN 0
-            end
-        )), 2) BudgetAmount
+Budgets as (
+    select bt.BudgetYearId, bt.CategId, Period
+        , case 
+              when Period = 'Weekly' then 30.41667 / 7
+              when Period = 'Bi-Weekly' then 30.41667 / 7 / 2
+              when Period = 'Fortnightly' then 30.41667 / 7 / 2
+              when Period = 'Monthly' then 1 
+              when Period = 'Bi-Monthly' then 1 / 2
+              when Period = 'Every 2 Months' then 1 / 2
+              when Period = 'Quarterly' then 1 / 3
+              when Period = 'Half-Yearly' then 1 / 6
+              when Period = 'Yearly' then 1 / 12
+              when Period = 'Daily' then 30.41667
+              WHEN Period = 'None' THEN 0
+          end Factor
+        , Amount
     from BudgetTable_v1 bt
-        join selectedBudgetMonths sbm on (bt.BudgetYearId = sbm.BudgetYearId)
-        join Category_v1 c on (bt.CategId = c.CategId)
-        left join SubCategory_v1 sc on (bt.SubCategId = sc.SubCategId)
-    group by c.CategId, c.CategName
-    UNION ALL
-    SELECT ts.CategoryId, ts.CategoryName Category
-        , round(total(abs(
-            case 
-                when Period = 'Weekly' then Amount * 30.41667 / 7
-                when Period = 'Bi-Weekly' then Amount * 30.41667 / 7 / 2
-                when Period = 'Fortnightly' then Amount * 30.41667 / 7 / 2
-                when Period = 'Monthly' then Amount 
-                when Period = 'Bi-Monthly' then Amount / 2
-                when Period = 'Every 2 Months' then Amount / 2
-                when Period = 'Quarterly' then Amount / 3
-                when Period = 'Half-Yearly' then Amount / 6
-                when Period = 'Yearly' then Amount / 12
-                when Period = 'Daily' then Amount * 30.41667
-                WHEN Period = 'None' THEN 0
-            end
-        )), 2) BudgetAmount
-    FROM BudgetTable_v1 bt
-        join selectedBudgetMonths sbm on (bt.BudgetYearId = sbm.BudgetYearId)
-        JOIN transferSubstitution ts ON (ts.CategId = bt.CategId AND ts.SubCategId = bt.SubCategId)
-    GROUP BY ts.CategoryId, ts.CategoryName
+        join SelectedBudgetMonths sbm on (bt.BudgetYearId = sbm.BudgetYearId)
 ),
+/**
+ * Budget totals by category normalized to months
+ */
+budgetsByCategory AS (
+    select CategoryId, Category
+        , round(total(abs(Amount * Factor)), 2) BudgetAmount
+    from (
+        select CategId, RootCategId CategoryId, RootCategName Category
+        from Categories
+        union all 
+        SELECT CategoryId CategId, CategoryId, CategoryName Category
+        from transferSubstitution
+    ) c 
+        join Budgets b on (c.CategId = b.CategId)
+    group by CategoryId, Category
+),
+--    GROUP BY ts.CategoryId, ts.CategoryName
 /**
  * actuals vs budgets for each category if one of the values exists
  */
@@ -272,10 +271,23 @@ reportData AS (
         , BaseCurrencyPrefixSymbol
         , BaseCurrencySuffixSymbol
         , 0 SwitchType
-        , '' TYPE
-        , 1 Show
+        , '' Type
+    , 1 Show
     from actualsVsBudgets
     order by TransCode, Category
+),
+/**
+ * Substitute date format patterns, which work in C++ but not in SQLite
+ */
+DateFormatSubstituted AS (
+    SELECT replace(replace(replace(infovalue, 
+        '%y', '%Y'), 
+        '%Mon', '%m'), 
+        '%w', '') format
+        , infovalue, infoname
+    FROM infotable_v1
+    WHERE infoname = 'DATEFORMAT'
+    LIMIT 1
 )
 SELECT *
 FROM reportData
@@ -286,3 +298,11 @@ SELECT '-- selected accounts --' TransCode, "" CategoryId
     , "" BaseCurrencyPrefixSymbol, "" BaseCurrencySuffixSymbol, 0 SwitchType, '' TYPE
     , 0 Show
 FROM selectedAccounts
+UNION ALL
+SELECT '-- selected period --' TransCode, "" CategoryId
+    , strftime(ifnull(format, '%y-%m-%d'), begin_date) || ' - ' || strftime(ifnull(format, '%y-%m-%d'), end_date) Category
+    , 0 ActualAmount, 0 BudgetAmount, 0 Difference, 0 Rate, 0 RelativeDeviation
+    , "" BaseCurrencyPrefixSymbol, "" BaseCurrencySuffixSymbol, 0 SwitchType, '' TYPE
+    , 0 Show
+FROM PeriodSelection
+    left join DateFormatSubstituted on (1=1)
