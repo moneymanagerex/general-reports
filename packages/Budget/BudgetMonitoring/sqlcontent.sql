@@ -143,6 +143,7 @@ actuals AS (
     where 1=1
         and t.TransCode <> 'Transfer'
         and t.Status <> 'V'
+        AND ifnull(t.deletedtime, '') = ''
         and TransDate between (select begin_date from PeriodSelection limit 1) and (select end_date from PeriodSelection limit 1)
         AND a.accountType NOT IN (SELECT accountType FROM IgnoredAccountTypes)
         AND a.accountName NOT IN (SELECT accountName FROM IgnoredAccountNames)
@@ -160,6 +161,7 @@ actuals AS (
     where 1=1
         and t.TransCode = 'Transfer'
         and t.Status <> 'V'
+        AND ifnull(t.deletedtime, '') = ''
         and TransDate between (select begin_date from PeriodSelection limit 1) and (select end_date from PeriodSelection limit 1)
         AND a.accountType NOT IN (SELECT accountType FROM IgnoredAccountTypes)
         AND a.accountName NOT IN (SELECT accountName FROM IgnoredAccountNames)
@@ -176,6 +178,7 @@ actuals AS (
     WHERE 1=1
         AND t.TransCode = 'Transfer'
         AND t.Status <> 'V'
+        AND ifnull(t.deletedtime, '') = ''
         and TransDate between (select begin_date from PeriodSelection limit 1) and (select end_date from PeriodSelection limit 1)
         AND a.accountType NOT IN (SELECT accountType FROM IgnoredAccountTypes)
         AND a.accountName NOT IN (SELECT accountName FROM IgnoredAccountNames)
