@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+    <script src="ChartNew.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Account Trend Report (<TMPL_VAR ACCOUNTNAME>)</h3>
+        <p><TMPL_VAR TODAY></p>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table-condensed">
+                <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
+                <tr><td><p class="small text-muted">All figures in Account's currency: <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></td></tr>
+                <tr><td><table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th class="text-right">Balance <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <TMPL_LOOP NAME=CONTENTS>
+                    <tr>
+                        <td><TMPL_VAR DATE></td>
+                        <td class="money text-right"><TMPL_VAR Balance></td>
+                    </tr>
+                    </TMPL_LOOP>
+                </tbody>
+                <tfoot>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL1></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE1></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL2></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE2></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL3></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE3></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL4></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE4></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL5></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE5></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL6></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE6></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL7></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE7></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL8></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE8></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL9></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE9></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL10></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE10></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL11></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE11></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL12></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE12></td>
+                    </tr>
+                </tfoot>
+                 </table></td></tr></table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+  <!-- Chart -->
+    var data = {<TMPL_VAR "CHART_DATA">}
+    var opt = {bezierCurve : false}
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Line(data,opt);
+<!-- Format numbers -->
+	function formatNumberWithSeparators(sn, grpchar) {
+		if (grpchar != "") {
+			return sn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function changeDecimalPoint(sn, dpchar) {
+	    var dppos = sn.lastIndexOf(".");
+		if (dpchar != "") {
+			return (dppos > 0 ? sn.slice(0, dppos) + dpchar + sn.substr(dppos + 1) : sn);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function currency(sn, grpsep, dpt) {
+	    var fn = parseFloat(sn);
+	    return isNaN(fn) ? sn : formatNumberWithSeparators(changeDecimalPoint(fn.toFixed(2), dpt), grpsep);
+	}
+	var NegValue = 0;
+	var elements = document.getElementsByClassName("money"); //Currency format e.g. $1,234.00 and -$1,234.00 [red colour]
+	if (elements) {
+		for (var i = 0; i < elements.length; i++) {
+			NegValue = (elements[i].innerHTML.indexOf("-") > -1) ? 1 : 0;
+			elements[i].innerHTML = ((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>") + " " + currency((elements[i].innerHTML).replace("-",""), (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"), (elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")) + " " + (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();
+			if (NegValue) {
+				elements[i].style.color = "#ff0000";
+				elements[i].innerHTML = "-" + elements[i].innerHTML
+			}
+			elements[i].style.textAlign = 'right';
+		}
+	}
+</script>
+</body>
+</html>

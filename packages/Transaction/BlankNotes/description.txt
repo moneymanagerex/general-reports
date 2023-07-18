@@ -1,0 +1,3 @@
+This report will show transactions with Blank note fields.
+
+Transaction amounts are displayed in the currency of the Account.

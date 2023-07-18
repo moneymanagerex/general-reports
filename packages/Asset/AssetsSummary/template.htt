@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+    <script src="ChartNew.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Asset Summary Report</h3>
+        <p>Report Date: <TMPL_VAR TODAY></p>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table-condensed">
+                <tr><td class="text-center"><canvas id="reportChart" width="300" height="300"></canvas></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><table class="table">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th class="text-right">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <TMPL_VAR SubTotals>
+                </tbody>
+                <tfoot>
+                     <tr class="total">
+                        <td>Total</td>
+                        <td class="money text-right"><TMPL_VAR Current_Total></td>
+                    </tr>
+                </tfoot>
+                </table></td></tr></table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+    <!-- Format numbers -->
+    var elements= document.getElementsByClassName("money");
+    for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + elements[i].innerHTML + "<TMPL_VAR SFX_SYMBOL>";}
+    <!-- Chart -->
+    var data = [
+        <TMPL_VAR "ASSET_DATA">
+    ];
+    var options = {
+        animationEasing: 'easeOutQuint'
+    };
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Pie(data, options);
+</script>
+</body>
+</html>

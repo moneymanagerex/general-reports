@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en-US'>
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+Report Date: <TMPL_VAR TODAY><hr>
+<div class = "row">
+<div class = "col-xs-2"></div>
+<div class = "col-xs-8">
+<table class = "table">
+<thead>
+    <tr>
+        <th>Type</th>
+        <th>Nr</th>
+        <th>Reference</th>
+        <th>Description</th>
+        <th>File</th>
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR "Type"></td>
+        <td class = "text-right"><TMPL_VAR "Nr"></td>
+        <td><TMPL_VAR "Reference"></td>
+        <td><TMPL_VAR "Description"></td>
+        <td><a href="<TMPL_VAR "BasePathLUA">"><TMPL_VAR "File"></a></td>
+        </tr>
+    </TMPL_LOOP>
+</tbody>
+</table>
+</div>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+</div>
+</body>
+</html>

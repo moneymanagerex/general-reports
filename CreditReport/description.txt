@@ -1,5 +1,0 @@
-Show the account balance and available credit for the specified accounts.
-
-TODO: 
-1. Update account name in SQL (line 16). 
-2. Update credit limits in Lua (line 2).

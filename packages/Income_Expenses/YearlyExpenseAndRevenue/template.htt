@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src="ChartNew.js"></script>
+    <script src="sorttable.js"></script>
+    <link href="master.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<h3><TMPL_VAR REPORTNAME></h3>
+		<p>Report Date:<TMPL_VAR TODAY></p><hr>
+		<div class="row">
+			<div class="row">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-8">
+				<table class="table-condensed">
+					<tr><td  class="text-center"><canvas id="myChart" width="600" height="300"></canvas></td></tr>
+					<tr><td><p class="small text-muted">All chart figures in base currency:  <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></p></td></tr>
+					<tr><td>
+					<table class='table'>
+						<thead>
+							<tr>
+								<th class="text-center">Period Month</th>
+								<th class="text-center"><TMPL_VAR name_n0></th>
+								<th class="text-center"><TMPL_VAR name_n1></th>
+								<th class="text-center"><TMPL_VAR name_n2></th>
+<!--
+								<th class="text-center"><TMPL_VAR name_n3></th>
+								<th class="text-center"><TMPL_VAR name_n4></th>
+-->
+								<th class="text-center">Cumul <TMPL_VAR name_n0></th>
+								<th class="text-center">Cumul <TMPL_VAR name_n1></th>
+								<th class="text-center">Cumul <TMPL_VAR name_n2></th>
+							</tr>
+						</thead>
+						<tbody>
+						<TMPL_LOOP NAME=CONTENTS>
+							<tr>
+							<td><TMPL_VAR "periode_month"></td>
+							<td class="money"><TMPL_VAR "Total"></td>
+							<td class="money"><TMPL_VAR "Total_n1"></td>
+							<td class="money"><TMPL_VAR "Total_n2"></td>
+							<td class="money"><TMPL_VAR "cumul_n0"></td>
+							<td class="money"><TMPL_VAR "cumul_n1"></td>
+							<td class="money"><TMPL_VAR "cumul_n2"></td>
+<!--
+							<td class="money"><TMPL_VAR "Total_n3"></td>
+							<td class="money"><TMPL_VAR "Total_n4"></td>
+-->
+							</tr>
+						</TMPL_LOOP>
+						</tbody>
+					</table></td></tr></table>
+				</div>
+				<TMPL_LOOP ERRORS>
+					<TMPL_VAR ERROR>
+				</TMPL_LOOP>
+			</div>
+		</div>
+	</div>
+	<script>
+	<!--Format numbers-->
+	function formatNumberWithSeparators(sn, grpchar) {
+		if (grpchar != "") {
+			return sn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function changeDecimalPoint(sn, dpchar) {
+	    var dppos = sn.lastIndexOf(".");
+		if (dpchar != "") {
+			return (dppos > 0 ? sn.slice(0, dppos) + dpchar + sn.substr(dppos + 1) : sn);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function currency(sn, grpsep, dpt) {
+	    var fn = parseFloat(sn);
+	    return isNaN(fn) ? sn : formatNumberWithSeparators(changeDecimalPoint(fn.toFixed(2), dpt), grpsep);
+	}
+	var NegValue = 0;
+	var elements = document.getElementsByClassName("money"); //Currency format e.g. $1,234.00 and -$1,234.00 [red colour]
+	if (elements) {
+		for (var i = 0; i < elements.length; i++) {
+			NegValue = (elements[i].innerHTML.indexOf("-") > -1) ? 1 : 0;
+			elements[i].innerHTML = ((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>") + " " + currency((elements[i].innerHTML).replace("-",""), (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"), (elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")) + " " + (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();
+			if (NegValue) {
+				elements[i].style.color = "#ff0000";
+				elements[i].innerHTML = "-" + elements[i].innerHTML
+			}
+			elements[i].style.textAlign = 'right';
+		}
+	}
+	</script>
+	<script>
+	// Init graph data :
+	var data={
+		labels: [<TMPL_LOOP NAME=CONTENTS>"<TMPL_VAR periode_month>",</TMPL_LOOP>],
+		datasets: [
+/*			{
+				label: "0 axis",
+				fillColor: "rgba(220,220,220,0.2)",
+				strokeColor: "rgba(220,220,220,1)",
+				pointColor: "rgba(220,220,220,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(220,220,220,1)",
+				data: [<TMPL_LOOP NAME=CONTENTS>0,</TMPL_LOOP>]
+			},
+		{
+				label: "<TMPL_VAR name_n4>",
+				fillColor: "rgba(151,186,204,0)",
+				strokeColor: "rgba(151,186,204,1)",
+				pointColor: "rgba(151,186,204,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,186,204,1)",
+				data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n4>,</TMPL_LOOP>]
+			},
+		{
+				label: "<TMPL_VAR name_n3>",
+				fillColor: "rgba(151,204,195,0)",
+				strokeColor: "rgba(151,204,195,1)",
+				pointColor: "rgba(151,204,195,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,204,195,1)",
+				data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n3>,</TMPL_LOOP>]
+			},
+*/
+			{
+				label: "<TMPL_VAR name_n2>",
+				fillColor: "rgba(151,160,204,0)",
+				strokeColor: "rgba(151,160,204,1)",
+				pointColor: "rgba(151,160,204,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,160,204,1)",            
+				data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n2>,</TMPL_LOOP>]
+			},
+			{
+				label: "<TMPL_VAR name_n1>",
+				fillColor: "rgba(151,187,205,0)",
+				strokeColor: "rgba(151,187,205,1)",
+				pointColor: "rgba(151,187,205,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,187,205,1)",
+				data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n1>,</TMPL_LOOP>]
+			},
+			{
+				label: "<TMPL_VAR name_n0>",
+				fillColor: "rgba(151,187,205,0.1)",
+				strokeColor: "rgba(70,180,119,1)",
+				pointColor: "rgba(70,180,119,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,187,205,1)",
+				data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR cumul_n0>,</TMPL_LOOP>]
+			}
+		]
+	};
+	//display graph
+	var options={
+		legend:true,
+		bezierCurve:false,
+		scaleLineWidth:1,
+		responsive:true
+	};
+	var ctx=document.getElementById("myChart").getContext("2d");  
+	var myNewChart=new Chart(ctx).Line(data,options);
+	</script>
+</body>
+</html>

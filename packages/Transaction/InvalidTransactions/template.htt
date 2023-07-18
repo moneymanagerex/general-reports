@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+</head>
+<body>
+<h3 class="i18n">_Title_</h3>
+<TMPL_VAR TODAY>
+<hr>
+<table class='table'>
+  <thead>
+    <tr>
+        <th class="i18n">ID</td>
+        <th class="i18n">Date</th>
+        <th class="i18n">Account</th>
+        <th class="i18n">Payee</th>
+        <th class="i18n">Category</th>
+        <th class="i18n">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR TRX_LINK></td>
+        <td><TMPL_VAR TRANSDATE></td>
+        <td class='ERROR i18n'><TMPL_VAR TRX_LINK_GO></td>
+        <td class='ERROR i18n'><TMPL_VAR Payee></td>
+        <td class='ERROR i18n'><TMPL_VAR Category></td>
+        <td><TMPL_VAR NOTES></td>
+    </tr>
+    </TMPL_LOOP>
+</tbody>
+</table>
+<TMPL_LOOP ERRORS>
+    <hr>    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+
+<script type="text/javascript">
+    <!-- Red color for ERRORS-->
+    function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
+    var elements= document.getElementsByClassName("ERROR");
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].innerHTML.indexOf("ERROR") > -1) {
+            elements[i].style.color="#ff0000";
+        } 
+    }
+</script>
+<!-- Translations -->
+<script>     
+    var translations =
+    {
+    "english":[{
+        "_Title_":"Invalid Transactions"
+    }],
+    "english_uk":[{
+        "_Title_":"Invalid Transactions"
+    }],
+    "english_us":[{
+        "_Title_":"Invalid Transactions"
+    }],
+    "russian": [{
+        "_Title_":"Транзакции с ошибками"
+        , "Date":"Дата"
+        , "Payee":"Получатель"
+        , "Category":"Категория"
+        , "Account":"Счёт"
+        , "Notes":"Примечания"
+        , "ERROR":"Ошибка"
+    }],
+    };
+
+	var my_lang = [];
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
+        // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
+	
+    var elements= document.getElementsByClassName('i18n');
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        //var my_lang = translations.<TMPL_VAR LANGUAGE>;
+        if (my_lang == null) my_lang = translations.english;
+        var item = my_lang[0][element.innerHTML];
+        element.innerHTML = (item == null) ? element.innerHTML : item;
+    }
+</script>
+</html>

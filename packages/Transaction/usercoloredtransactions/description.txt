@@ -1,0 +1,4 @@
+List all user colored transactions.
+
+Use CTRL 1 through CTRL 7 to set color. Use CTRL 0 to clear color.
+Map specific colors used in MMEX View Options.

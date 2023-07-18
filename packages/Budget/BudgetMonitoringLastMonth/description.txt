@@ -1,0 +1,60 @@
+<h1>Budget Monitoring Report</h1>
+<p>Version: 1.1.1 - 20190310</p>
+<p>
+The report monitors the actual expenses and income of the last month compared to the budget
+of the last month. </p>
+<p>
+The first section shows the overall comparison of
+<ul>
+    <li>expenses (actual value) vs income (reference value)</li>
+    <li>income (actual value) vs budget (reference value)</li>
+    <li>expenses (actual value) vs budget (reference value)</li>
+</ul>
+in separate circulare gauge charts. The actual value is displayed as the red needle and the 
+reference value as the blue triangle.
+</p>
+<p>
+The second and third section show the comparison of the actual values compared to the budget for
+each category, which has at least a budget or an actual value. The actual values are displayed as
+colored bars, the budget marks the 50% reference value of the bar.
+</p>
+<h2>Value Ranges</h2>
+<p>
+As it should be possible to show the cases, when the actual value is higher than the reference
+value, the reference value is set at 50% of the complete value range.
+</p>
+<p>
+The green area marks a good state, where 10% over (withdrawal) or under (deposit) budget
+is still acceptable.
+</p>
+<h2>Data prerequesites for using this report</h2>
+<ul>
+    <li>You should have some actual income at the beginning of the month, since the comparison
+        to the expenses won't make much sense in other cases. If there is no income, the summed
+        income will be set as half of the expenses, so that the expense needle is in the dark
+        red range of the circular gauge.</li>
+    <li>You should have created a budget for the last month, which should have the name <code>YYYY-MM</code>.</li>
+    <li>Each category and its subcategories should contain only transactions with the same transaction
+        code. I.e. each category should be either a Withdrawal category or a Deposit category.</li>
+    <li>The <em>transfer</em> transactions and <em>void</em> transactions will not be taken into account.</li>
+</ul>
+<h2>Technical prerequesites for using this report</h2>
+<p>
+The charts are created using the javascript framework ChartJS from 
+<a href="http://chartjs.devexpress.com/">http://chartjs.devexpress.com/</a>, which creates simply 
+stunning gauge widgets. It's free for non-commercial use and can be licensed for commercial use.
+
+As you alone are aware of, if you will use the report non-commercially, you have to download the
+libraries by yourself from <a href="http://chartjs.devexpress.com/Download">http://chartjs.devexpress.com/Download</a>
+and copy the following two files from the archive directory <code>Lib/js</code> directly 
+into your <code>MoneyManagerEx/res</code> directory:
+<ul>
+    <li><code>dx.viz-web.js</code></li>
+    <li><code>jquery.min.js</code></li>
+</ul>
+</p>
+<h3>Note:</h3>
+<p>
+If you have downloaded the javascript libraries into the specified directory, close and re-open
+MoneyManagerEx, if it is currently started.
+</p>

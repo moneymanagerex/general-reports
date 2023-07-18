@@ -4,20 +4,28 @@
 import os
 import zipfile
 
-def pack_report(report):
-    print 'packing %s' % report
-    f = zipfile.ZipFile(report + '.zip', 'w')
-    for item in os.listdir(report):
-        f.write(os.path.join(report, item))
+def pack_report(subdir, package):
+    root_path = os.path.dirname(os.path.realpath(__file__))
+    print ('~~|zip|~~ ', subdir.ljust(65),  package + '.zip')
+    valid_names = ['description.txt', 'luacontent.lua', 'sqlcontent.sql', 'template.htt']
+    f = zipfile.ZipFile(package + '.zip', 'w')
+    os.chdir(subdir)
+    for item in valid_names:
+        f.write(item)
     f.close()
-    print 'done %s' % report
+    os.chdir(root_path)
 
 if __name__ == '__main__':
-    for report in os.listdir('.'):
-        if not report.startswith('.') and os.path.isdir(report):
-            try:
-                pack_report(report)
-            except:
-                exit(1)
-    exit(0)
+    path = 'packages'
     
+    for subdir, dirs, files in os.walk(path):
+        file_count = len(files)    
+        if file_count < 4: continue
+        path, subfolder = os.path.split(subdir)
+        try:
+            pack_report(subdir, subfolder)
+        except:
+            print ('[X] Exception')
+            exit(1)
+    print ('[V] OK')
+    exit(0)

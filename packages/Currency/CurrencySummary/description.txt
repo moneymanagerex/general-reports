@@ -1,0 +1,8 @@
+<h1>Used Currency Summary Report</h1>
+<p>Lists all currencies used in 'Open' Accounts</p>
+<p><dl>
+<dt>Currency Conversion Rate</dt>
+<dd>This is the values from the 'Conversion to Base Rate' field on the Currency Record.<br /><i>Note: This field will be depreciated in MMEX v1.4.x (DB v13), currency conversion will be done using the Currency History Options</i></dd>
+<dt>Latest History Rate</dt>
+<dd>This is the latest value from the 'Conversion to Base Rate' field on the Currency Record.<br />If no history values is set, then displayed '0.0000'.</dd>
+</dl></p>

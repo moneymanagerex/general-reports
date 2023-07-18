@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+    <script src="ChartNew.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Account Forecast Report (<TMPL_VAR ACCOUNTNAME>)</h3>
+        <p>Report Date: <TMPL_VAR TODAY></p>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table-condensed">
+                <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
+                <tr><td><p class="small text-muted">All figures in Account's currency: <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></p></td></tr>
+                <tr><td><table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th class="text-right">Amount (<TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Current</td>
+                        <td class="numberf text-right"><TMPL_VAR Current_Total></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>1 month <TMPL_VAR Month1_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month1_Total></td>
+                   </tr>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>2 months <TMPL_VAR Month2_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month2_Total></td>
+                   </tr>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>3 months <TMPL_VAR Month3_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month3_Total></td>
+                   </tr>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>4 months <TMPL_VAR Month4_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month4_Total></td>
+                   </tr>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>5 months <TMPL_VAR Month5_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month5_Total></td>
+                   </tr>
+                   <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td>6 months <TMPL_VAR Month6_Label></td>
+                        <td class="numberf text-right"><TMPL_VAR Month6_Total></td>
+                   </tr>
+                </tfoot>
+                </table></td></tr></table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+<!-- Chart -->
+    var data = {labels : ["Current","1 month","2 months","3 months","4 months","5 months","6 months"], <TMPL_VAR "CHART_DATA">}
+    var opt = {bezierCurve : false}
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Line(data,opt);
+</script>
+<script>
+  <!-- Format numbers -->
+	function formatNumberWithSeparators(sn, grpchar) {
+		if (grpchar != "") {
+			return sn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function changeDecimalPoint(sn, dpchar) {
+	    var dppos = sn.lastIndexOf(".");
+		if (dpchar != "") {
+			return (dppos > 0 ? sn.slice(0, dppos) + dpchar + sn.substr(dppos + 1) : sn);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function currency(sn, grpsep, dpt) {
+	    var fn = parseFloat(sn);
+	    return isNaN(fn) ? sn : formatNumberWithSeparators(changeDecimalPoint(fn.toFixed(2), dpt), grpsep);
+	}
+
+	var NegValue = 0;
+	var elements = document.getElementsByClassName("numberf");
+	if (elements) {
+		for (var i = 0; i < elements.length; i++) {
+			NegValue = (elements[i].innerHTML.indexOf("-") > -1) ? 1 : 0;
+			elements[i].innerHTML = currency(elements[i].innerHTML, (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"), (elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")).trim();
+			if (NegValue) {
+				elements[i].style.color = "#ff0000";
+			}
+			elements[i].style.textAlign = 'right';
+		}
+	}
+</script>
+</body>
+</html>

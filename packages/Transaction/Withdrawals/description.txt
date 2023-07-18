@@ -1,0 +1,16 @@
+Report: select all withdrawal transactions (for specified accounts).
+Included columns: date, amount, cat:subcat, notes, payee,  account name.
+Author: Aleksandr Anfilov
+
+Displays amouts in the currency of the account.
+
+How to export results to Excel: 
+1. Create a blank worksheet in Excel, set format for columns:
+  B (date) - Date format,
+  C (amount) - Number format.
+2. Switch to MoneyManager and go to Tools - General Reports Manager. Click Import,
+find a "Withdrawals.grm" file. Go to SQL tab and click Test, you should see the results.
+At this stage, you may want to specify accounts by name - just update the WHERE clause
+at lines 17 & 35 and uncomment them.
+3. Run this report. Select all records in the Output tab and Copy, then switch to Excel.
+4. Set cursor to cell A1. "Paste - keep text only".

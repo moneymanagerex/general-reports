@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href = "master.css" rel = "stylesheet" />
+    <script src = "ChartNew.js"></script>
+</head>
+<body>
+    <div class = "container">
+        <h3>Currency Summary Report</h3>
+        <p>Report Date: <TMPL_VAR TODAY></p>
+        <div class = "row">
+            <div class = "col-xs-2"></div>
+            <div class = "col-xs-8">
+                <table class = "table-condensed">
+                <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Currency Name</th>
+                        <th class="text-center">Symbol</th>
+                        <th class="text-center">No. of Accounts</th>
+                        <th class="text-center">Currency Conversion Rate</th>
+			<th class="text-center">Latest History Rate</th>
+			<th class="text-center">Display Format</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <TMPL_LOOP NAME=CONTENTS>
+                    <tr>
+                        <td style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR CURRENCYNAME></td>
+                        <td class = "text-center"><TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></td>
+                        <td class = "text-right"><TMPL_VAR "Quantity"></td>
+                        <td class = "currrate text-right"><TMPL_VAR BASECONVRATE></td>
+			<td class = "currrate text-right"><TMPL_VAR HISTBASECONVRATE></td>
+			<td class = "money text-right" data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" data-decpt="<TMPL_VAR DECIMAL_POINT>" data-grpsep="<TMPL_VAR GROUP_SEPARATOR>">1000</td>
+                    </tr>
+                    </TMPL_LOOP>
+                    <p>Base currency is set to: <b><TMPL_VAR CURRENCYNAME>&nbsp;<TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></b></p>
+                </tbody>
+                </table></td></tr></table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>   
+</body>
+<script>
+    <!--Format numbers-->
+    <!--Format Currency Rate-->
+    function currrate(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(4);};
+    var elements = document.getElementsByClassName("currrate");
+    for (var i = 0; i < elements.length; i++) { elements[i].innerHTML = currrate(elements[i].innerHTML);};
+    <!--Format money-->
+	function formatNumberWithSeparators(sn, grpchar) {
+		if (grpchar != "") {
+			return sn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function changeDecimalPoint(sn, dpchar) {
+	    var dppos = sn.lastIndexOf(".");
+		if (dpchar != "") {
+			return (dppos > 0 ? sn.slice(0, dppos) + dpchar + sn.substr(dppos + 1) : sn);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function currency(sn, grpsep, dpt) {
+	    var fn = parseFloat(sn);
+	    return isNaN(fn) ? sn : formatNumberWithSeparators(changeDecimalPoint(fn.toFixed(2), dpt), grpsep);
+	}
+	var NegValue = 0;
+	var elements = document.getElementsByClassName("money"); //Currency format e.g. $1,234.00 and -$1,234.00 [red colour]
+	if (elements) {
+		for (var i = 0; i < elements.length; i++) {
+			NegValue = (elements[i].innerHTML.indexOf("-") > -1) ? 1 : 0;
+			elements[i].innerHTML = ((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>") + " " + currency((elements[i].innerHTML).replace("-",""), (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"), (elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>")) + " " + (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();
+			if (NegValue) {
+				elements[i].style.color = "#ff0000";
+				elements[i].innerHTML = "-" + elements[i].innerHTML
+			}
+			elements[i].style.textAlign = 'right';
+		}
+	}
+    <!-- Chart -->
+    var data = [
+        <TMPL_LOOP CONTENTS>
+        {
+            value:<TMPL_VAR Quantity>,
+            color:"<TMPL_VAR COLOR>",
+            title:"<TMPL_VAR CURRENCYNAME>",
+            labelColor:"black",
+            labelFontSize:"12",
+            labelAlign:"center"
+        } <TMPL_IF __LAST__><TMPL_ELSE>,</TMPL_IF>
+        </TMPL_LOOP>
+    ]
+    var options = {legend:true,animationEasing:'easeOutQuint'}
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Pie(data, options);
+</script>
+</html>

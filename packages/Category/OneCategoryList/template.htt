@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src="sorttable.js"></script>
+	<!-- sorttable_customkey is not HTML5, should be data-sortable_customkey, but needs changes to sorttable.js -->
+    <link href="master.css" rel="stylesheet">
+	<style>
+	img{
+		height:100%;
+		max-height:50px;
+	}
+	</style>
+</head>
+<body>
+<div class="container">
+<h3 class="i18n">_Title_</h3>
+<TMPL_VAR TODAY><hr>
+<div class="row">
+<div class="col-xs-2"></div>
+<div class="col-xs-8">
+<table class="table sortable">
+<thead>
+    <tr>
+        <th class="i18n sorttable_nosort"></th>
+        <th class="i18n">Nr</th>
+        <th class="i18n">Account</th>
+        <th class="i18n">Payee</th>
+        <th class="i18n">Date</th>
+        <th class="i18n">Amount</th>
+        <th class="i18n">Notes</th>
+        <th class="i18n sorttable_nosort">Files</th>
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td <TMPL_VAR COLOR> ></td>
+        <td class="text-right"><TMPL_VAR TRX_LINK></td>
+        <td style="white-space: nowrap"><TMPL_VAR ACCOUNTNAME></td>
+        <td style="white-space: nowrap"><TMPL_VAR PAYEENAME></td>
+        <td class="date" sorttable_customkey='<TMPL_VAR Date>' style="white-space: nowrap"><TMPL_VAR Date></td>
+        <td class="money" sorttable_customkey='<TMPL_VAR Amount>' data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" ><TMPL_VAR Amount></td>
+        <td><TMPL_VAR Notes></td>
+        <td class="files"><TMPL_VAR FILES></td>
+    </tr>
+    </TMPL_LOOP>
+</tbody>
+<tfoot>
+	<tr class="total">
+		<td></td>
+		<td class="i18n">Total</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td class="money" data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" style="white-space: nowrap"><TMPL_VAR GRAND_TOTAL></td>
+		<td></td>
+		<td></td>
+	</tr>
+</tfoot>
+</table>
+</div>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+</div>
+<script>
+    <!-- Format numbers -->
+    function currency(n) {n=parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
+    var elements= document.getElementsByClassName("money");
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        element.style.textAlign='right';
+        if (element.innerHTML.indexOf("-") > -1) {
+            element.style.color="#ff0000";
+        }
+        element.innerHTML=element.getAttribute('data-prefix') + currency(element.innerHTML) + element.getAttribute('data-suffix');
+    }
+</script>
+<script>
+    <!-- files -->
+    var re=/(?:\.([^.]+))?$/;
+    var attachments_path='<TMPL_VAR ATTACHMENTSFOLDER>Transaction<TMPL_VAR FILESEPARATOR>' ;
+    var elements= document.getElementsByClassName("files");
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        // Create a variable to contain the array
+        var splitStr= element.innerHTML.split(',');
+        element.innerHTML='';
+         if (splitStr != '') {
+            for (var j=0; j < splitStr.length; j++) {
+                var ext=re.exec(splitStr[j])[1].toUpperCase();
+                var full_path=attachments_path + splitStr[j];
+                if (ext == 'JPG' || ext == 'PNG') {
+                    element.innerHTML += '<a href="' + full_path + '"><img src="' + full_path + '"></a>';
+                } else {
+                    element.innerHTML += '<a href="' + full_path + '">' + splitStr[j] + '</a>';
+                }
+            }
+        } //end if
+    }
+</script>
+<script>
+    <!-- Format dates -->
+    var elements= document.getElementsByClassName("date");
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        var d=new Date(element.innerHTML);
+        var date=d.getDate();
+        date=date > 9 ? date : "0"+date;
+        var month=d.getMonth() + 1;
+        month=month > 9 ? month : "0"+month;
+        var curr_year=d.getFullYear();
+        var short_year=curr_year.toString().substr(2, 4);
+        var date_mask='<TMPL_VAR DATEFORMAT>';
+
+        element.innerHTML=date_mask.replace('%y', short_year).replace('%Y', curr_year).replace('%m', month).replace('%d', date);
+    }
+</script>
+<script> <!-- Translations -->
+    var translations =
+    {
+    "english":[{
+        "_Title_":"One Category List"
+    }],
+    "english_uk":[{
+        "_Title_":"One Category List"
+    }],
+    "english_us":[{
+        "_Title_":"Single Category List"
+    }],
+    "russian": [{
+        "_Title_":"Куклы", "Nr":"№", "Amount":"Сумма"
+        , "Date": "Дата", "Account": "Счёт"
+         , "Payee":"Получатель", "Notes":"Примечания"
+         , "Files":"Файлы", "Total":"Всего:"
+    }],
+    "italian":[{
+        "_Title_":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
+        , "Date": "Data", "Account": "Conto"
+         , "Payee":"Beneficiario", "Notes":"Note"
+         , "Files":"File", "Total":"Totale:"
+    }]
+    };
+	var my_lang = [];
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
+        // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
+
+    var elements= document.getElementsByClassName('i18n');
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        if (my_lang == null) my_lang=translations.english;
+        var item=my_lang[0][element.innerHTML];
+        element.innerHTML=(item == null) ? element.innerHTML : item;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- TODO: Update category and subcategory in line 12 -->
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+    <script src="ChartNew.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Category Trend Report (Food:Groceries)</h3>
+        <p><TMPL_VAR TODAY></p>
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <table class="table-condensed">
+                <tr><td  class="text-center"><canvas id="reportChart" width="600" height="300"></canvas></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th class="text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <TMPL_LOOP NAME=CONTENTS>
+                    <tr>
+                        <td><TMPL_VAR DATE></td>
+                        <td class="money text-right"><TMPL_VAR AMOUNT></td>
+                    </tr>
+                    </TMPL_LOOP>
+                </tbody>
+                <tfoot>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL1></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE1></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL2></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE2></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL3></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE3></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL4></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE4></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL5></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE5></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL6></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE6></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL7></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE7></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL8></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE8></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL9></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE9></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL10></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE10></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL11></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE11></td>
+                    </tr>
+                    <tr style="background-color:rgba(255,0,0,0.5)">
+                        <td><TMPL_VAR FLABEL12></td>
+                        <td class="money text-right"><TMPL_VAR FVALUE12></td>
+                    </tr>
+                </tfoot>
+                </table></td></tr></table>
+            </div>
+            <table class="table">
+                <tbody>
+                <TMPL_LOOP ERRORS>
+                    <tr><td><h3><span class="label label-danger">Error</span></h3></td></tr>
+                    <tr><td><TMPL_VAR ERROR></td></tr>
+                </TMPL_LOOP>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    <!-- Format numbers -->
+    function currency(n) {n = parseFloat(n); return isNaN(n) ? 0 : n.toFixed(2);}
+    var elements= document.getElementsByClassName("money");
+    for (var i = 0; i < elements.length; i++) {elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>";}
+    <!-- Chart -->
+    var data = {<TMPL_VAR "CHART_DATA">}
+    var ctx = document.getElementById("reportChart").getContext("2d");
+    var reportChart = new Chart(ctx).Bar(data);
+  </script>
+</html>

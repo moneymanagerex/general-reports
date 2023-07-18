@@ -1,0 +1,25 @@
+<h1>Income vs. Expenses Comparison by Year</h1>
+<p>This report totals all the Deposit and Withdrawal transactions and provides totals per Year.<br />
+When imported, the report will show years 2015-2020 (where there at least one transaction in the year) and will collate results as per <i>Calendar</i> year.<br />
+The report is shown in the base currency, converting all non-base currency values to base currency using the MMEX setting <i>Convert to Base Rate</i> value on the currency.</p>
+<p>The report can be adjusted for the year(s) of interest and provide results for either <i>Calendar</i> year or <i>Financial</i> Year.</p>
+<p>As defaulted on import:<br />
+<ul>
+<li>Display years 2015-2020, if you wish to change the years displayed, then change line 44 in the SQL.</li>
+<li>Uses <i>Calendar</i> year (Jan-01 to Dec-31). Should you need the report to show <i>Financial</i> year, then change line 20 in the SQL.</li>
+<dl>
+<dt>"SELECT '<b>YEAR</b>' AS yeartype,"</dt>
+<dd>- This will set the results to <i>Calendar</i> year (Jan-01 to Dec-31)</dd>
+<dt>"SELECT '<b>FIN_YEAR</b>' AS yeartype,"</dt>
+<dd>- This will set the results to <i>Financial</i> year. The exact dates of the financial year are read from the MMEX options settings </dd>
+</dl>
+</ul>
+</p>
+<ul style="list-style-type:none;">
+<li>&#x2705; Converts all transaction amounts into <i>Base Currency</i>, using the Transactions's Account and the <i>Conversion to Base Rate</i> value on the currency record.</li>
+<li>&#x2705; Ignores transactions marked as <b>Void (V)</b> or <b>Duplicate (D)</b>.</li>
+<li>&#x2705; Ignores <b>Transfer</b> type transactions.</li>
+<li>&#x2705; Uses the MMEX Options for the <i>Financial</i> year start month and day when yeartype set to "FIN_YEAR".</li>
+</ul>
+<hr>
+<p style="font-size:10px">For MMEX v1.3.3. DB v7</p>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http - equiv = "Content-Type" content = "text/html" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src = "ChartNew.js"></script>
+    <script src = "sorttable.js"></script>
+    <link href = "master.css" rel = "stylesheet" />
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+
+<div class = "row">
+<div class = "col-xs-1">
+	<div id="legendDiv"></div>
+</div>
+<div class = "col-xs-11">
+	<div id="myChartParent" width="100%">
+		<canvas id="myChart" width="400" height="400"></canvas>
+	</div>
+</div>
+
+<div class = "row">
+	<div class = "col-xs-2">
+	</div>
+<div class = "col-xs-8">
+<table class='table sortable'>
+<thead>
+    <tr>
+        <th id="periode"><TMPL_VAR "periode_name"></th>
+        <th>Deposit</th>
+        <th>Withdrawal</th>
+        <th>Total</th>
+	<th>Cumul</th>
+	<th>CumulInitialBal</th>
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR "periode"></td>
+        <td class = "money, text-right"><TMPL_VAR "Deposit"></td>
+        <td class = "money, text-right"><TMPL_VAR "Withdrawal"></td>
+        <td class = "money, total, text-right"><TMPL_VAR "Total"></td>
+	<td class = "money, total, text-right"><TMPL_VAR "Cumul"></td>
+	<td class = "money, total, text-right"><TMPL_VAR "CumulInitialBal"></td>
+        </tr>
+    </TMPL_LOOP>
+</tbody>
+</table>
+</div>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+</div>
+</body>
+<script>
+  <!--Format numbers-->
+  function currency(n) {
+    n = parseFloat(n);
+    n =  isNaN(n) ? 0 : n.toFixed(2);
+    var out = n.toString().replace(".", "|");
+    out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+    out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+    return out;
+  }
+    
+  <!--Format "money, text-right"-->
+  var elements = document.getElementsByClassName("money, text-right");
+  for (var i = 0; i < elements.length; i++){
+    elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>"; 
+  }
+    
+  <!--Format "money, total, text-right"-->
+  var elements = document.getElementsByClassName("money, total, text-right");
+  for (var i = 0; i < elements.length; i++){
+    if ( elements[i].innerHTML.indexOf("-") > -1) {
+       elements[i].style.color="#ff0000";
+    } 
+      //alert(elements[i].innerHTML + " " +  currency(elements[i].innerHTML) );
+     //elements[i].innerHTML = "<TMPL_VAR PFX_SYMBOL>" + currency(elements[i].innerHTML) + "<TMPL_VAR SFX_SYMBOL>"; 
+  }
+
+  window.onload = function(){
+    // sort table
+    sorttable.innerSortFunction.apply(document.getElementById('periode'), []);
+    sorttable.innerSortFunction.apply(document.getElementById('periode'), []);
+
+    // Init graph data :
+var data = {
+    labels: [<TMPL_LOOP NAME=CONTENTS>"<TMPL_VAR periode>",</TMPL_LOOP>],
+    datasets: [
+        {
+            label: "0 axis",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS>0,</TMPL_LOOP>]
+        },
+        {
+            label: "Total",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR total>,</TMPL_LOOP>]
+        },
+        {
+            label: "Cumul",
+            fillColor: "rgba(151,187,205,0.1)",
+            strokeColor: "rgba(70,130,180,1)",
+            pointColor: "rgba(70,130,180,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR Cumul>,</TMPL_LOOP>]
+        },
+	{
+            label: "Cumul Initial Balance",
+            fillColor: "rgba(151,187,205,0.1)",
+            strokeColor: "rgba(70,180,119,1)",
+            pointColor: "rgba(70,180,119,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [<TMPL_LOOP NAME=CONTENTS><TMPL_VAR CumulInitialBal>,</TMPL_LOOP>]
+        }
+    ]
+};
+
+
+    //dipslay graph
+    var options = {
+      scaleLineWidth: 1,
+      responsive: true,
+      //String - A legend template
+      legendTemplate : '<ul>'
+                  +'<% for (var i=0; i<datasets.length; i++) { %>'
+                    +'<li>'
+                    +'<span style=\"background-color:<%=datasets[i].strokeColor%>\">'
+                    +'<% if (datasets[i].label) { %><%= datasets[i].label %><% } %>'
+		    +'</span>'
+                  +'</li>'
+                +'<% } %>'
+              +'</ul>'
+    };
+
+    var ctx = document.getElementById("myChart").getContext("2d");  
+    //alert(document.getElementById("myChartParent").offsetWidth);
+    ctx.canvas.width  = document.getElementById("myChartParent").offsetWidth;
+    var myNewChart = new Chart(ctx).Line(data,options);
+    myNewChart.resize();
+
+  //then you just need to generate the legend
+  var legend = myNewChart.generateLegend();
+  document.getElementById("legendDiv").innerHTML = legend;
+
+  }
+</script>
+</html>

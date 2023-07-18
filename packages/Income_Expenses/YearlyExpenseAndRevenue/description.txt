@@ -1,0 +1,3 @@
+<h1>Yearly Expense/Revenue</h1>
+<p>Show a graph of cumulative yearly expense and revenues by month for the last 3 years</p>
+<p>Displays all figures in the <b>Base currency</b>, converting amounts from the Account currency to Base currency using the latest <i>Currency History value</i>. If there are no currency history values, then uses the <i>Currency Base Rate Conversion</i>.</p>

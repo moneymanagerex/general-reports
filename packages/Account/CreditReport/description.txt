@@ -1,0 +1,4 @@
+Show the account balance and available credit for the specified accounts.
+
+TODO:
+1. Update account names in SQL (line 31) with a list of Accounts to be displayed.

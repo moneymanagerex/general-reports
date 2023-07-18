@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href="master.css" rel="stylesheet" />
+    <script src="ChartNew.js"></script>
+</head>
+<body>
+<h3>Account Summary Report</h3>
+<p>Report Date: <TMPL_VAR TODAY></p>
+<div class="container">
+<div class="row">
+	<div class="col-xs-12 text-center"><canvas id="reportChart" width="400" height="400"></canvas></div>
+	<p class="small text-muted">All chart figures in base currency: <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></p>
+</div>
+<div class="row">
+	<div class="col-xs-10">
+		<table class="table">
+		<thead>
+		  <tr>
+		    <th>Account Name</th>
+		    <th  class="text-right">Balance</th>
+		    <th  class="text-right">Base Currency</th>
+		  </tr>
+		</thead>
+		<tbody>
+		    <TMPL_LOOP NAME=CONTENTS>
+		    <tr>
+			<th><TMPL_VAR ACCOUNTNAME></th>
+			<td class="money text-right"  data-prefix="<TMPL_VAR PFX_SYMBOL>" data-suffix="<TMPL_VAR SFX_SYMBOL>" data-grpsep="<TMPL_VAR GROUP_SEPARATOR>" data-decpt="<TMPL_VAR DECIMAL_POINT>"><TMPL_VAR BALANCE></td>
+			<td  style="background-color:<TMPL_VAR "COLOR">" class="money text-right"><TMPL_VAR BASE></td>
+		    </tr>
+		    </TMPL_LOOP>
+		</tbody>
+		<tfoot>
+		    <tr class="total">
+			<td>Total</td>
+			<td></td>
+			<td class="money text-right"><TMPL_VAR Total></td>
+		    </tr>
+		</tfoot>
+		</table>
+	</div>
+</div>
+</div>
+<ul>
+	<TMPL_LOOP ERRORS>
+	<li><span class="label label-danger">Error</span><TMPL_VAR ERROR></li>
+	</TMPL_LOOP>
+</ul>
+<script>
+	<!-- Chart -->
+	var data = [ < TMPL_VAR CHART_DATA > ]
+	var ctx = document.getElementById("reportChart").getContext("2d");
+	var reportChart = new Chart(ctx).PolarArea(data);
+</script>
+<script>
+	<!-- Format numbers -->
+	function formatNumberWithSeparators(sn, grpchar) {
+		if (grpchar != "") {
+			return sn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, grpchar);
+		}
+		else {
+			return sn;
+		}
+	}
+
+	function changeDecimalPoint(sn, dpchar) {
+	    var dppos = sn.lastIndexOf(".");
+		if (dpchar != "") {
+			return (dppos > 0 ? sn.slice(0, dppos) + dpchar + sn.substr(dppos + 1) : sn);
+		}
+		else {
+			return sn;
+		}
+	}
+
+function currency(n, grpsep, dpt) {
+    var pn = parseFloat(n);
+    return isNaN(pn) ? n : formatNumberWithSeparators(changeDecimalPoint(pn.toFixed(2), dpt), grpsep);
+}
+var elements = document.getElementsByClassName("money");
+for (var i = 0; i < elements.length; i++) {
+    elements[i].innerHTML = ((elements[i].hasAttribute("data-prefix") ? elements[i].getAttribute("data-prefix") : "<TMPL_VAR PFX_SYMBOL>")
+	    + " "
+		+ currency(elements[i].innerHTML,
+		    (elements[i].hasAttribute("data-grpsep") ? elements[i].getAttribute("data-grpsep") : "<TMPL_VAR GROUP_SEPARATOR>"),
+		    (elements[i].hasAttribute("data-decpt") ? elements[i].getAttribute("data-decpt") : "<TMPL_VAR DECIMAL_POINT>"))
+		+ " "
+		+ (elements[i].hasAttribute("data-suffix") ? elements[i].getAttribute("data-suffix") : "<TMPL_VAR SFX_SYMBOL>")).trim();
+}
+</script>
+</body>
+</html>

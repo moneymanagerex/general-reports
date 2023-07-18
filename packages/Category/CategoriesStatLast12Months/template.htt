@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src="ChartNew.js"></script>
+    <script src="sorttable.js"></script>
+    <link href="master.css" rel="stylesheet" />
+<style>
+.foo {   
+    float: left;
+    width: 15px;
+    height: 12px;
+    margin: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.2);
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h3 class="i18n">_Title_</h3>
+<TMPL_VAR TODAY>
+<div class="row">
+<div class="col-xs-1"></div>
+<div class="col-xs-10">
+<div class="col-xs-1"></div>
+<div class="col-xs-10">
+    <canvas id="reportChart" width="700" height="400"></canvas>
+	<div class="col-xs-5"></div>
+	<div class="col-xs-4">
+	    <table class="table-condensed" style="border: 2px double gray;">
+		<tr>
+			<td class="small text-muted">All figures in base currency: <TMPL_VAR PFX_SYMBOL><TMPL_VAR SFX_SYMBOL></td>
+			<td><div class="foo" style="background-color:green;"></div></td><td id="lastYear">yyyy</td>
+			<td><div class="foo" style="background-color:blue;"></div></td><td id="thisYear">yyyy</td>
+		</tr>
+	    </table>
+	</div>
+	</div>
+<table class='table sortable'>
+  <thead>
+    <tr>
+        <th class="i18n">Category</th>
+        <th id='1'></th>
+        <th id='2'></th>
+        <th id='3'></th>
+        <th id='4'></th>
+        <th id='5'></th>
+        <th id='6'></th>
+        <th id='7'></th>
+        <th id='8'></th>
+        <th id='9'></th>
+        <th id='10'></th>
+        <th id='11'></th>
+        <th id='12'></th>
+        <th style='text-align:center' class="i18n">Overall</th>
+    </tr>
+  </thead>
+  <tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR CATEGORY></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR twe>' ><TMPL_VAR twe></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR ele>'><TMPL_VAR ele></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR ten>'><TMPL_VAR ten></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR nin>'><TMPL_VAR nin></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR egh>'><TMPL_VAR egh></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR sev>'><TMPL_VAR sev></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR six>'><TMPL_VAR six></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR fiv>'><TMPL_VAR fiv></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR fou>'><TMPL_VAR fou></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR thr>'><TMPL_VAR thr></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR two>'><TMPL_VAR two></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR one>'><TMPL_VAR one></td>
+        <td class='money' sorttable_customkey='<TMPL_VAR OVERALL>'><TMPL_VAR OVERALL></td>
+    </tr>
+    </TMPL_LOOP>
+</tbody>
+<tfoot>
+    <tr class="total">
+        <td class="i18n">Deposit:</td>
+        <td class='money'><TMPL_VAR DEPOSIT_twe></td>
+        <td class='money'><TMPL_VAR DEPOSIT_ele></td>
+        <td class='money'><TMPL_VAR DEPOSIT_ten></td>
+        <td class='money'><TMPL_VAR DEPOSIT_nin></td>
+        <td class='money'><TMPL_VAR DEPOSIT_egh></td>
+        <td class='money'><TMPL_VAR DEPOSIT_sev></td>
+        <td class='money'><TMPL_VAR DEPOSIT_six></td>
+        <td class='money'><TMPL_VAR DEPOSIT_fiv></td>
+        <td class='money'><TMPL_VAR DEPOSIT_fou></td>
+        <td class='money'><TMPL_VAR DEPOSIT_thr></td>
+        <td class='money'><TMPL_VAR DEPOSIT_two></td>
+        <td class='money'><TMPL_VAR DEPOSIT_one></td>
+        <td class='money'><TMPL_VAR TOTAL_DEPOSIT></td> 
+    </tr>
+    <tr class="total">
+        <td class="i18n">Expenses:</td>
+        <td class='money'><TMPL_VAR WITH_twe></td>
+        <td class='money'><TMPL_VAR WITH_ele></td>
+        <td class='money'><TMPL_VAR WITH_ten></td>
+        <td class='money'><TMPL_VAR WITH_nin></td>
+        <td class='money'><TMPL_VAR WITH_egh></td>
+        <td class='money'><TMPL_VAR WITH_sev></td>
+        <td class='money'><TMPL_VAR WITH_six></td>
+        <td class='money'><TMPL_VAR WITH_fiv></td>
+        <td class='money'><TMPL_VAR WITH_fou></td>
+        <td class='money'><TMPL_VAR WITH_thr></td>
+        <td class='money'><TMPL_VAR WITH_two></td>
+        <td class='money'><TMPL_VAR WITH_one></td>
+        <td class='money'><TMPL_VAR TOTAL_WITHDRAW></td> 
+    </tr>
+    <tr class="total">
+        <td class="i18n">Total:</td>
+        <td class='money'><TMPL_VAR TOTAL_twe></td>
+        <td class='money'><TMPL_VAR TOTAL_ele></td>
+        <td class='money'><TMPL_VAR TOTAL_ten></td>
+        <td class='money'><TMPL_VAR TOTAL_nin></td>
+        <td class='money'><TMPL_VAR TOTAL_egh></td>
+        <td class='money'><TMPL_VAR TOTAL_sev></td>
+        <td class='money'><TMPL_VAR TOTAL_six></td>
+        <td class='money'><TMPL_VAR TOTAL_fiv></td>
+        <td class='money'><TMPL_VAR TOTAL_fou></td>
+        <td class='money'><TMPL_VAR TOTAL_thr></td>
+        <td class='money'><TMPL_VAR TOTAL_two></td>
+        <td class='money'><TMPL_VAR TOTAL_one></td>
+        <td class='money'><TMPL_VAR GRAND_TOTAL></td> 
+    </tr>
+</tfoot>
+</table>
+    </div></div>
+<TMPL_LOOP ERRORS>
+    <hr><TMPL_VAR ERROR>
+</TMPL_LOOP>
+</div>
+<script> <!-- Translations -->
+    var translations =
+    {
+    "english":[{
+        "_Title_":"Categories stats for last 12 months"
+    }],
+    "english_uk":[{
+        "_Title_":"Categories statistics for the last 12 month period"
+    }],
+    "english_us":[{
+        "_Title_":"Categories statistics for the last 12 months"
+    }],
+    "russian": [{
+        "_Title_":"Категории за последние 12 месяцев"
+        , "Category": "Категория", "Overall":"Сумма"
+        , "Jan": "Янв", "Feb": "Фев", "Mar":"Мар"
+        , "Apr": "Апр", "May": "Май", "Jun":"Июн"
+        , "Jul": "Июл", "Aug": "Авг", "Sep":"Сен"
+        , "Oct": "Окт", "Nov": "Ноя", "Dec":"Дек"
+         , "Total:":"Всего:"
+    }],
+  "german": [{
+        "_Title_":"Übersicht letzte 12 Monate"
+        , "Category": "Каtegorie", "Overall":"Total"
+        , "Jan": "Jan", "Feb": "Feb", "Mar":"Мär"
+        , "Apr": "Аpr", "May": "Маi", "Jun":"Jun"
+        , "Jul": "Jul", "Aug": "Аug", "Sep":"Sep"
+        , "Oct": "Оkt", "Nov": "Nov", "Dec":"Dez"
+         , "Total:":"Total:"
+    }],
+    "italian":[{
+        "_Title_":"Il mio rapporto", "Nr":"#", "Amount":"Importo"
+         , "Overall":"Overall"
+         , "Total":"Totale:"
+    }],
+    "french":[{
+        "_Title_":"Récapitulatif pour les derniers 12 mois", "Nr":"#",
+        "Jan": "Jan", "Feb": "Fev", "Mar":"Мar"
+        , "Apr": "Аvr", "May": "Маi", "Jun":"Jui"
+        , "Jul": "Jul", "Aug": "Аoû", "Sep":"Sep"
+        , "Oct": "Оct", "Nov": "Nov", "Dec":"Déc",
+        "Amount":"Quantité",
+         "Overall":"Global",
+        "Category":"Catégories",
+        "Deposit:":"Recettes:",
+        "Expenses:":"Dépenses:"
+    }]
+    };
+    function _(n) {
+	// The below line has issues with hyphenated languages (i.e. english-uk, english-us) and causes script to stop. So check for '-' and set, or default to english.
+        // var my_lang=translations.<TMPL_VAR LANGUAGE>;
+	var my_lang = [];
+	if ("<TMPL_VAR LANGUAGE>".indexOf("-") != -1) {
+		switch("<TMPL_VAR LANGUAGE>") {
+		  case "english-uk":
+		    my_lang=translations.english_uk;
+		    break;
+		  case "english-us":
+		    my_lang=translations.english_us;
+		    break;
+		  default:
+		    my_lang=translations.english;
+		}
+	}
+        if (my_lang == null) my_lang=translations.english;
+        var item=my_lang[0][n];
+        var out=(item == null) ? n : item;
+        return out;
+    }
+    var elements = document.getElementsByClassName('i18n');
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        element.innerHTML=_(element.innerHTML);
+    }
+</script>
+<script>
+    var d=new Date();
+    var m=d.getMonth();
+    var months={1:_('Jan'), 2:_('Feb'), 3:_('Mar'), 4:_('Apr'), 5:_('May'), 6:_('Jun'), 7:_('Jul'), 8:_('Aug'), 9:_('Sep'), 10:_('Oct'), 11:_('Nov'), 12:_('Dec')};
+    var dataAccountColours=[ 
+            "#f79646", "#f5f445", "#7fd13b", "#4bacc6", "#1f497d", "#8064a2"
+            ,"#f2f2f2", "#f8d1d3", "#fdeada", "#fafdd7", "#e5f5d7", "#dbeef3"
+            , "#c6d9f0", "#e5e0ec", "#ffcc00", "#595959", "#f2a3a7", "#fbd5b5"
+            , "#fbfaae", "#cbecb0", "#b7dde8", "#8db3e2", "#ccc1d9", "#548dd4"
+            , "#eb757b", "#fac08f", "#eef98e", "#b2e389", "#92cddc", "#b2a2c7"
+            , "#a3171e", "#e36c09", "#dede07", "#5ea226", "#31859b", "#17365d", "#5f497a"
+    ];
+    document.getElementById('lastYear').innerHTML=d.getFullYear() - 1;;
+    document.getElementById('thisYear').innerHTML=d.getFullYear();
+    <!-- Chart -->
+    var dataTimeMajor=[
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR twe>, </TMPL_LOOP>],
+                [ <TMPL_LOOP CONTENTS> <TMPL_VAR ele>, </TMPL_LOOP>],
+                [ <TMPL_LOOP CONTENTS> <TMPL_VAR ten>, </TMPL_LOOP>],
+                [ <TMPL_LOOP CONTENTS> <TMPL_VAR nin>, </TMPL_LOOP>],
+                [ <TMPL_LOOP CONTENTS> <TMPL_VAR egh>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR sev>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR six>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR fiv>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR fou>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR thr>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR two>, </TMPL_LOOP>],
+		[ <TMPL_LOOP CONTENTS> <TMPL_VAR one>, </TMPL_LOOP>],
+	]
+	var dataAccountNames=[ <TMPL_LOOP CONTENTS> "<TMPL_VAR CATEGORY>", </TMPL_LOOP>]
+	var dataAccountMajor=[]
+	var dataAccountTotal=[]
+        for (var t=0; t < dataAccountNames.length; t++)
+        {
+             dataAccountMajor.push ([]);
+             dataAccountTotal.push (0);
+        }
+	for (var t=0; t < dataTimeMajor.length; t++)
+	{
+		for(var account=0; account<dataTimeMajor[t].length; account++)
+		{
+			dataAccountMajor[account].push(dataTimeMajor[t][account]);
+			dataAccountTotal[account]=dataAccountTotal[account]+1;
+		}
+	}
+	var data={ labels : [], datasets : [] };
+	for (var account=0; account < dataAccountMajor.length; account++)
+	{
+			data.datasets.push(  {
+				fillColor : dataAccountColours[account],
+				data : dataAccountMajor[account],
+				title : dataAccountNames[account]
+			} );
+	}
+        for(var i in months){
+            var x=(m + parseInt(i))%12 + 1;
+            data.labels.push(months[x]);
+            var element=document.getElementById(i) ;
+            element.innerHTML=months[x];
+            if (x > m + 1) {
+                element.style.color="green"
+            } else {
+                element.style.color="blue"
+            }
+            element.style.textAlign="center";
+        }
+
+	var options={
+		animationEasing: 'easeOutQuint',
+		legend:true,
+                responsive : true,
+		annotateDisplay : true
+	}
+	var ctx=document.getElementById("reportChart").getContext("2d");
+	var reportChart=new Chart(ctx).StackedBar(data, options);
+</script>
+<script>
+    <!-- Format double to base currency -->
+    function currency(n) {
+        n=parseFloat(n);
+        n= isNaN(n) ? 0 : n.toFixed(2);
+        var out=n.toString().replace(".", "|");
+        out=out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+        out=out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+        return out;
+    }
+    var elements= document.getElementsByClassName("money");
+    for (var i=0; i < elements.length; i++) {
+        var element=elements[i];
+        element.style.textAlign='right';
+        element.style.whiteSpace='nowrap';
+        if (element.innerHTML.indexOf("-") > -1) {
+            element.style.color="#ff0000";
+        } 
+        element.innerHTML=currency(element.innerHTML);
+    }
+</script>
+</body>
+</html>

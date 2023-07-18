@@ -1,0 +1,8 @@
+<h1>Account Forecast Report using Repeating Transactions</h1>
+<p>Figures are displayed in the Currency of the Account selected.</p>
+<p>Note: Requires at least one entry for Account in Repeating Transactions.</p>
+<p>Setup: 
+<ol>
+<li>Update Account name in SQL (line 25).</li>
+</ol>
+</p>
