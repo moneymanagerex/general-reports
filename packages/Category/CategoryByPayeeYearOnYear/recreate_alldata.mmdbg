@@ -1,1 +1,43 @@
-CREATE VIEW alldata as    select CANS.TransID as ID, CANS.TransCode as TransactionType, CANS.TransDate as Date, round(strftime('%Y', CANS.TransDate)) as Year   , round(strftime('%m', CANS.TransDate)) as Month, round(strftime('%d', CANS.TransDate)) as Day, CAT.CategName as Category, SUBCAT.SubCategName as Subcategory   , ROUND(case CANS.TRANSCODE when 'Withdrawal' then -1*CANS.TRANSAMOUNT  else CANS.TRANSAMOUNT end,2) as Amount    , (select cf.BaseConvRate from currencyformats_v1 cf where cf.currencyid=FROMACC.CURRENCYID) as BaseConvRate   , FROMACC.CurrencyID as CurrencyID, FROMACC.AccountName as AccountName,  FROMACC.AccountID as AccountID, TOACC.AccountName as ToAccountName, TOACC.ACCOUNTId as ToAccountID, CANS.ToTransAmount ToTransAmount, TOACC.CURRENCYID as ToCurrencyID   , 0 as Splitted , CAT.CategID as CategID, SUBCAT.SubCategID as SubCategID, PAYEE.PayeeName as Payee, PAYEE.PayeeID as PayeeID   , CANS.TRANSACTIONNUMBER as TransactionNumber, CANS.Status as Status, CANS.NOTES as Notes     from  CHECKINGACCOUNT_V1 CANS    inner join CATEGORY_V1    CAT     on CAT.CATEGID      = CANS.CATEGID    left  join SUBCATEGORY_V1 SUBCAT  on SUBCAT.SUBCATEGID= CANS.SUBCATEGID    left  join PAYEE_V1       PAYEE   on PAYEE.PAYEEID    = CANS.PAYEEID    left  join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID= CANS.ACCOUNTID    left  join ACCOUNTLIST_V1 TOACC   on TOACC.ACCOUNTID  = CANS.TOACCOUNTID   UNION ALL    SELECT CASS.TRANSID, CASS.TRANSCODE, CASS.TransDate, round(strftime('%Y', CASS.TransDate)) as Year   , round(strftime('%m', CASS.TransDate)) as Month, round(strftime('%d', CASS.TransDate)) as Day,CAT.CATEGNAME, SUBCAT.SUBCATEGNAME   ,ROUND(SPLIT.SPLITTRANSAMOUNT, 2)*(case when CASS.TRANSCODE='Withdrawal' then -1 else 1 end) as Amount    , (select cf.BaseConvRate from currencyformats_v1 cf where cf.currencyid=FROMACC.CURRENCYID) as BaseConvRate   , FROMACC.CURRENCYID, FROMACC.ACCOUNTNAME, FROMACC.ACCOUNTId ,TOACC.ACCOUNTNAME, TOACC.ACCOUNTId, CASS.totransamount, TOACC.CURRENCYID    , 1 as Splitted , CAT.CATEGId, SUBCAT.SUBCATEGId, PAYEE.PAYEENAME, PAYEE.PAYEEID   , CASS.TRANSACTIONNUMBER, CASS.Status, CASS.NOTES    from  CHECKINGACCOUNT_V1 CASS    inner join SPLITTRANSACTIONS_V1 SPLIT   on SPLIT.TRANSID    = CASS.TRANSID    inner join CATEGORY_V1          CAT     on CAT.CATEGID      = SPLIT.CATEGID    left  join SUBCATEGORY_V1       SUBCAT  on SUBCAT.SUBCATEGID= SPLIT.SUBCATEGID    left  join PAYEE_V1             PAYEE   on PAYEE.PAYEEID    = CASS.PAYEEID    left  join ACCOUNTLIST_V1       FROMACC on FROMACC.ACCOUNTID= CASS.ACCOUNTID    left  join ACCOUNTLIST_V1       TOACC   on TOACC.ACCOUNTID  = CASS.TOACCOUNTID   order by CANS.transid
+-- MMEX Debug SQL - Update --
+
+CREATE VIEW alldata as
+select CANS.TransID as ID, CANS.TransCode as TransactionType, CANS.TransDate as Date,
+coalesce(CAT.ParentName, SCAT.ParentName, CAT.CategName, SCAT.CategName) as Category,
+(case coalesce(CAT.ParentId, SCAT.ParentId) when -1 then "" else coalesce(CAT.CategName, SCAT.CategName) end) as Subcategory,
+ROUND((case CANS.TRANSCODE when 'Withdrawal' then -1 else 1 end)*
+(case CANS.CATEGID when -1 then st.splittransamount
+else CANS.TRANSAMOUNT end),2) as Amount,
+cf.currency_symbol as currency,
+CANS.Status as Status, CANS.NOTES as Notes,
+cf.BaseConvRate as BaseConvRate,
+FROMACC.CurrencyID as CurrencyID,
+FROMACC.AccountName as AccountName, FROMACC.AccountID as AccountID, TOACC.AccountName as ToAccountName,
+TOACC.ACCOUNTId as ToAccountID, CANS.ToTransAmount ToTransAmount, TOACC.CURRENCYID as ToCurrencyID,
+(case ifnull(CANS.CATEGID,-1) when -1 then 1 else 0 end) as Splitted,
+ifnull(CAT.CategId,st.CategId) as CategID,
+PAYEE.PayeeName as Payee, PAYEE.PayeeID as PayeeID,
+CANS.TRANSACTIONNUMBER as TransactionNumber,
+round(strftime('%Y', CANS.TransDate)) as Year,
+round(strftime('%m', CANS.TransDate)) as Month,
+round(strftime('%d', CANS.TransDate)) as Day
+from CHECKINGACCOUNT_V1 CANS
+left join 
+    (
+        select CAT.CATEGID as CATEGID, CAT.CATEGNAME as CATEGNAME, PCAT.CATEGNAME as PARENTNAME, CAT.PARENTID as PARENTID 
+        from CATEGORY_V1 CAT 
+        left join CATEGORY_V1 PCAT 
+        on PCAT.CATEGID = CAT.PARENTID
+    ) as CAT on CAT.CATEGID = CANS.CATEGID
+left join PAYEE_V1 PAYEE on PAYEE.PAYEEID = CANS.PAYEEID
+left join ACCOUNTLIST_V1 FROMACC on FROMACC.ACCOUNTID = CANS.ACCOUNTID
+left join ACCOUNTLIST_V1 TOACC on TOACC.ACCOUNTID = CANS.TOACCOUNTID
+left join splittransactions_v1 st on CANS.transid=st.transid
+left join 
+    (
+        select CAT.CATEGID as CATEGID, CAT.CATEGNAME as CATEGNAME, PCAT.CATEGNAME as PARENTNAME, CAT.PARENTID as PARENTID 
+        from CATEGORY_V1 CAT 
+        left join CATEGORY_V1 PCAT 
+        on PCAT.CATEGID = CAT.PARENTID
+    ) as SCAT on SCAT.CATEGID = st.CATEGID and CANS.TransId=st.transid
+left join currencyformats_v1 cf on cf.currencyid=FROMACC.currencyid
+order by CANS.transid;

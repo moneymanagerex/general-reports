@@ -2,13 +2,15 @@ Category By Payee Year on Year Report
 
 This report will look at a given category and display transactions sorted by payee in rows and year in columns. Could be useful for tracking donations, bills, etc.
 
-Tested on MMEX v1.6.1 (DB v16)
+Tested on MMEX v1.6.4 (DB v18)
 
 PREREQUISITE:
-Use the recreate_alldata.mmdbg to get the alldata view back which was removed in a prior MMEX version. 
+Use the recreate_alldata.mmdbg to get the alldata view back which was removed in a prior MMEX version. This version of recreate_alldata was from here: https://github.com/moneymanagerex/moneymanagerex/issues/5724#issuecomment-1454207805 see known issues below. 
 
 LIMITATIONS/KNOWN ISSUES:
-This is the initial checkin of the report, basically unchanged from when SQL was the only option. There are lots of hard coded dates and methods, which should be changed using Lua.
+There are lots of hard coded dates and methods.
+
+This version of recreate_alldata puts the category and subcategory back as separate columns in the alldata view like it used to be in prior mmex versions before nested subcategories. This could cause issues if this report is edited looking for subsubcategories since it is not handled, but it returns the same information as the report did in db v16.
 
 USAGE:
 It is complicated. It will get better. 
@@ -26,3 +28,4 @@ Payee2	$8	$6	$14
 
 CREDITS:
 Thanks to Nikolay for some help. Originally posted here: http://forum.moneymanagerex.org/viewtopic.php?f=12&t=2669
+Thanks to n-stein for the updated code recreate_alldata
