@@ -1,0 +1,87 @@
+<!DOCTYPE html><h3><TMPL_VAR REPORTNAME></h3>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <link href = "master.css" rel = "stylesheet">
+</head>
+<body>
+<TMPL_VAR TODAY><hr>
+<table cellspacing='1' width='95%'>
+    <tr bgcolor='#D5D6DE'>
+        <th>Payee</th>
+        <th style="text-align:center">2023</th>
+        <th style="text-align:center">2022</th>
+        <th style="text-align:center">2021</th>
+        <th style="text-align:center">2020</th>
+        <th style="text-align:center">2019</th>
+        <th style="text-align:center">2018</th>
+        <th style="text-align:center">2017</th>
+        <th style="text-align:center">2016</th>
+        <th style="text-align:center">2015</th>
+        <th style="text-align:center">2014</th>
+        <th style="text-align:center">2013</th>
+        <th style="text-align:center">2012</th>
+        <th style="text-align:center">2011</th>
+        <th style="text-align:center">2010</th>
+        <th style="text-align:center">2009</th>
+        <th style="text-align:center">2008</th>
+        <th style="text-align:center">Total ('08-'23)</th>
+    </tr>
+    <TMPL_LOOP NAME=CONTENTS>
+    <TMPL_IF __ODD__>
+        <tr>
+    <TMPL_ELSE>
+        <tr bgcolor='#E1EDFB'>
+    </TMPL_IF>
+        <td><TMPL_VAR "Payee"></td>
+       <td class = "money"><TMPL_VAR "2023"></td>
+       <td class = "money"><TMPL_VAR "2022"></td>
+       <td class = "money"><TMPL_VAR "2021"></td>
+       <td class = "money"><TMPL_VAR "2020"></td>
+       <td class = "money"><TMPL_VAR "2019"></td>
+       <td class = "money"><TMPL_VAR "2018"></td>
+       <td class = "money"><TMPL_VAR "2017"></td>
+        <td class = "money"><TMPL_VAR "2016"></td>
+        <td class = "money"><TMPL_VAR "2015"></td>
+        <td class = "money"><TMPL_VAR "2014"></td>
+        <td class = "money"><TMPL_VAR "2013"></td>
+        <td class = "money"><TMPL_VAR "2012"></td>
+        <td class = "money"><TMPL_VAR "2011"></td>
+        <td class = "money"><TMPL_VAR "2010"></td>
+        <td class = "money"><TMPL_VAR "2009"></td>
+        <td class = "money"><TMPL_VAR "2008"></td>
+        <td class = "money"><TMPL_VAR "Total ('08-'23)"></td>
+        </tr>
+    </TMPL_LOOP>
+</table>
+<TMPL_LOOP ERRORS>
+    <hr>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+<script>
+    <!-- Format double to base currency -->
+    function currency(n) {
+        n = parseFloat(n);
+        n =  isNaN(n) ? "" : n.toFixed(2);
+        var out = n.toString().replace(".", "|");
+        out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+        out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+        return out;
+    }
+    var elements= document.getElementsByClassName("money");
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.textAlign='right';
+        if (element.innerHTML.indexOf("-") > -1) {
+            element.style.color="#ff0000";
+        } 
+       if (element.innerHTML == "") {
+}
+else {
+	element.innerHTML = '<TMPL_VAR PFX_SYMBOL>' + currency(element.innerHTML) +'<TMPL_VAR SFX_SYMBOL>';
+}
+    }
+</script>
+</html>
