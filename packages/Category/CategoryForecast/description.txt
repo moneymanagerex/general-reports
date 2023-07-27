@@ -2,12 +2,9 @@ Category Forecast Report Using Repeating Transactions
 
 This report will calculate the transactions for the current year in a given category and then use the remaining repeating transactions to forecast the total for the category at year's end.
 
-LIMITATIONS/KNOWN ISSUES:
-Does not include split transactions.
-Only works for an entire category, not individual subcategories.
-
 USAGE:
-Update category name in line 15 of the SQL.
+Update category ID in SQL (see comments in the file for instructions).
+As written, it will include all children of that category in the forecast, however if you don't want this behavior, there are instructions to just forecast a single category as well. 
 
 SIMPLE EXAMPLE: 
 

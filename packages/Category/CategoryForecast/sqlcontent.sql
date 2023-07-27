@@ -1,3 +1,4 @@
+--To change the category, update the CATEGID at the end of line 66
 SELECT b.TRANSAMOUNT AS TRANSAMOUNT,
        b.REPEATS AS REPEATS,
        b.NUMOCCURRENCES AS NUMOCCURRENCES,
@@ -30,7 +31,8 @@ SELECT b.TRANSAMOUNT AS TRANSAMOUNT,
             WHERE t.CATEGID = cat.CATEGID
        )
        AS BALANCE,
-       cat.CATEGNAME AS CATEGORY
+       cat.CATEGNAME AS CATEGORY,
+	   cat.CATEGID AS CATEGID
   FROM (
            SELECT (CASE BD.CATEGID WHEN -1 THEN BDSPX.CATEGID ELSE BD.CATEGID END) AS CATEGID,
                   BD.STATUS,
@@ -53,10 +55,20 @@ SELECT b.TRANSAMOUNT AS TRANSAMOUNT,
                   LEFT JOIN
                   BUDGETSPLITTRANSACTIONS_V1 AS bdspx ON bd.BDID = bdspx.TRANSID
             WHERE bd.STATUS NOT IN ('D', 'V')
+			-- have to add in all categories that do not have any recurring so they don't get left off the from clause
+			UNION
+			SELECT CATEGID, NULL as Col2, NULL as Col3, NULL as Col4, NULL as Col5, NULL as Col6 FROM CATEGORY_V1 WHERE CATEGID NOT IN (SELECT CATEGID FROM BILLSDEPOSITS_V1)
        )
        AS b
        INNER JOIN
        CATEGORY_V1 AS cat ON b.CATEGID = cat.CATEGID
- WHERE cat.CATEGNAME = 'Bills';
--- Convert to Base Currency from Tx Acc Currency using Curr History or Curr Conv 2 Base Rate
--- CheckingAccount also now use SplitTransactions (check CATEGID = -1)-- Billdeposits Account also now use BudgetSplitTransactions (check CATEGID = -1)
+ WHERE cat.CATEGID IN (WITH RECURSIVE categories(categid, categname, parentid) AS 
+(SELECT a.categid, a.categname, a.parentid FROM category_v1 a WHERE a.categid=1 
+UNION ALL 
+SELECT c.categid, r.categname || ':' || c.categname, c.parentid 
+FROM categories r, category_v1 c 
+WHERE r.categid = c.parentid) 
+ SELECT categid FROM categories);
+ --This WHERE statement starting on line 65 will include all child categories in the forecast. If you do not want this behavior, replace line 65 with:
+ --  WHERE cat.CATEGID = 1
+ -- to only include category id 1 and not its children for example
