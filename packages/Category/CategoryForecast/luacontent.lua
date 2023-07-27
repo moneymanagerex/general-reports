@@ -1,9 +1,10 @@
     local total = 0;
     local forecast = 0;
     local period = 6;
-    local initialized = 0;
     local repeatcode = 0;
     local numrepeats = 0;
+	local categid = -99;
+	local categname = "";
 
     function is_leap_year(year)
         local ly = 0;
@@ -139,11 +140,17 @@
     end
 
     function handle_record(record)
-        if initialized == 0 then
-            total = record:get("BALANCE");
-            forecast= total;
-            initialized = 1;
-        end
+		-- BALANCE gets repeated if there are more than one recurring transaction with the same categid.
+		--    This if statement will only add BALANCE to the total and forecast the first time
+		if record:get("CATEGID") ~= categid then
+			categid = record:get("CATEGID");
+			total = total + record:get("BALANCE");
+			forecast= forecast + record:get("BALANCE");
+			-- very first time, get the title of the category for the HTML report
+		    if categname == "" then
+                categname = record:get("CATEGORY");
+            end		
+		end
         repeatcode = tonumber(record:get("REPEATS"));
         numrepeats = record:get("NUMOCCURRENCES");
         local amount = record:get("TRANSAMOUNT");
@@ -170,4 +177,5 @@
         local curDay = os.date('%d');
         result:set("Current_Total", total);
         result:set("Projected", forecast);
+		result:set("categname", categname);
     end
