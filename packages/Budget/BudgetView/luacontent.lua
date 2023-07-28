@@ -1,10 +1,10 @@
 local total = 0; 
-local subcategid;
+local categid;
 function handle_record(record)
         total = record:get("TransAmount");
-        subcategid = record:get("SubcategoryID");
+        categid = record:get("categid");
 
-        if (subcategid == "97") or (subcategid == "5") or (subcategid == "134") or (subcategid == "90") then
+        if (categid == "127") or (categid == "35") or (categid == "164") or (categid == "120") then
             record:set("TransAmount",-total);
         end
 

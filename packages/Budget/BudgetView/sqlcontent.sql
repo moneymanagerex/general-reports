@@ -1,19 +1,16 @@
 
-SELECT bq.CategoryID,  bq.Category, bq.SubcategoryID, bq.subcategname, ifnull(TransAmount,0) TransAmount, ifnull(round(BudgetAmount, 2), 0) BudgetAmount
+SELECT bq.categid,  bq.categname, ifnull(TransAmount,0) TransAmount, ifnull(round(BudgetAmount, 2), 0) BudgetAmount
 FROM (
-select distinct cs.CategoryID,  cs.Category, cs.SubcategoryID, cs.subcategname
-from (
-select distinct c.CategId CategoryID, CategName Category, subcategid SubcategoryID, subcategname
-from category_v1 c
-join subcategory_v1 on subcategory_v1.categid = c.categid
-UNION
-select distinct c.CategId CategoryID, CategName Category, -1 SubcategoryID, "" subcategname
-from category_v1 c
-) cs
+WITH RECURSIVE categories(categid, categname, parentid) AS 
+(SELECT a.categid, a.categname, a.parentid FROM category_v1 a WHERE parentid = '-1' 
+UNION ALL 
+SELECT c.categid, r.categname || ':' || c.categname, c.parentid 
+FROM categories r, category_v1 c 
+WHERE r.categid = c.parentid) 
+ SELECT categid, categname FROM categories ORDER by categname
 ) bq
 LEFT JOIN (
             select CategID categoryID , Category
-                    ,  ifnull(SubCategID,-1) subcategoryid, Subcategory
                 , round(SUM(Amount),2) TransAmount
             from alldata 
             where 1=1
@@ -21,10 +18,10 @@ LEFT JOIN (
                 and Date 
                     between date('2021-01-01') 
                     and date('2021-12-31')
-           group by Category, Subcategory
-) d on (bq.CategoryId = d.CategoryId) AND (bq.SubCategoryID = d.subcategoryid)
+           group by categid
+) d on (bq.categid = d.CategoryId)
 LEFT JOIN (
-      select c.categid categoryId, c.categName category, ifnull(s.subcategId,-1) subcategoryId, s.subcategName subcategory
+      select c.categid categoryId, c.categName category
             , total(
                 case 
                     when Period = 'Weekly' then Amount * 52
@@ -40,11 +37,10 @@ LEFT JOIN (
         from BudgetTable_v1 bt
             left join BudgetYear_v1 by on (bt.BudgetYearId = by.BudgetYearId)
             left join category_v1 c on (bt.categId = c.categId)
-            left join subcategory_v1 s on (bt.subcategId = s.subcategId)
         where 1=1
             and by.BudgetYearName = strftime('%Y', date('2021-12-31'))
-        group by c.categId, s.subcategid
-) b on (bq.categoryId = b.categoryId) AND (bq.subcategoryId = b.subcategoryId)
+        group by c.categId
+) b on (bq.categid = b.categoryId)
 
-order by bq.Category, bq.subcategname
+order by bq.categname
 

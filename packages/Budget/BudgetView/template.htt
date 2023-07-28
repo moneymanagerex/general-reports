@@ -19,8 +19,6 @@
     <tr>
         <th>CategoryID</th>
         <th>Category</th>
-        <th>SubcategoryID</th>
-        <th>subcategname</th>
         <th>TransAmount</th>
         <th>BudgetAmount</th>
 
@@ -29,10 +27,8 @@
 <tbody>
     <TMPL_LOOP NAME=CONTENTS>
         <tr>
-        <td class = "text-right"><TMPL_VAR "CategoryID"></td>
-        <td><TMPL_VAR "Category"></td>
-        <td class = "text-right"><TMPL_VAR "SubcategoryID"></td>
-        <td><TMPL_VAR "subcategname"></td>
+        <td class = "text-right"><TMPL_VAR "categid"></td>
+        <td><TMPL_VAR "categname"></td>
         <td class = "money"><TMPL_VAR "TransAmount"></td>
         <td class = "money"><TMPL_VAR "BudgetAmount"></td>
 
