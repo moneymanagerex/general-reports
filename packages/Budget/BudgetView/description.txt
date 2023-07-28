@@ -1,0 +1,7 @@
+Works for db v18 / MMEX v1.6.4
+
+Roughly duplicates the view you get when you view a budget year.
+This can be useful if you want to copy/paste the data into a spreadsheet. 
+
+Dates are set in the SQL query.
+Lua code flips amounts in particular categories to be negative, please change/remove the category IDs there to suit your needs. 
