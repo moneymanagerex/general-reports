@@ -1,0 +1,22 @@
+{
+  "reportGroups": [
+    {   
+      "name": "Account",
+      "reports": [
+        {"name": "AccountBalances", "path": "Account/AccountBalances/sqlcontent.sql"},
+        {"name": "AccountForecast", "path": "Account/AccountForecast/sqlcontent.sql"},
+        {"name": "AccountSummary", "path": "Account/AccountSummary/sqlcontent.sql"},
+        {"name": "AccountTrend", "path": "Account/AccountTrend/sqlcontent.sql"},
+        {"name": "CreditReport", "path": "Account/CreditReport/sqlcontent.sql"},
+        {"name": "CreditReport2", "path": "Account/CreditReport2/sqlcontent.sql"}
+      ]   
+    },
+    {
+      "name": "Asset",
+      "reports": [
+        {"name": "AssetForecast", "path": "Asset/AssetForecast/sqlcontent.sql"},
+        {"name": "AssetsSummary", "path": "Asset/AssetsSummary/sqlcontent.sql"}
+      ]
+    }
+  ]
+}
