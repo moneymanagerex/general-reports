@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GRM Reports</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script src="report.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>GRM Reports Explorer</h1>
+        
+        <div id="report-nav" class="grid-container"></div>
+        
+        <div id="result-container">
+            <h2 id="report-title"></h2>
+            <div id="query-result"></div>
+        </div>
+
+        <!-- Added SQL content display section -->
+        <div id="sql-container">
+            <h3 id="report-title"></h3>
+            <pre id="sql-content" class="sql-code"></pre>
+        </div>
+
+    </div>
+</body>
+</html>

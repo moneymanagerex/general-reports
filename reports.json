@@ -1,0 +1,92 @@
+{
+  "reportGroups": [
+    {   
+      "name": "Account",
+      "reports": [
+        {"name": "AccountBalances", "path": "Account/AccountBalances/sqlcontent.sql"},
+        {"name": "AccountForecast", "path": "Account/AccountForecast/sqlcontent.sql"},
+        {"name": "AccountSummary", "path": "Account/AccountSummary/sqlcontent.sql"},
+        {"name": "AccountTrend", "path": "Account/AccountTrend/sqlcontent.sql"},
+        {"name": "CreditReport", "path": "Account/CreditReport/sqlcontent.sql"},
+        {"name": "CreditReport2", "path": "Account/CreditReport2/sqlcontent.sql"}
+      ]   
+    },
+    {
+      "name": "Asset",
+      "reports": [
+        {"name": "AssetForecast", "path": "Asset/AssetForecast/sqlcontent.sql"},
+        {"name": "AssetsSummary", "path": "Asset/AssetsSummary/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Budget",
+      "reports": [
+        {"name": "BudgetMonitoring", "path": "Budget/BudgetMonitoring/sqlcontent.sql"},
+        {"name": "BudgetMonitoringCurrentMonth", "path": "Budget/BudgetMonitoringCurrentMonth/sqlcontent.sql"},
+        {"name": "BudgetMonitoringLastMonth", "path": "Budget/BudgetMonitoringLastMonth/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Category",
+      "reports": [
+        {"name": "CategoriesStatLast12Months", "path": "Category/CategoriesStatLast12Months/sqlcontent.sql"},
+        {"name": "CategoryForecast", "path": "Category/CategoryForecast/sqlcontent.sql"},
+        {"name": "CategoryTrend", "path": "Category/CategoryTrend/sqlcontent.sql"},
+        {"name": "OneCategoryList", "path": "Category/OneCategoryList/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Currency",
+      "reports": [
+        {"name": "CurrencySummary", "path": "Currency/CurrencySummary/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Income_Expenses",
+      "reports": [
+        {"name": "DepositVsExpensesAndLoanRepaymentByMonth", "path": "Income_Expenses/DepositVsExpensesAndLoanRepaymentByMonth/sqlcontent.sql"},
+        {"name": "ExpenditureHistory", "path": "Income_Expenses/ExpenditureHistory/sqlcontent.sql"},
+        {"name": "ExpenseAndRevenueByMonth", "path": "Income_Expenses/ExpenseAndRevenueByMonth/sqlcontent.sql"},
+        {"name": "ExpenseAndRevenueByQuarter", "path": "Income_Expenses/ExpenseAndRevenueByQuarter/sqlcontent.sql"},
+        {"name": "ExpenseAndRevenueByYear", "path": "Income_Expenses/ExpenseAndRevenueByYear/sqlcontent.sql"},
+        {"name": "IncomeVsExpensesTransactionsByYear", "path": "Income_Expenses/IncomeVsExpensesTransactionsByYear/sqlcontent.sql"},
+        {"name": "SavingsProgress", "path": "Income_Expenses/SavingsProgress/sqlcontent.sql"},
+        {"name": "YearlyExpenseAndRevenue", "path": "Income_Expenses/YearlyExpenseAndRevenue/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Others",
+      "reports": [
+        {"name": "AttachmentList", "path": "Others/AttachmentList/sqlcontent.sql"},
+        {"name": "GameOfTransferAccount", "path": "Others/GameOfTransferAccount/sqlcontent.sql"},
+        {"name": "Quit Count", "path": "Others/Quit Count/sqlcontent.sql"},
+        {"name": "SVG_Clock_animated", "path": "Others/SVG_Clock_animated/sqlcontent.sql"},
+        {"name": "SVG_Fruit_Collection", "path": "Others/SVG_Fruit_Collection/sqlcontent.sql"},
+        {"name": "Simple Clock", "path": "Others/Simple Clock/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Payee",
+      "reports": [
+        {"name": "PayeeTrend", "path": "Payee/PayeeTrend/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Stock",
+      "reports": [
+        {"name": "StockSummary", "path": "Stock/StockSummary/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Transaction",
+      "reports": [
+        {"name": "BlankNotes", "path": "Transaction/BlankNotes/sqlcontent.sql"},
+        {"name": "FollowUpTransactions", "path": "Transaction/FollowUpTransactions/sqlcontent.sql"},
+        {"name": "InvalidTransactions", "path": "Transaction/InvalidTransactions/sqlcontent.sql"},
+        {"name": "TransactionStatistics", "path": "Transaction/TransactionStatistics/sqlcontent.sql"},
+        {"name": "Withdrawals", "path": "Transaction/Withdrawals/sqlcontent.sql"},
+        {"name": "usercoloredtransactions", "path": "Transaction/usercoloredtransactions/sqlcontent.sql"}
+      ]
+    }
+  ]
+}

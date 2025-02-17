@@ -1,0 +1,92 @@
+let dbInstance = null;
+
+async function initDB() {
+    const SQL = await initSqlJs({
+        locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+    });
+    
+    const response = await fetch('Sample4GRM.mmb');
+    const dbBuffer = await response.arrayBuffer();
+    dbInstance = new SQL.Database(new Uint8Array(dbBuffer));
+}
+
+function renderReports(data) {
+    const container = document.getElementById('report-nav');
+    
+    data.reportGroups.forEach(group => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'report-group';
+        groupDiv.innerHTML = `<h3>${group.name}</h3>`;
+        
+        group.reports.forEach(report => {
+            const reportElem = document.createElement('div');
+            reportElem.className = 'report-item';
+            reportElem.textContent = report.name;
+            reportElem.onclick = () => loadReport(report);
+            groupDiv.appendChild(reportElem);
+        });
+        
+        container.appendChild(groupDiv);
+    });
+}
+
+async function loadReport(report) {
+    try {
+        const sqlPath = `packages/${report.path}`;
+        const response = await fetch(sqlPath);
+        const sql = await response.text();
+       
+        // Display SQL content in the UI
+        renderSQLContent(report.name, sql);
+
+        const stmt = dbInstance.prepare(sql);
+        const results = stmt.getAsObject({});
+        const columns = stmt.getColumnNames();
+        
+        renderResults(report.name, columns, results);
+    } catch (error) {
+        console.error('Error executing report:', error);
+
+        alert('Error loading report: ' + error.message);
+    } finally {
+        console.log(`Finished processing report: ${report.name}`);
+        // Optionally, update UI to reflect the loading status
+    }
+}
+
+function renderResults(title, columns, rows) {
+    const resultDiv = document.getElementById('query-result');
+    document.getElementById('report-title').textContent = title;
+    
+    let html = '<table><tr>';
+    columns.forEach(col => html += `<th>${col}</th>`);
+    html += '</tr><tr>';
+    
+    columns.forEach(col => {
+        html += `<td>${rows[col] || ''}</td>`;
+    });
+    
+    html += '</tr></table>';
+    resultDiv.innerHTML = html;
+}
+
+// Function to render the SQL content and title in the UI
+function renderSQLContent(title, sql) {
+    const sqlContainer = document.getElementById('sql-container');
+
+    // Set the report title for the SQL section
+    const reportTitleElem = sqlContainer.querySelector('#report-title');
+    reportTitleElem.textContent = `SQL for: ${title}`;  // Dynamic title based on report
+
+    // Set the SQL content in the pre tag
+    const sqlContentElem = sqlContainer.querySelector('#sql-content');
+    sqlContentElem.textContent = sql;  // Display the SQL query in pre-formatted text
+}
+
+// 初始化
+(async () => {
+    await initDB();
+    const response = await fetch('reports.json');
+    const data = await response.json();
+    renderReports(data);
+})();
