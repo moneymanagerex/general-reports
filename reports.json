@@ -55,17 +55,6 @@
       ]
     },
     {
-      "name": "Others",
-      "reports": [
-        {"name": "AttachmentList", "path": "Others/AttachmentList/sqlcontent.sql"},
-        {"name": "GameOfTransferAccount", "path": "Others/GameOfTransferAccount/sqlcontent.sql"},
-        {"name": "Quit Count", "path": "Others/Quit Count/sqlcontent.sql"},
-        {"name": "SVG_Clock_animated", "path": "Others/SVG_Clock_animated/sqlcontent.sql"},
-        {"name": "SVG_Fruit_Collection", "path": "Others/SVG_Fruit_Collection/sqlcontent.sql"},
-        {"name": "Simple Clock", "path": "Others/Simple Clock/sqlcontent.sql"}
-      ]
-    },
-    {
       "name": "Payee",
       "reports": [
         {"name": "PayeeTrend", "path": "Payee/PayeeTrend/sqlcontent.sql"}
@@ -86,6 +75,17 @@
         {"name": "TransactionStatistics", "path": "Transaction/TransactionStatistics/sqlcontent.sql"},
         {"name": "Withdrawals", "path": "Transaction/Withdrawals/sqlcontent.sql"},
         {"name": "usercoloredtransactions", "path": "Transaction/usercoloredtransactions/sqlcontent.sql"}
+      ]
+    },
+    {
+      "name": "Others",
+      "reports": [
+        {"name": "AttachmentList", "path": "Others/AttachmentList/sqlcontent.sql"},
+        {"name": "GameOfTransferAccount", "path": "Others/GameOfTransferAccount/sqlcontent.sql"},
+        {"name": "Quit Count", "path": "Others/Quit Count/sqlcontent.sql"},
+        {"name": "SVG_Clock_animated", "path": "Others/SVG_Clock_animated/sqlcontent.sql"},
+        {"name": "SVG_Fruit_Collection", "path": "Others/SVG_Fruit_Collection/sqlcontent.sql"},
+        {"name": "Simple Clock", "path": "Others/Simple Clock/sqlcontent.sql"}
       ]
     }
   ]
