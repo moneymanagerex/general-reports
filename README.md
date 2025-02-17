@@ -6,8 +6,6 @@ Reports can be created using Money Manager Ex as well.
 
 [![Demo Doccou alpha](https://j.gifs.com/3QPAjR.gif)](https://youtu.be/1FDAhWueHm8)
 
-[![Build Status](https://secure.travis-ci.org/moneymanagerex/general-reports.png)](http://travis-ci.org/moneymanagerex/general-reports)
-
 Report structure
 ----------------
 
