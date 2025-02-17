@@ -1,5 +1,11 @@
 let dbInstance = null;
 
+// Function to get query parameter by name
+function getQueryParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
 async function initDB() {
     const SQL = await initSqlJs({
         locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
@@ -44,6 +50,13 @@ async function loadReport(report) {
         const columns = stmt.getColumnNames();
         
         renderResults(report.name, columns, results);
+
+        // Update URL with the current report's name
+        window.history.pushState(
+            { reportName: report.name },  // State object (can store data for the history entry)
+            '',                           // Title (optional)
+            `?report=${encodeURIComponent(report.name)}`  // Update the URL with the report name
+        );
     } catch (error) {
         console.error('Error executing report:', error);
 
@@ -75,7 +88,7 @@ function renderSQLContent(title, sql) {
     const sqlContainer = document.getElementById('sql-container');
 
     // Set the report title for the SQL section
-    const reportTitleElem = sqlContainer.querySelector('#report-title');
+    const reportTitleElem = sqlContainer.querySelector('#sql-title');
     reportTitleElem.textContent = `SQL for: ${title}`;  // Dynamic title based on report
 
     // Set the SQL content in the pre tag
@@ -89,4 +102,19 @@ function renderSQLContent(title, sql) {
     const response = await fetch('reports.json');
     const data = await response.json();
     renderReports(data);
+
+    // Check if there's a report query parameter in the URL
+    const reportParam = getQueryParam('report');
+    if (reportParam) {
+        // Find the report corresponding to the query parameter
+        const report = data.reportGroups.flatMap(group => group.reports)
+            .find(report => report.name === reportParam);
+
+        // If the report exists, load it
+        if (report) {
+            loadReport(report);
+        } else {
+            alert(`Report ${reportParam} not found!`);
+        }
+    }
 })();
