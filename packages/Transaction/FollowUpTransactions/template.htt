@@ -3,9 +3,9 @@
    <head>
       <meta charset="UTF-8" />
       <title><TMPL_VAR REPORTNAME></title>
-      <link href="master.css" rel="stylesheet" />
-      <script src = "sorttable.js"></script>
-      <!-- sorttable_customkey is not HTML5, should be data-sorttable_customkey but this needs changes to sorttable.js -->
+      <link href="memory:master.css" rel="stylesheet" />
+      <script src = "memory:memory:sorttable.js"></script>
+      <!-- sorttable_customkey is not HTML5, should be data-sorttable_customkey but this needs changes to memory:sorttable.js -->
    </head>
    <body>
       <div class="container">

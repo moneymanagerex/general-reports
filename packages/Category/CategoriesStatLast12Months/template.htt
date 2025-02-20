@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <script src="ChartNew.js"></script>
-    <script src="sorttable.js"></script>
-    <link href="master.css" rel="stylesheet" />
+    <script src="memory:ChartNew.js"></script>
+    <script src="memory:memory:sorttable.js"></script>
+    <link href="memory:master.css" rel="stylesheet" />
 <style>
 .foo {   
     float: left;

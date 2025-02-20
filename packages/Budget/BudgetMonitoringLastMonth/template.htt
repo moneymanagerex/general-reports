@@ -3,13 +3,13 @@
 <head>
     <title><TMPL_VAR NAME="REPORTNAME" /></title>
     <meta charset="UTF-8" />
-    <link href="master.css" rel="stylesheet" />
+    <link href="memory:master.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="css/dx.common.css" />
     <link rel="stylesheet" href="css/dx.light.css" />
     <link rel="stylesheet" href="css/styles.css" />
 
-    <script src="jquery.min.js"></script>
+    <script src="memory:jquery.min.js"></script>
     <script src="dx.viz-web.js"></script>
     <script>
         var circularGaugeOptions = {

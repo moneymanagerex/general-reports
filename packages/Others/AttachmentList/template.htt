@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href="master.css" rel="stylesheet" />
+    <link href="memory:master.css" rel="stylesheet" />
 </head>
 <body>
 <div class = "container">
