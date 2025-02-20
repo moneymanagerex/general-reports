@@ -5,8 +5,8 @@
       <title>
          <TMPL_VAR REPORTNAME>
       </title>
-      <link href="master.css" rel="stylesheet" />
-      <script src="ChartNew.js"></script>
+      <link href="memory:master.css" rel="stylesheet" />
+      <script src="memory:ChartNew.js"></script>
    </head>
    <body>
       <div class="container">

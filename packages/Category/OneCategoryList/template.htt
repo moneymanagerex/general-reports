@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <script src="sorttable.js"></script>
-	<!-- sorttable_customkey is not HTML5, should be data-sortable_customkey, but needs changes to sorttable.js -->
-    <link href="master.css" rel="stylesheet">
+    <script src="memory:sorttable.js"></script>
+	<!-- sorttable_customkey is not HTML5, should be data-sortable_customkey, but needs changes to memory:sorttable.js -->
+    <link href="memory:master.css" rel="stylesheet">
 	<style>
 	img{
 		height:100%;

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
-    <link href = "master.css" rel = "stylesheet" />
+    <link href = "memory:master.css" rel = "stylesheet" />
 </head>
 <body>
 <img src="" id="myimage" />
