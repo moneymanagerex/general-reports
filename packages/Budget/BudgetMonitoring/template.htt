@@ -11,8 +11,8 @@
         window.Promise || document.write('<script src="memory:umd.min.js"><\/script>');
     </script>
     <script src="memory:apexcharts.min.js"></script>
-    <script src="memory:memory:sorttable.js"></script>
-    <link href="memory:memory:master.css" rel="stylesheet" />
+    <script src="memory:sorttable.js"></script>
+    <link href="memory:master.css" rel="stylesheet" />
     <style type="text/css">
         .money {
             text-align: right;
