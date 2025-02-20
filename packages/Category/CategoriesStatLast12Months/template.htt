@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title><TMPL_VAR REPORTNAME></title>
     <script src="memory:ChartNew.js"></script>
-    <script src="memory:memory:sorttable.js"></script>
+    <script src="memory:sorttable.js"></script>
     <link href="memory:master.css" rel="stylesheet" />
 <style>
 .foo {   
