@@ -1,8 +1,11 @@
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Limit to 5 items per row */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1rem;
     margin: 20px 0;
+    max-width: calc(370px * 5);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .report-group {
