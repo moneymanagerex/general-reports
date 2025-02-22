@@ -199,7 +199,7 @@
 		}
 	}
         if (my_lang == null) my_lang=translations.english;
-        var item=my_lang[0][n];
+        var item=my_lang[n];
         var out=(item == null) ? n : item;
         return out;
     }
