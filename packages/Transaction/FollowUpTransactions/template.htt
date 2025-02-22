@@ -167,7 +167,7 @@
          for (var i = 0; i < elements.length; i++) {
              var element = elements[i];
              if (my_lang == null) my_lang = translations.english;
-             var item = my_lang[0][element.innerHTML];
+             var item = my_lang[element.innerHTML];
              element.innerHTML = (item == null) ? element.innerHTML : item;
          }
       </script>
