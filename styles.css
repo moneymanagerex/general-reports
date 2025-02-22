@@ -51,9 +51,52 @@ th {
 }
 
 .ad-container {
-    margin: 40px 0;
-    padding: 15px;
+    margin: 60px 0 30px;
+    padding: 20px;
     background: #f8f9fa;
-    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
     text-align: center;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.ad-label {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.ad-content {
+    margin: 15px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+}
+
+.ad-note {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 12px;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .ad-container {
+        margin: 40px 0 20px;
+        padding: 15px;
+    }
+
+    .ad-label {
+        font-size: 0.75em;
+        top: -10px;
+    }
 }
