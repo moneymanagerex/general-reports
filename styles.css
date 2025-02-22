@@ -1,6 +1,6 @@
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* Limit to 5 items per row */
     gap: 1rem;
     margin: 20px 0;
 }
@@ -29,7 +29,7 @@
     background-color: #f4f4f4;
     padding: 10px;
     border-radius: 5px;
-    white-space: pre-wrap; /* Ensure long lines wrap */
+    white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 14px;
 }
@@ -48,4 +48,12 @@ th, td {
 th {
     background-color: #4CAF50;
     color: white;
+}
+
+.ad-container {
+    margin: 40px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
 }
