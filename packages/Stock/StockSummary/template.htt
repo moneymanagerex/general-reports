@@ -28,10 +28,12 @@
                 <tbody>
                     <TMPL_LOOP NAME=CONTENTS>
                     <tr>
+                        <td><TMPL_VAR STOCKID></td>
                         <td><TMPL_VAR STOCKNAME></td>
                         <td style="background-color:<TMPL_VAR "COLOR">"><TMPL_VAR SYMBOL></td>
                         <td class="stock text-right"><TMPL_VAR NUMSHARES></td>
                         <td class="money text-right"><TMPL_VAR VALUE></td>
+                        <td class="money text-right"><TMPL_VAR UnRealizedPL></td>
                     </tr>
                     </TMPL_LOOP>
                 </tbody>
