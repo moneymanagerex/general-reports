@@ -63,6 +63,7 @@
     {
       "name": "Security",
       "reports": [
+        {"name": "TradeHistory", "path": "Security/TradeHistory/sqlcontent.sql"},
         {"name": "StockSummary", "path": "Security/StockSummary/sqlcontent.sql"}
       ]
     },
