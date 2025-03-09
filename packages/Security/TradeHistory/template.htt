@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><TMPL_VAR REPORTNAME></title>
+    <script src = "memory:ChartNew.js"></script>
+   <script>
+        window.Promise || document.write('<script src="memory:polyfill.min.js"><\/script>');
+        window.Promise || document.write('<script src="memory:classlist.min.js"><\/script>');
+        window.Promise || document.write('<script src="memory:resize-observer.js"><\/script>');
+        window.Promise || document.write('<script src="memory:findindex.min.js"><\/script>');
+        window.Promise || document.write('<script src="memory:umd.min.js"><\/script>');
+    </script>
+    <script src = "memory:apexcharts.min.js"></script>
+    <script src = "memory:sorttable.js"></script>
+    <link href = "memory:master.css" rel = "stylesheet">
+</head>
+<body>
+<div class = "container">
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+<div class = "row">
+<div class = "col-xs-2"></div>
+<div class = "col-xs-8">
+<table class = "table">
+<thead>
+    <tr>
+        <th>STOCKNAME</th>
+        <th>SYMBOL</th>
+        <th>TRANSDATE</th>
+        <th>TRANSCODE</th>
+        <th>SHAREINFOID</th>
+        <th>CHECKINGACCOUNTID</th>
+        <th>SHARENUMBER</th>
+        <th>SHAREPRICE</th>
+        <th>SHARECOMMISSION</th>
+        <th>SHARELOT</th>
+
+    </tr>
+</thead>
+<tbody>
+    <TMPL_LOOP NAME=CONTENTS>
+        <tr>
+        <td><TMPL_VAR "STOCKNAME"></td>
+        <td><TMPL_VAR "SYMBOL"></td>
+        <td><TMPL_VAR "TRANSDATE"></td>
+        <td><TMPL_VAR "TRANSCODE"></td>
+        <td class = "text-right"><TMPL_VAR "SHAREINFOID"></td>
+        <td class = "text-right"><TMPL_VAR "CHECKINGACCOUNTID"></td>
+        <td class = "text-right"><TMPL_VAR "SHARENUMBER"></td>
+        <td class = "money"><TMPL_VAR "SHAREPRICE"></td>
+        <td class = "text-right"><TMPL_VAR "SHARECOMMISSION"></td>
+        <td><TMPL_VAR "SHARELOT"></td>
+
+        </tr>
+    </TMPL_LOOP>
+</tbody>
+
+</table>
+</div>
+</div>
+
+</div>
+<TMPL_LOOP ERRORS>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+</body>
+<script>
+    <!-- Format double to base currency -->
+    function currency(n) {
+        n = parseFloat(n);
+        n =  isNaN(n) ? 0 : n.toFixed(2);
+        var out = n.toString().replace(".", "|");
+        out = out.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<TMPL_VAR GROUP_SEPARATOR>");
+        out = out.replace("|", "<TMPL_VAR DECIMAL_POINT>");
+        return out;
+    }
+    var elements= document.getElementsByClassName("money");
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.textAlign='right';
+        if (element.innerHTML.indexOf("-") > -1) {
+            element.style.color="#f75e5e";
+        }
+        element.innerHTML = '<TMPL_VAR PFX_SYMBOL>' + currency(element.innerHTML) +'<TMPL_VAR SFX_SYMBOL>';
+    }
+</script>
+</html>
+
