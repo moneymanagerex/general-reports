@@ -61,9 +61,9 @@
       ]
     },
     {
-      "name": "Stock",
+      "name": "Security",
       "reports": [
-        {"name": "StockSummary", "path": "Stock/StockSummary/sqlcontent.sql"}
+        {"name": "StockSummary", "path": "Security/StockSummary/sqlcontent.sql"}
       ]
     },
     {
