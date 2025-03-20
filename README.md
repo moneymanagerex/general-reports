@@ -6,6 +6,11 @@ Reports can be created using Money Manager Ex as well.
 
 [![Demo Doccou alpha](https://j.gifs.com/3QPAjR.gif)](https://youtu.be/1FDAhWueHm8)
 
+Badges
+----------------
+
+<img alt="GitHub Downloads (all assets, latest release)" src="https://img.shields.io/github/downloads-pre/moneymanagerex/general-reports/latest/total">
+
 Report structure
 ----------------
 
