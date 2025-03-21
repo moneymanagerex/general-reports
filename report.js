@@ -18,12 +18,14 @@ async function initDB() {
 
 function renderReports(data) {
     const container = document.getElementById('report-nav');
-    
+    let totalReports = 0;
+
     data.reportGroups.forEach(group => {
+        totalReports += group.reports.length;
         const groupDiv = document.createElement('div');
         groupDiv.className = 'report-group';
-        groupDiv.innerHTML = `<h3>${group.name}</h3>`;
-        
+        groupDiv.innerHTML = `<h3>${group.name} (${group.reports.length})</h3>`;
+
         group.reports.forEach(report => {
             const reportElem = document.createElement('div');
             reportElem.className = 'report-item';
@@ -31,9 +33,11 @@ function renderReports(data) {
             reportElem.onclick = () => loadReport(report);
             groupDiv.appendChild(reportElem);
         });
-        
+
         container.appendChild(groupDiv);
     });
+
+    document.getElementById('report-total').textContent = `TOTAL: ${totalReports} reports`;
 }
 
 async function loadReport(report) {
