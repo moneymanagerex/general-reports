@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title><TMPL_VAR REPORTNAME></title>
+
+    <script src="memory:ChartNew.js"></script>
+    <script src="memory:sorttable.js"></script>
+
+    <link href="memory:master.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+<h3><TMPL_VAR REPORTNAME></h3>
+<TMPL_VAR TODAY><hr>
+
+
+<div class="row">
+<div class="col-xs-2"></div>
+<div class="col-xs-8">
+
+<table class="table">
+
+<thead>
+<tr>
+    <th>Account</th>
+    <th>Type</th>
+    <th class="text-right">Balance</th>
+    <th>Currency</th>
+    <th class="text-right">Rate</th>
+    <th class="text-right">Base per Account</th>
+    <th class="text-right">Balance</th>
+</tr>
+</thead>
+
+<tbody>
+
+<TMPL_LOOP NAME=CONTENTS>
+
+    <TMPL_IF NAME="IS_SUBTOTAL">
+
+        <tr>
+            <td><TMPL_VAR ACCOUNTNAME></td>
+            <td></td>
+            <td class="text-right"></td>
+            <td></td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
+            <td class="text-right"><TMPL_VAR BASE></td>
+        </tr>
+
+        <tr>
+            <td colspan="7" style="height:10px;"></td>
+        </tr>
+
+    <TMPL_ELSE>
+
+        <tr>
+
+            <td><TMPL_VAR ACCOUNTNAME></td>
+
+            <td><TMPL_VAR ACCOUNTTYPE></td>
+
+            <td class="money text-right"
+                data-prefix="<TMPL_VAR PFX_SYMBOL>"
+                data-suffix="<TMPL_VAR SFX_SYMBOL>">
+                <TMPL_VAR BALANCE>
+            </td>
+
+            <td>
+                <TMPL_VAR CURRENCY_SYMBOL>
+            </td>
+
+            <td class="text-right">
+                <TMPL_VAR RATE>
+            </td>
+
+            <td class="money text-right">
+                <TMPL_VAR BASE_SINGLE>
+            </td>
+
+            <td class="text-right">
+                <TMPL_VAR BASE>
+            </td>
+
+        </tr>
+
+    </TMPL_ELSE>
+
+</TMPL_LOOP>
+
+<tr style="font-weight:bold;">
+    <td></td>
+    <td>Total</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td class="text-right">
+        <TMPL_VAR SUMMA>
+    </td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- PIE CHART                                                   -->
+<!-- ========================================================= -->
+
+<div style="display:flex; justify-content:center; align-items:flex-start; width:100%; margin-top:20px;">
+
+    <div style="width:420px; height:420px;">
+        <canvas
+            id="pieSubtotals"
+            width="420"
+            height="420"
+            style="border:1px solid #cccccc;">
+        </canvas>
+    </div>
+
+    <div id="pieLegend"
+         style="margin-left:25px; padding-top:20px; font-size:14px; max-width:260px;">
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+ * ============================================================
+ * Daten für das Pie-Chart aus der Tabelle ermitteln
+ * ============================================================
+ */
+
+var rows = document.querySelectorAll("table tbody tr");
+
+var data = [];
+
+var colors = [
+    "#4e79a7",
+    "#f28e2b",
+    "#59a14f",
+    "#e15759",
+    "#76b7b2",
+    "#edc948",
+    "#b07aa1",
+    "#ff9da7",
+    "#9c755f",
+    "#bab0ac"
+];
+
+var colorIndex = 0;
+
+rows.forEach(function(row) {
+
+    var cells = row.querySelectorAll("td");
+
+    if (cells.length !== 7) {
+        return;
+    }
+
+    var name = cells[0].innerText.trim();
+    var baseText = cells[6].innerText.trim();
+
+    var isSubtotal =
+        cells[1].innerText.trim() === "" &&
+        cells[2].innerText.trim() === "" &&
+        cells[3].innerText.trim() === "" &&
+        cells[4].innerText.trim() === "" &&
+        cells[5].innerText.trim() === "" &&
+        baseText !== "";
+
+    if (!isSubtotal) {
+        return;
+    }
+
+    var base = parseFloat(
+        baseText.replace(/,/g, "").replace(/[^0-9.-]/g, "")
+    );
+
+    if (isNaN(base)) {
+        return;
+    }
+
+    if (base <= 0) {
+        return;
+    }
+
+    data.push({
+        value: base,
+        color: colors[colorIndex % colors.length],
+        label: name
+    });
+
+    colorIndex++;
+
+});
+
+
+/*
+ * ============================================================
+ * ChartNew Optionen
+ * ============================================================
+ */
+
+var options = {
+    animation: false,
+    responsive: false,
+    legend: true,
+    legendBorders: false,
+    legendFontSize: 12,
+    legendFontColor: "#000",
+    inGraphDataShow: false
+};
+
+var canvas = document.getElementById("pieSubtotals");
+var ctx = canvas.getContext("2d");
+
+if (data.length === 0) {
+
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#000000";
+    ctx.fillText(
+        "Keine positiven Subtotale vorhanden",
+        30,
+        210
+    );
+
+}
+else {
+
+    try {
+        new Chart(ctx).Pie(data, options);
+    }
+    catch (e) {
+        ctx.font = "14px Arial";
+        ctx.fillStyle = "#000000";
+
+        ctx.fillText("Fehler beim Zeichnen des Diagramms:", 10, 30);
+        ctx.fillText(String(e), 10, 55);
+
+        alert("ChartNew-Fehler:\n\n" + String(e));
+    }
+
+    /*
+     * ============================================================
+     * Externe Legende erzeugen (eine Zeile, Betrag rechtsbündig)
+     * ============================================================
+     */
+    var legendDiv = document.getElementById("pieLegend");
+    legendDiv.innerHTML = "";
+
+    data.forEach(function(item) {
+
+        var row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.alignItems = "center";
+        row.style.marginBottom = "8px";
+
+        var colorBox = document.createElement("div");
+        colorBox.style.width = "14px";
+        colorBox.style.height = "14px";
+        colorBox.style.backgroundColor = item.color;
+        colorBox.style.border = "1px solid #666";
+        colorBox.style.marginRight = "10px";
+
+        var nameSpan = document.createElement("span");
+        nameSpan.textContent = item.label;
+
+        var valueSpan = document.createElement("span");
+        valueSpan.textContent = item.value.toLocaleString();
+        valueSpan.style.marginLeft = "auto";
+        valueSpan.style.textAlign = "right";
+        valueSpan.style.minWidth = "80px";
+
+        row.appendChild(colorBox);
+        row.appendChild(nameSpan);
+        row.appendChild(valueSpan);
+
+        legendDiv.appendChild(row);
+    });
+
+}
+
+</script>
+
+
+Parameters:<br>
+Date: <TMPL_VAR single_date>
+
+</div>
+
+<TMPL_LOOP ERRORS>
+    <TMPL_VAR ERROR>
+</TMPL_LOOP>
+
+<script>
+
+/*
+ * ============================================================
+ * Währungswerte formatieren
+ * ============================================================
+ */
+
+var elements = document.getElementsByClassName("money");
+
+for (var i = 0; i < elements.length; i++) {
+
+    var prefix = elements[i].getAttribute("data-prefix");
+    var suffix = elements[i].getAttribute("data-suffix");
+    var value = elements[i].innerText;
+
+    if (!value) continue;
+    if (!prefix) prefix = "";
+    if (!suffix) suffix = "";
+
+    elements[i].innerText =
+        (prefix + " " + value + " " + suffix).trim();
+}
+
+</script>
+
+</body>
+</html>
