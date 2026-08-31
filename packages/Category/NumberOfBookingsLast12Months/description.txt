@@ -1,0 +1,1 @@
+﻿Number of bookings by category for the last 12 months with StackedBar
